@@ -1,4 +1,4 @@
-package com.esprit.jobfinder.security.services;
+package com.esprit.jobfinder.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

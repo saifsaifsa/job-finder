@@ -30,7 +30,7 @@ import com.esprit.jobfinder.payload.response.MessageResponse;
 import com.esprit.jobfinder.repository.RoleRepository;
 import com.esprit.jobfinder.repository.UserRepository;
 import com.esprit.jobfinder.security.jwt.JwtUtils;
-import com.esprit.jobfinder.security.services.UserDetailsImpl;
+import com.esprit.jobfinder.services.UserDetailsImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
