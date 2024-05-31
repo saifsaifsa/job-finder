@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.esprit.jobfinder.security.jwt.AuthEntryPointJwt;
 import com.esprit.jobfinder.security.jwt.AuthTokenFilter;
-import com.esprit.jobfinder.security.services.UserDetailsServiceImpl;
+import com.esprit.jobfinder.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableMethodSecurity
