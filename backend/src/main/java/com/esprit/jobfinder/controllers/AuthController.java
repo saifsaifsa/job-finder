@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.esprit.jobfinder.models.ERole;
+import com.esprit.jobfinder.models.enums.ERole;
 import com.esprit.jobfinder.models.Role;
 import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.payload.request.LoginRequest;
