@@ -1,0 +1,68 @@
+<div>
+    <div class="add-title">
+      <h2 class="primary">Add customer</h2>
+    </div>
+    <div>
+      <form [formGroup]="addCusForm" (change)="formChanged()">
+        <mat-grid-list cols="2" [cols]="breakpoint" rowHeight="85px" (window:resize)="onResize($event)">
+          <mat-grid-tile>
+            Title
+            <div class="text-inside">
+             
+              <mat-form-field>
+              
+                <input matInput placeholder="Title" value={{fname}} formControlName="Title" required>
+                
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            Description
+            <div class="text-inside">
+             
+              <mat-form-field>
+              
+                <input matInput placeholder="Description" value={{fname}} formControlName="Description" required>
+                
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            Type
+            <div class="text-inside">
+             
+              <mat-form-field>
+              
+                <input matInput placeholder="Type" value={{fname}} formControlName="Type" required>
+                
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            Experience
+            <div class="text-inside">
+             
+              <mat-form-field>
+              
+                <input matInput placeholder="Experience" value={{fname}} formControlName="Experience" required>
+                
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+      
+         
+          
+        
+        
+          
+        </mat-grid-list>
+  
+        <div class="btn-sec">
+          <button mat-raised-button type="submit" color="primary" class="Update-btn" (click)="onAddCus()">Save</button>
+          <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+        </div>
+  
+      </form>
+    </div>
+  </div>
+  

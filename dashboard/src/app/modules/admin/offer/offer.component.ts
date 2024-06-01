@@ -6,6 +6,7 @@ import { MatDialog,MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialo
 
 import {MatSort} from '@angular/material/sort';
 import { OfferService } from './offerService';
+import { AddCustomerComponent } from './add-offer/add-offer.component';
 
 
 
@@ -19,7 +20,7 @@ export class OfferComponent implements OnInit
 {
     displayedColumns: string[] = ["Title","Description", "Type","Experience Level"];
     dataSource : any;
-    constructor(private offerService:OfferService) {
+    constructor(private offerService:OfferService,public dialog: MatDialog) {
     }
 
     @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -42,6 +43,11 @@ export class OfferComponent implements OnInit
      
      
     }
+    openDialog(): void {
+      const dialogRef = this.dialog.open(AddCustomerComponent,{
+        width: '640px',disableClose: true 
+      });
+  }
    
   }
   
