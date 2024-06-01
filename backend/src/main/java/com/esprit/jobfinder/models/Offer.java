@@ -1,5 +1,6 @@
 package com.esprit.jobfinder.models;
 
+import com.esprit.jobfinder.models.enums.ExperienceLevel;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

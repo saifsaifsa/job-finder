@@ -1,4 +1,4 @@
-package com.esprit.jobfinder.models;
+package com.esprit.jobfinder.models.enums;
 
 public enum ExperienceLevel {
     BEGINNER,
