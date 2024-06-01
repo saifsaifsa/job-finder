@@ -1,5 +1,6 @@
 package com.esprit.jobfinder.models;
 
+import com.esprit.jobfinder.models.enums.ERole;
 import jakarta.persistence.*;
 
 @Entity
