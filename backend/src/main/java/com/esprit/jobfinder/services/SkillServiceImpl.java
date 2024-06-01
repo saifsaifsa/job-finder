@@ -1,4 +1,4 @@
-package com.esprit.jobfinder.service.impl;
+package com.esprit.jobfinder.services;
 
 import java.util.List;
 
@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.esprit.jobfinder.models.Skill;
 import com.esprit.jobfinder.repository.SkillRepository;
-import com.esprit.jobfinder.services.SkillService;
 
 @Service
 public class SkillServiceImpl implements SkillService {
