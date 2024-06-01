@@ -1,0 +1,23 @@
+
+u
+java:S1192c"ZDefine a constant instead of duplicating this literal "Error: Role is not found." 4 times.(ÉÿÊ–ùÿÿÿÿ
+>
+java:S5411M"(Use a primitive boolean expression here.(‡Ö…²
+>
+java:S5411S"(Use a primitive boolean expression here.(Œ‰ÓŒ
+X
+java:S6813'"BRemove this field injection and use constructor injection instead.(êæÄŞ
+X
+java:S6813*"BRemove this field injection and use constructor injection instead.(êæÄŞ
+X
+java:S6813-"BRemove this field injection and use constructor injection instead.(êæÄŞ
+X
+java:S68130"BRemove this field injection and use constructor injection instead.(êæÄŞ
+X
+java:S68133"BRemove this field injection and use constructor injection instead.(êæÄŞ
+<
+java:S14527"&Remove usage of generic wildcard type.(—­è€
+h
+java:S6204B"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹
+A
+java:S1452L"&Remove usage of generic wildcard type.(éã°éúÿÿÿÿ

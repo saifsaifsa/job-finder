@@ -13,12 +13,18 @@ import java.util.List;
 import static org.springframework.http.ResponseEntity.notFound;
 
 @RestController
-@RequestMapping("cv")
-@RequiredArgsConstructor
+@RequestMapping("/api/cv")
+
 public class CvController {
     private CvService cvService;
+
+    public CvController(CvService cvService) {
+        this.cvService = cvService;
+    }
+
     @PostMapping
     public Cv createCv(@RequestBody Cv cv) {
+
         return cvService.createCv(cv);
     }
 

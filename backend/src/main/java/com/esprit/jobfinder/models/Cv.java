@@ -1,6 +1,8 @@
 package com.esprit.jobfinder.models;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -8,6 +10,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class Cv {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +26,6 @@ public class Cv {
     private int views;
     private int downloads;
 
-    @ElementCollection
-    private List<String> skills;
-
-    @Lob
     private String linkedInData;
 
 }

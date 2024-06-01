@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-@RequiredArgsConstructor
 @Service
 public class CvServiceImp implements CvService {
+    public CvServiceImp(CvRepository cvRepository) {
+        this.cvRepository = cvRepository;
+    }
 
     private CvRepository cvRepository;
 
