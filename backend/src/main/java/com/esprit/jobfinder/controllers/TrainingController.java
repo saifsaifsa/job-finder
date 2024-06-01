@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("training")
+@RequestMapping("/api/training")
 @RequiredArgsConstructor
 public class TrainingController {
     @Qualifier("ITrainingServiceImpl")
