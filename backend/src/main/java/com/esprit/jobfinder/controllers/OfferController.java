@@ -3,6 +3,7 @@ package com.esprit.jobfinder.controllers;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.esprit.jobfinder.exceptions.ResourceNotFoundException;
 import com.esprit.jobfinder.models.Offer;
 import com.esprit.jobfinder.services.OfferService;
-import com.esprit.jobfinder.exceptions.ResourceNotFoundException;
 
+// add cross origin *
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/offers")
 public class OfferController {
