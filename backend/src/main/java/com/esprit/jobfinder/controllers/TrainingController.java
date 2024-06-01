@@ -3,7 +3,6 @@ package com.esprit.jobfinder.controllers;
 import com.esprit.jobfinder.models.Training;
 import com.esprit.jobfinder.models.enums.TrainingCategories;
 import com.esprit.jobfinder.services.ITrainingService;
-import com.esprit.jobfinder.services.ITrainingServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +34,7 @@ public class TrainingController {
     public void deleteTraining(@PathVariable long id){
         trainingService.DeleteTraining(id);
     }
-    @PutMapping("update")
+    @PutMapping()
     public Training updateTraining(@RequestBody Training training){
         return trainingService.updateTraining(training);
     }
