@@ -1,68 +1,33 @@
-<div>
-    <div class="add-title">
-      <h2 class="primary">Add customer</h2>
-    </div>
-    <div>
-      <form [formGroup]="addCusForm" (change)="formChanged()">
-        <mat-grid-list cols="2" [cols]="breakpoint" rowHeight="85px" (window:resize)="onResize($event)">
-          <mat-grid-tile>
-            Title
-            <div class="text-inside">
-             
-              <mat-form-field>
-              
-                <input matInput placeholder="Title" value={{fname}} formControlName="Title" required>
-                
-              </mat-form-field>
-            </div>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            Description
-            <div class="text-inside">
-             
-              <mat-form-field>
-              
-                <input matInput placeholder="Description" value={{fname}} formControlName="Description" required>
-                
-              </mat-form-field>
-            </div>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            Type
-            <div class="text-inside">
-             
-              <mat-form-field>
-              
-                <input matInput placeholder="Type" value={{fname}} formControlName="Type" required>
-                
-              </mat-form-field>
-            </div>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            Experience
-            <div class="text-inside">
-             
-              <mat-form-field>
-              
-                <input matInput placeholder="Experience" value={{fname}} formControlName="Experience" required>
-                
-              </mat-form-field>
-            </div>
-          </mat-grid-tile>
-      
-         
-          
-        
-        
-          
-        </mat-grid-list>
-  
-        <div class="btn-sec">
-          <button mat-raised-button type="submit" color="primary" class="Update-btn" (click)="onAddCus()">Save</button>
-          <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
-        </div>
-  
-      </form>
-    </div>
+<div class="p-6">
+  <div class="mb-4">
+    <h2 class="text-2xl font-bold text-primary-600">Add customer</h2>
   </div>
-  
+  <div>
+    <form [formGroup]="addCusForm" (change)="formChanged()">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="Title">Title</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="Title" type="text" placeholder="title" formControlName="title" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="Description">Description</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="Description" type="text" placeholder="description" formControlName="description" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="Type">Type</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="type" type="text" placeholder="type" formControlName="type" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="Experience">Experience</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="experience" type="text" placeholder="Experience" formControlName="experience" required>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" (click)="onAddCus()">Save</button>
+        <button class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="openDialog()">Cancel</button>
+      </div>
+
+    </form>
+  </div>
+</div>

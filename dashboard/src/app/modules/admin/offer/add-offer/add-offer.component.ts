@@ -25,17 +25,19 @@ export class AddCustomerComponent implements OnInit {
     
     this.addCusForm = this.fb.group({
      
-      Title: ['', [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]],
-      Description: ['', [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]],
-      Type: ['', [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]],
-      Experience : ['', [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]],
+      title: ['', [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]],
+      description: ['', [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]],
+      type: ['', [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]],
+      experience : ['', [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]],
     
     });
     this.breakpoint = window.innerWidth <= 600 ? 1 : 2; 
   }
 
   public onAddCus(): void {
-    this.markAsDirty(this.addCusForm);
+    if (this.addCusForm.valid) {
+      console.log(this.addCusForm.value);
+    }
   }
 
   openDialog(): void {
