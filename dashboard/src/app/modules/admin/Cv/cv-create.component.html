@@ -1,0 +1,35 @@
+<div class="cv-create-container">
+    <h2>Create CV</h2>
+    <form [formGroup]="cvForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input id="name" formControlName="name" type="text" class="form-control" />
+        <div *ngIf="cvForm.get('name').invalid && (cvForm.get('name').touched || cvForm.get('name').dirty)" class="error">
+          Name is required.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input id="email" formControlName="email" type="email" class="form-control" />
+        <div *ngIf="cvForm.get('email').invalid && (cvForm.get('email').touched || cvForm.get('email').dirty)" class="error">
+          Enter a valid email.
+        </div>
+      </div>
+  
+      <div formArrayName="skills" class="form-group">
+        <label>Skills:</label>
+        <div *ngFor="let skill of skills.controls; let i=index" [formGroupName]="i">
+          <input formControlName="skill" type="text" class="form-control" />
+          <button type="button" (click)="removeSkill(i)" class="btn btn-danger">Remove</button>
+          <div *ngIf="skill.get('skill').invalid && (skill.get('skill').touched || skill.get('skill').dirty)" class="error">
+            Skill is required.
+          </div>
+        </div>
+        <button type="button" (click)="addSkill()" class="btn btn-primary">Add Skill</button>
+      </div>
+  
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+  </div>
+  

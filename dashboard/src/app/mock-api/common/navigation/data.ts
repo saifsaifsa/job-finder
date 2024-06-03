@@ -15,6 +15,20 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/offre'
+    },
+    {
+        id   : 'cv',
+        title: 'Cv',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/cv'
+    },
+    {
+        id   : 'cv-create',
+        title: 'cv-create',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/cv-create'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [

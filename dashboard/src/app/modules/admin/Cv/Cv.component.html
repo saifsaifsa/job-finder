@@ -1,0 +1,58 @@
+<div class="flex flex-col flex-auto min-w-0">
+  <div class="flex m-5">
+    <div class="text-4xl font-extrabold tracking-tight leading-none">CV Data</div>
+    <button mat-raised-button color="primary" routerLink="/cv/create" style="margin-left: auto;">Créer un nouveau CV</button>
+  </div>
+
+  <div class="flex">
+    <div class="w-full h-10 sm:flex items-center bg-white rounded-lg overflow-hidden px-2 py-1 justify-between m-2">
+      <input class="text-base text-gray-400 flex-grow outline-none px-2" type="text" (keyup)="applyFilter($event)" placeholder="Search CV by name" />
+    </div>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <!-- Name Column -->
+    <ng-container matColumnDef="Name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="Email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <!-- Views Column -->
+    <ng-container matColumnDef="Views">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Views </th>
+      <td mat-cell *matCellDef="let element"> {{element.views}} </td>
+    </ng-container>
+
+    <!-- Downloads Column -->
+    <ng-container matColumnDef="Downloads">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Downloads </th>
+      <td mat-cell *matCellDef="let element"> {{element.downloads}} </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="Actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" (click)="editCv(element.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteCv(element.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Header row definition -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <!-- Row definition -->
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

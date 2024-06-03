@@ -1,0 +1,25 @@
+{
+  "name": "job-finder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saifsaifsa/job-finder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saifsaifsa/job-finder/issues"
+  },
+  "homepage": "https://github.com/saifsaifsa/job-finder#readme",
+  "dependencies": {
+    "@angular/cdk": "^18.0.1",
+    "@angular/cli": "^18.0.2",
+    "@angular/core": "^18.0.1",
+    "@angular/material": "^18.0.1"
+  }
+}

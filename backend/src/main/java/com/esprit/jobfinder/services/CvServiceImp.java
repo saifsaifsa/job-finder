@@ -1,20 +1,19 @@
 package com.esprit.jobfinder.services;
 
 import com.esprit.jobfinder.models.Cv;
+import com.esprit.jobfinder.models.Skill;
 import com.esprit.jobfinder.repository.CvRepository;
+import com.esprit.jobfinder.repository.SkillRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-@Service
-public class CvServiceImp implements CvService {
-    public CvServiceImp(CvRepository cvRepository) {
-        this.cvRepository = cvRepository;
-    }
 
-    private CvRepository cvRepository;
+@Service
+@RequiredArgsConstructor
+public class CvServiceImp implements CvService {
+    private final CvRepository cvRepository;
+    private final SkillRepository skillRepository;
 
     @Override
     public Cv createCv(Cv cv) {
@@ -49,17 +48,35 @@ public class CvServiceImp implements CvService {
         });
     }
 
-
-
     @Override
     public void incrementDownloads(Long id) {
-
+        // Implement this method if needed
     }
 
     @Override
     public byte[] exportCvToPDF(Long id) {
+        // Implement this method if needed
         return new byte[0];
     }
 
+    @Override
+    public Cv addSkillToCv(Long cvId, Skill skill) {
+        Cv cv = cvRepository.findById(cvId).orElseThrow(() -> new RuntimeException("CV not found"));
+        Skill existingSkill = skillRepository.findById(skill.getId()).orElseThrow(() -> new RuntimeException("Skill not found"));
+        cv.getSkills().add(existingSkill);
+        return cvRepository.save(cv);
+    }
 
+    @Override
+    public Cv removeSkillFromCv(Long cvId, Long skillId) {
+        return null;
+    }
+
+  /*   @Override
+   public Cv removeSkillFromCv(Long cvId, Long skillId) {
+        /*Cv cv = cvRepository.findById(cvId).orElseThrow(() -> new RuntimeException("CV not found"));
+        Skill skill = skillRepository.findById(skillId).orElseThrow(() -> new RuntimeException("Skill not found"));
+        cv.getSkills().remove(skill);
+        return cvRepository.save(cv);
+    }*/
 }

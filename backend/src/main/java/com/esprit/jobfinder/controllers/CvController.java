@@ -1,6 +1,7 @@
 package com.esprit.jobfinder.controllers;
 
 import com.esprit.jobfinder.models.Cv;
+import com.esprit.jobfinder.models.Skill;
 import com.esprit.jobfinder.services.CvService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,21 +11,15 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-import static org.springframework.http.ResponseEntity.notFound;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/cv")
-
+@RequiredArgsConstructor
 public class CvController {
-    private CvService cvService;
-
-    public CvController(CvService cvService) {
-        this.cvService = cvService;
-    }
+    private final CvService cvService;
 
     @PostMapping
     public Cv createCv(@RequestBody Cv cv) {
-
         return cvService.createCv(cv);
     }
 
@@ -42,11 +37,6 @@ public class CvController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found");
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCv(@PathVariable Long id) {
-        cvService.deleteCv(id);
-        return ResponseEntity.ok().build();
-    }
     @PutMapping("/{id}")
     public Cv updateCv(@PathVariable Long id, @RequestBody Cv cvDetails) {
         Cv cv = cvService.getCv(id);
@@ -57,10 +47,26 @@ public class CvController {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found");
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCv(@PathVariable Long id) {
+        cvService.deleteCv(id);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/{id}/increment-views")
     public ResponseEntity<Void> incrementViews(@PathVariable Long id) {
         cvService.incrementViews(id);
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/{id}/skills")
+    public Cv addSkillToCv(@PathVariable Long id, @RequestBody Skill skill) {
+        return cvService.addSkillToCv(id, skill);
+    }
+
+    @DeleteMapping("/{id}/skills/{skillId}")
+    public Cv removeSkillFromCv(@PathVariable Long id, @PathVariable Long skillId) {
+        return cvService.removeSkillFromCv(id, skillId);
+    }
 }
