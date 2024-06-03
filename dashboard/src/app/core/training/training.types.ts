@@ -1,8 +1,10 @@
+import { TrainingCategories } from "./training.enums";
+
 export interface Training{
     id: Number;
     title:  String;
     description:  String;
-    trainingCategories: String;
+    trainingCategories: TrainingCategories;
     rating: Number;
     price: Number;
     likes: Number;

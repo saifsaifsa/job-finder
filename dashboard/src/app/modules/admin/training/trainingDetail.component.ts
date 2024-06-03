@@ -3,6 +3,7 @@ import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { fuseAnimations } from "@fuse/animations";
 import { FuseAlertType } from "@fuse/components/alert";
+import { TrainingCategories } from "app/core/training/training.enums";
 import { TrainingService } from "app/core/training/trainingService";
 
 @Component({
@@ -21,6 +22,7 @@ export class TrainingDetailComponent implements OnInit {
     showAlert: boolean = false;
     trainingDetailsForm: FormGroup;
     isUpdating: boolean = false;
+    trainingCategories = Object.values(TrainingCategories);
 
     constructor(
         private trainingService: TrainingService,

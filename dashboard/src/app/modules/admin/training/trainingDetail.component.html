@@ -31,7 +31,11 @@
 
         <div class="sm:col-span-4">
             <mat-form-field class="w-1/2 mt-4 mx-4">
-                <input matInput placeholder="trainingCategories" formControlName="trainingCategories" />
+                <mat-select formControlName="trainingCategories" >
+                  <mat-option *ngFor="let trainingCategory of trainingCategories" [value]="trainingCategory">
+                    {{ trainingCategory }}
+                  </mat-option>
+                </mat-select>
                 <mat-error *ngIf="
                               trainingDetailsForm.get('trainingCategories').invalid &&
                               trainingDetailsForm.get('trainingCategories').touched">
