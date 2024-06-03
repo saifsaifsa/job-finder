@@ -108,13 +108,14 @@ export class TrainingDetailComponent implements OnInit {
         formData.append('dateFin', this.trainingDetailsForm.get('dateFin').value);
         // formData.append('image', this.trainingDetailsForm.get('image').value);
 
-        var object = {};
-        formData.forEach(function(value, key){
-            object[key] = value;
-        });
-        var json = JSON.stringify(object);
         if (this.isUpdating) {
             const trainingId = this.route.snapshot.params['id'];
+            var object = {};
+            formData.forEach(function(value, key){
+                object[key] = value;
+            });
+            object['id'] = trainingId;
+            var json = JSON.stringify(object);
             console.log(json)
             this.trainingService
                 .updateTraining(trainingId, json)
@@ -141,6 +142,11 @@ export class TrainingDetailComponent implements OnInit {
                     }
                 );
         } else {
+            var object = {};
+            formData.forEach(function(value, key){
+                object[key] = value;
+            });
+            var json = JSON.stringify(object);
             // Perform add operation
             this.trainingService.createTraining(json).subscribe(
                 () => {

@@ -51,7 +51,7 @@ export class TrainingService {
     */
     updateTraining(id:string,data:any){
         let headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this._httpClient.put(`${environment.apiUrl}training/${id}`,data,{headers: headers})
+        return this._httpClient.put(`${environment.apiUrl}training`,data,{headers: headers})
     }
     
     /**
