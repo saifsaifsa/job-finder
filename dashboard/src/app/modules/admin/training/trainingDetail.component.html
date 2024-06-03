@@ -1,0 +1,127 @@
+<div class="w-full w-10/12">
+    <div class="text-xl mt-5 ml-5">Training Details</div>
+    <div>
+        <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type"
+            [@shake]="alert.type === 'error'">
+            {{ alert.message }}
+        </fuse-alert>
+    </div>
+    <form [formGroup]="trainingDetailsForm" (ngSubmit)="onSubmit()" #trainingDetailNgForm="ngForm">
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-1/2 mt-4 mx-4">
+                <input matInput placeholder="title" formControlName="title" />
+                <mat-error *ngIf="
+                              trainingDetailsForm.get('title').invalid &&
+                              trainingDetailsForm.get('title').touched">
+                    Title is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-1/2 mt-4 mx-4">
+                <input matInput placeholder="description" formControlName="description" />
+                <mat-error *ngIf="
+                              trainingDetailsForm.get('description').invalid &&
+                              trainingDetailsForm.get('description').touched">
+                    description is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-1/2 mt-4 mx-4">
+                <input matInput placeholder="trainingCategories" formControlName="trainingCategories" />
+                <mat-error *ngIf="
+                              trainingDetailsForm.get('trainingCategories').invalid &&
+                              trainingDetailsForm.get('trainingCategories').touched">
+                    training Categories is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-1/2 mt-4 mx-4">
+                <input matInput type="number" placeholder="price" formControlName="price" />
+                <mat-error *ngIf="
+                              trainingDetailsForm.get('price').invalid &&
+                                  trainingDetailsForm.get('price').touched">
+                    price is required and greater that 0
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-1/2 mt-4 mx-4">
+                <input matInput type="number" placeholder="rating" formControlName="rating" />
+                <mat-error *ngIf="
+                              trainingDetailsForm.get('rating').invalid &&
+                                  trainingDetailsForm.get('rating').touched">
+                    rating is required and greater that 0
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-1/2 mt-4 mx-4">
+                <input matInput type="number" placeholder="likes" formControlName="likes" />
+                <mat-error *ngIf="
+                              trainingDetailsForm.get('likes').invalid &&
+                                  trainingDetailsForm.get('likes').touched">
+                    likes is required and greater that 0
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-1/2 mt-4 mx-4">
+                <input matInput type="number" placeholder="dislikes" formControlName="dislikes" />
+                <mat-error *ngIf="
+                              trainingDetailsForm.get('dislikes').invalid &&
+                                  trainingDetailsForm.get('dislikes').touched">
+                    dislikes is required and greater that 0
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-1/2 mt-4 mx-4">
+                <input matInput type="date" placeholder="dateDebut" formControlName="dateDebut" />
+                <mat-error *ngIf="
+                              trainingDetailsForm.get('dateDebut').invalid &&
+                                  trainingDetailsForm.get('dateDebut').touched">
+                    dateDebut is required and greater that 0
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-1/2 mt-4 mx-4">
+                <input matInput type="date" placeholder="dateFin" formControlName="dateFin" />
+                <mat-error *ngIf="
+                              trainingDetailsForm.get('dateFin').invalid &&
+                                  trainingDetailsForm.get('dateFin').touched">
+                    dateFin is required and greater that 0
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <!-- <div class="sm:col-span-4">
+                <label for="image" class="w-1/2 mt-4 mx-4">Image</label>
+                <input id="image" type="file" accept=".jpg,.jpeg,.png"
+                    (change)="onAvatarChange($event)" formControlName="image" />
+        </div> -->
+
+        <div class="mt-4 mb-10 border-t"></div>
+
+        <div class="flex items-center justify-end mb-10 mx-4">
+            <button class="ml-4 orangeBtn" mat-flat-button color="primary" type="submit"
+                [disabled]="trainingDetailsForm.invalid">
+                Save
+            </button>
+            <button class="mr-4 ml-4" mat-stroked-button type="button" (click)="goToTrainingsList()">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>
