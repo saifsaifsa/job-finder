@@ -10,7 +10,7 @@ export class CvService {
 
     constructor(private http: HttpClient) { }
 
-    getAllCvs(): Observable<any> {
+    getAllCvs(): Observable<any> { 
         return this.http.get<any>(this.apiUrl);
     }
 

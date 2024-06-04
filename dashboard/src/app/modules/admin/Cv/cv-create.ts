@@ -16,7 +16,7 @@ export class CvCreateComponent implements OnInit {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       skills: this.fb.array([this.createSkill()])
-    });
+    }); 
   }
 
   get skills(): FormArray {
