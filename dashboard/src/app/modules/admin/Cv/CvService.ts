@@ -9,6 +9,7 @@ export class CvService {
     private apiUrl = 'http://localhost:8080/api/cv'; 
 
     constructor(private http: HttpClient) { }
+    
 
     getAllCvs(): Observable<any> { 
         return this.http.get<any>(this.apiUrl);
@@ -18,9 +19,9 @@ export class CvService {
         return this.http.get<any>(`${this.apiUrl}/${id}`);
     }
 
-    createCv(cv: any): Observable<any> {
-        return this.http.post<any>(this.apiUrl, cv);
-    }
+    createCv(cvData: any): Observable<any> {
+    return this.http.post(this.apiUrl, cvData);
+  }
 
     updateCv(cv: any): Observable<any> {
         return this.http.put<any>(this.apiUrl, cv);

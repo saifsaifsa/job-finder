@@ -25,3 +25,5 @@ G
 Kbackend/src/main/java/com/esprit/jobfinder/controllers/OfferController.java,9\6\9686ebfb97f3eb73f72d1b9619f2812925f16e12
 w
 Gbackend/src/main/java/com/esprit/jobfinder/repository/CvRepository.java,c\5\c554bf5b437ea710e235d1c64b7448771a11187a
+o
+?backend/src/main/java/com/esprit/jobfinder/models/Training.java,2\d\2d41550f8e025fdab176d2f2dcfc6f25e5fc0ad6

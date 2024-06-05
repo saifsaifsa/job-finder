@@ -42,7 +42,6 @@ public class CvController {
         Cv cv = cvService.getCv(id);
         if (cv != null) {
             cv.setContent(cvDetails.getContent());
-            // Update other necessary fields
             return cvService.updateCv(cv);
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found");
