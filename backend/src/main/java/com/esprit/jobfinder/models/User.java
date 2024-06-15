@@ -3,6 +3,7 @@ package com.esprit.jobfinder.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.esprit.jobfinder.models.enums.ERole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -22,7 +23,11 @@ public class User {
   @NotBlank
   @Size(max = 20)
   private String username;
+  private String firstName;
 
+  private String lastName;
+  @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+  private Boolean active = false;
   @NotBlank
   @Size(max = 50)
   @Email
@@ -32,11 +37,8 @@ public class User {
   @Size(max = 120)
   private String password;
 
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(  name = "user_roles", 
-        joinColumns = @JoinColumn(name = "user_id"), 
-        inverseJoinColumns = @JoinColumn(name = "role_id"))
-  private Set<Role> roles = new HashSet<>();
+  @Enumerated(EnumType.ORDINAL)
+  private ERole role;
   @ManyToMany
   Set<Training> trainings;
   public User() {
@@ -46,6 +48,13 @@ public class User {
     this.username = username;
     this.email = email;
     this.password = password;
+  }
+  public User(String firstName,String lastName,String username, String email, String password) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.lastName = lastName;
+    this.firstName = firstName;
   }
 
   public Long getId() {
@@ -80,11 +89,27 @@ public class User {
     this.password = password;
   }
 
-  public Set<Role> getRoles() {
-    return roles;
+  public String getFirstName() {
+    return firstName;
   }
 
-  public void setRoles(Set<Role> roles) {
-    this.roles = roles;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public Boolean getActive() {
+    return active;
+  }
+
+  public void setActive(Boolean active) {
+    this.active = active;
   }
 }
