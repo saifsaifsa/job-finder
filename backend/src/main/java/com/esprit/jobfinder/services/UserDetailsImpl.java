@@ -36,16 +36,15 @@ public class UserDetailsImpl implements UserDetails {
   }
 
   public static UserDetailsImpl build(User user) {
-    List<GrantedAuthority> authorities = user.getRoles().stream()
-        .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-        .collect(Collectors.toList());
+//    List<GrantedAuthority> authorities = user.getRole().
+//        .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+//        .collect(Collectors.toList());
 
     return new UserDetailsImpl(
         user.getId(), 
         user.getUsername(), 
         user.getEmail(),
-        user.getPassword(), 
-        authorities);
+        user.getPassword(),null);
   }
 
   @Override
