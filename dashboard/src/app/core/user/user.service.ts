@@ -108,21 +108,21 @@ export class UserService
           params = params.append('sortOrder', sortOrder);
         }
     
-        return this._httpClient.get(`${environment.baseUrl}users`, { params });
+        return this._httpClient.get(`${environment.baseUrl}api/users`, { params });
       }
     deleteUser(id:string){
-        return this._httpClient.delete(`${environment.baseUrl}users/${id}`)
+        return this._httpClient.delete(`${environment.baseUrl}api/users/${id}`)
     }
     getUser(id:string){
-        return this._httpClient.get(`${environment.baseUrl}users/${id}`)
+        return this._httpClient.get(`${environment.baseUrl}api/users/${id}`)
     }
     updateUser(id:string,data:any){
-        return this._httpClient.put(`${environment.baseUrl}users/${id}`,data)
+        return this._httpClient.put(`${environment.baseUrl}api/users/${id}`,data)
     }
     addUser(data:any){
-        return this._httpClient.post(`${environment.baseUrl}users`,data)
+        return this._httpClient.post(`${environment.baseUrl}api/users`,data)
     }
     toggleConfirmation(id:string,confirmed:boolean){
-        return this._httpClient.patch(`${environment.baseUrl}users/${id}/confirmed`,{confirmed})
+        return this._httpClient.patch(`${environment.baseUrl}api/users/${id}/confirmed`,{confirmed})
     }
 }

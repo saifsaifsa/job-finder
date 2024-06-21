@@ -1,0 +1,116 @@
+<div class="w-full w-10/12">
+    <div>
+        <fuse-alert class="mx-8 mt-8 mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+            [type]="alert.type" [@shake]="alert.type === 'error'">
+            {{ alert.message }}
+        </fuse-alert>
+    </div>
+    <form [formGroup]="userDetailsForm" (ngSubmit)="onSubmit()" #userDetailNgForm="ngForm">
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name" formControlName="name" />
+                <mat-error *ngIf="
+                        userDetailsForm.get('name').invalid &&
+                        userDetailsForm.get('name').touched
+                    ">
+                    Name is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" placeholder="Email" formControlName="email" />
+                <mat-error *ngIf="
+                        userDetailsForm.get('email').invalid &&
+                        userDetailsForm.get('email').touched
+                    ">
+                    Email is required and should be a valid email
+                    address
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>Phone</mat-label>
+                <input matInput type="phone" placeholder="Phone" formControlName="phone" />
+                <mat-error *ngIf="
+                        userDetailsForm.get('phone').invalid &&
+                        userDetailsForm.get('phone').touched
+                    ">
+                    Phone is required and should be a valid Tunisian phone number
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>Address</mat-label>
+                <input matInput placeholder="Address" formControlName="address" />
+                <mat-error *ngIf="
+                        userDetailsForm.get('address').invalid &&
+                        userDetailsForm.get('address').touched
+                    ">
+                    Address is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="sm:col-span-4" *ngIf="!isUpdating">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>Password</mat-label>
+                <input *ngIf="!isUpdating" matInput type="password" placeholder="Password" formControlName="password" />
+                <mat-error *ngIf="
+                        userDetailsForm.get('password').invalid &&
+                        userDetailsForm.get('password').touched
+                    ">
+                    Password should have at least one lowercase letter, one uppercase letter, and one digit, and its
+                    length should be at least 8 characters
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>Role</mat-label>
+                <mat-select formControlName="role">
+                    <mat-option value="99">Admin</mat-option>
+                    <mat-option value="1">Client</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <!-- <div class="sm:col-span-4">
+            <label for="image">Avatar</label>
+            <img
+                    class="w-full h-full rounded-full"
+                    *ngIf="user.image"
+                    [src]="user.image"
+                    alt="User avatar">
+            <input formControlName="photo" id="image" type="file" accept=".jpg,.jpeg,.png"
+                (change)="onAvatarChange($event)" />
+        </div> -->
+        <div class="sm:col-span-4  mt-4 mx-4" >
+            <div class="relative w-24 h-24">
+                <img class="w-full h-full rounded-full" [src]="avatar ? avatar : 'assets/images/avatars/avatar.png'" alt="User avatar"
+                    (click)="avatarInput.click()" />
+                <input formControlName="photo" id="image" type="file" accept=".jpg,.jpeg,.png"
+                    (change)="onAvatarChange($event)" #avatarInput style="display: none" />
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="mt-4 mb-10 border-t"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end mb-10 mx-4">
+            <button mat-stroked-button type="button" (click)="goToUsersList()">
+                Cancel
+            </button>
+            <button class="ml-4" [class.orangeBtn]="!userDetailsForm.invalid" mat-flat-button type="submit"
+                [disabled]="userDetailsForm.invalid">Save
+            </button>
+        </div>
+        <!-- <button mat-raised-button color="primary" type="submit" [disabled]="userDetailsForm.invalid">
+            Enregistrer
+        </button> -->
+    </form>
+</div>
