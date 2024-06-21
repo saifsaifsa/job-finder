@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
       @UniqueConstraint(columnNames = "username"),
       @UniqueConstraint(columnNames = "email") 
     })
-public class User  implements UserDetails {
+public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -84,11 +84,6 @@ public class User  implements UserDetails {
     this.email = email;
   }
 
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
-  }
-
   public String getPassword() {
     return password;
   }
@@ -129,24 +124,4 @@ public class User  implements UserDetails {
     this.role = role;
   }
 
-
-  @Override
-  public boolean isAccountNonExpired() {
-    return false;
-  }
-
-  @Override
-  public boolean isAccountNonLocked() {
-    return false;
-  }
-
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return false;
-  }
-
-  @Override
-  public boolean isEnabled() {
-    return false;
-  }
 }

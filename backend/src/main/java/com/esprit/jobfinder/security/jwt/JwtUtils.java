@@ -19,10 +19,11 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtils {
   private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-  @Value("${jobfinder.app.jwtSecret}")
+  @Value("${jwt.secret}")
+
   private String jwtSecret;
 
-  @Value("${jobfinder.app.jwtExpirationMs}")
+  @Value("${jwt.expiration}")
   private int jwtExpirationMs;
 
   public String generateJwtToken(Authentication authentication) {
