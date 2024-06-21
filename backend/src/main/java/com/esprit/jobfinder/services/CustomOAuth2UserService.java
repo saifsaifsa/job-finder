@@ -1,4 +1,5 @@
 package com.esprit.jobfinder.services;
+import com.esprit.jobfinder.models.enums.ERole;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -25,7 +26,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         Map<String, Object> attributes = oauth2User.getAttributes();
 
         return new DefaultOAuth2User(
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")),
+                Collections.singletonList(new SimpleGrantedAuthority(ERole.ROLE_USER.toString())),
                 attributes,
                 userNameAttributeName);
     }

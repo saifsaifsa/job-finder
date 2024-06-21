@@ -101,7 +101,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
             .oauth2Login(oauth2 ->
                     oauth2.userInfoEndpoint()
                             .userService(customOAuth2UserService)
-            );
+            ).cors();
 
     http.authenticationProvider(authenticationProvider());
 
