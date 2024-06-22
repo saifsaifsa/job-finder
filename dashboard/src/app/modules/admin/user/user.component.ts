@@ -42,7 +42,7 @@ export class UserComponent implements OnInit {
     sortField: string = '';
     sortOrder: 'asc' | 'desc' = 'asc';
     pageSize: number = 10;
-    currentPage: number = 1;
+    currentPage: number = 0;
     totalItems:number=0
     authentifiedUser:any
     ngOnInit(): void {
@@ -74,7 +74,7 @@ export class UserComponent implements OnInit {
             )
             .subscribe(
                 (data: any) => {
-                    this.usersDataSource.data = data;
+                    this.usersDataSource.data = data.content;
                     this.totalItems = data.total
                 },
                 (err) => {
@@ -83,7 +83,7 @@ export class UserComponent implements OnInit {
             );
     }
     applyFilters() {
-        this.currentPage = 1;
+        this.currentPage = 0;
         this.getUsers();
     }
     applySort(sort: { active: string; direction: 'asc' | 'desc' }) {

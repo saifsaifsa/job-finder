@@ -35,8 +35,8 @@ public class UserService implements IUserService{
 //    public List<User> getAllUsers() {
 //        return userRepository.findAll();
 //    }
-    public Page<User> getAllUsers(String name, String email, ERole role, String phone, int page, int size, String sortBy) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+    public Page<User> getAllUsers(String name, String email, ERole role, String phone, int page, int size, String sortBy,String sortOrder) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortOrder), sortBy));
 
         Specification<User> spec = Specification.where(UserSpecification.hasName(name))
                 .and(UserSpecification.hasEmail(email))

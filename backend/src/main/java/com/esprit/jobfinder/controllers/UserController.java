@@ -39,9 +39,10 @@ public class UserController {
             @RequestParam(required = false) String phone,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "id") String sortBy) {
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder) {
 
-        Page<User> users = userService.getAllUsers(name, email, role, phone, page, size, sortBy);
+        Page<User> users = userService.getAllUsers(name, email, role, phone, page, size, sortBy, sortOrder);
         return ResponseEntity.ok(users);
     }
 

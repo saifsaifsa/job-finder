@@ -86,25 +86,26 @@ export class UserService
         );
     }
     getUsers(
-        page: number = 1,
-        pageSize: number = 10,
+        page: number = 0,
+        size: number = 10,
         filters: { [key: string]: string } = {},
-        sortField: string = '',
+        sortBy: string = '',
         sortOrder: 'asc' | 'desc' = 'asc'
       ): Observable<any> {
         let params = new HttpParams();
     
         params = params.append('page', page.toString());
-        params = params.append('pageSize', pageSize.toString());
+        params = params.append('size', size.toString());
     
         Object.keys(filters).forEach((key) => {
           if (filters[key] !== '') {
             params = params.append(key, filters[key]);
           }
         });
+        
     
-        if (sortField !== '' && (sortOrder === 'asc' || sortOrder === 'desc')) {
-          params = params.append('sortField', sortField);
+        if (sortBy !== '' && (sortOrder === 'asc' || sortOrder === 'desc')) {
+          params = params.append('sortBy', sortBy);
           params = params.append('sortOrder', sortOrder);
         }
     

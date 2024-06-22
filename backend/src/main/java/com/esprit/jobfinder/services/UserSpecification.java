@@ -2,13 +2,24 @@ package com.esprit.jobfinder.services;
 
 import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.enums.ERole;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 public class UserSpecification {
 
     public static Specification<User> hasName(String name) {
-        return (root, query, criteriaBuilder) ->
-                name == null ? null : criteriaBuilder.like(root.get("name"), "%" + name + "%");
+        return (Root<User> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
+            if (name == null) {
+                return null;
+            }
+            String namePattern = "%" + name + "%";
+            Predicate firstNamePredicate = criteriaBuilder.like(root.get("firstName"), namePattern);
+            Predicate lastNamePredicate = criteriaBuilder.like(root.get("lastName"), namePattern);
+            return criteriaBuilder.or(firstNamePredicate, lastNamePredicate);
+        };
     }
 
     public static Specification<User> hasEmail(String email) {
