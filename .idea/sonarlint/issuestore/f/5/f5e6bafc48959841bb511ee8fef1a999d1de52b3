@@ -1,0 +1,28 @@
+
+[	java:S112K"FDefine and throw a dedicated exception instead of using a generic one.(ÄøèÊ
+[	java:S112O"FDefine and throw a dedicated exception instead of using a generic one.(µûðò
+`	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(ààŽ¤ÿÿÿÿÿ
+>
+java:S54118"(Use a primitive boolean expression here.(¶‡¨€
+C
+java:S5411;"(Use a primitive boolean expression here.(Êý€Ëýÿÿÿÿ
+X
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ
+X
+java:S6813""BRemove this field injection and use constructor injection instead.(êæÄÞ
+X
+java:S6813%"BRemove this field injection and use constructor injection instead.(êæÄÞ
+X
+java:S6813("BRemove this field injection and use constructor injection instead.(êæÄÞ
+X
+java:S6813+"BRemove this field injection and use constructor injection instead.(êæÄÞ
+X
+java:S6813."BRemove this field injection and use constructor injection instead.(êæÄÞ
+`
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(ÂÅ½øùÿÿÿÿ
+d
+java:S1128"NRemove this unused import 'com.esprit.jobfinder.exceptions.NotFoundException'.(ÔÓ…ù
+[
+java:S1128"@Remove this unused import 'com.esprit.jobfinder.utiles.JwtUtil'.(â„Â‚ùÿÿÿÿ
+
+java:S1128"dRemove this unused import 'org.springframework.security.core.userdetails.UsernameNotFoundException'.(Í£Ö¶ùÿÿÿÿ
