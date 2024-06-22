@@ -24,6 +24,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         User savedUser = userService.saveUser(user);
+        user.setPassword("");
         return ResponseEntity.ok(savedUser);
     }
 
