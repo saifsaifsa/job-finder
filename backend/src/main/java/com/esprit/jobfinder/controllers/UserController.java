@@ -3,7 +3,9 @@ package com.esprit.jobfinder.controllers;
 import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.enums.ERole;
 import com.esprit.jobfinder.payload.request.PatchUserRequest;
+import com.esprit.jobfinder.payload.request.UpdateUserReq;
 import com.esprit.jobfinder.services.IUserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         User savedUser = userService.saveUser(user);
         return ResponseEntity.ok(savedUser);
     }
@@ -47,8 +49,16 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id,@Valid @RequestBody UpdateUserReq updateReq) {
+
+        User userDetails = new User();
         userDetails.setId(id);
+        userDetails.setRole(updateReq.getRole());
+        userDetails.setEmail(updateReq.getEmail());
+        userDetails.setFirstName(updateReq.getFirstName());
+        userDetails.setLastName(updateReq.getLastName());
+        userDetails.setPhone(updateReq.getPhone());
+        userDetails.setUsername(updateReq.getUsername());
         User updatedUser = userService.updateUser(userDetails);
         return ResponseEntity.ok(updatedUser);
     }
