@@ -1,6 +1,6 @@
-package com.yourapp.repositories;
+package com.esprit.jobfinder.repository;
 
-import com.yourapp.models.Competence;
+import com.esprit.jobfinder.models.Competence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

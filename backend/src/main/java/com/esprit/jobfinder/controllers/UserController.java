@@ -1,9 +1,11 @@
 package com.esprit.jobfinder.controllers;
 
 import com.esprit.jobfinder.models.User;
+import com.esprit.jobfinder.models.enums.ERole;
 import com.esprit.jobfinder.payload.request.PatchUserRequest;
 import com.esprit.jobfinder.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +32,16 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
+    public ResponseEntity<Page<User>> getAllUsers(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) ERole role,
+            @RequestParam(required = false) String phone,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy) {
+
+        Page<User> users = userService.getAllUsers(name, email, role, phone, page, size, sortBy);
         return ResponseEntity.ok(users);
     }
 

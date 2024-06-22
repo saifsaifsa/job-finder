@@ -1,7 +1,7 @@
-package com.yourapp.services;
+package com.esprit.jobfinder.services;
 
-import com.yourapp.models.Quiz;
-import com.yourapp.repositories.QuizRepository;
+import com.esprit.jobfinder.models.Quiz;
+import com.esprit.jobfinder.repository.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

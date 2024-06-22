@@ -1,6 +1,6 @@
-package com.yourapp.services;
+package com.esprit.jobfinder.services;
 
-import com.yourapp.models.Participation;
+import com.esprit.jobfinder.models.Participation;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

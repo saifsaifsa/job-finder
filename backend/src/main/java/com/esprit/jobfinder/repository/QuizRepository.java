@@ -1,6 +1,6 @@
-package com.yourapp.repositories;
+package com.esprit.jobfinder.repository;
 
-import com.yourapp.models.Quiz;
+import com.esprit.jobfinder.models.Quiz;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

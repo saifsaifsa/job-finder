@@ -1,8 +1,7 @@
-package com.yourapp.controllers;
+package com.esprit.jobfinder.controllers;
 
-import com.yourapp.models.Quiz;
-import com.yourapp.services.QuizService;
-import com.yourapp.utils.PDFExporter;
+import com.esprit.jobfinder.models.Quiz;
+import com.esprit.jobfinder.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -59,19 +58,19 @@ public class QuizController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/export")
-    public ResponseEntity<byte[]> exportQuizzesToPDF() {
-        List<Quiz> quizzes = quizService.findAll();
-        byte[] pdfContent = PDFExporter.exportQuizzesToPDF(quizzes);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "quizzes.pdf");
-
-        return ResponseEntity.ok()
-                .headers(headers)
-                .body(pdfContent);
-    }
+//    @GetMapping("/export")
+//    public ResponseEntity<byte[]> exportQuizzesToPDF() {
+//        List<Quiz> quizzes = quizService.findAll();
+//        byte[] pdfContent = PDFExporter.exportQuizzesToPDF(quizzes);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_PDF);
+//        headers.setContentDispositionFormData("attachment", "quizzes.pdf");
+//
+//        return ResponseEntity.ok()
+//                .headers(headers)
+//                .body(pdfContent);
+//    }
 }
 
 

@@ -1,10 +1,10 @@
-package com.yourapp.controllers;
+package com.esprit.jobfinder.controllers;
 
-import com.yourapp.models.Competence;
-import com.yourapp.services.CompetenceService;
-import com.yourapp.utils.PDFExporter;
+import com.esprit.jobfinder.models.Competence;
+import com.esprit.jobfinder.services.CompetenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -64,19 +64,19 @@ public class CompetenceController {
         return competenceService.findByCategory(category);
     }
 
-    @GetMapping("/export")
-    public ResponseEntity<byte[]> exportCompetencesToPDF() {
-        List<Competence> competences = competenceService.findAll();
-        byte[] pdfContent = PDFExporter.exportCompetencesToPDF(competences);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "competences.pdf");
-
-        return ResponseEntity.ok()
-                .headers(headers)
-                .body(pdfContent);
-    }
+//    @GetMapping("/export")
+//    public ResponseEntity<byte[]> exportCompetencesToPDF() {
+//        List<Competence> competences = competenceService.findAll();
+//        byte[] pdfContent = PDFExporter.exportCompetencesToPDF(competences);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_PDF);
+//        headers.setContentDispositionFormData("attachment", "competences.pdf");
+//
+//        return ResponseEntity.ok()
+//                .headers(headers)
+//                .body(pdfContent);
+//    }
 
     @PostMapping("/{id}/upload")
     public ResponseEntity<String> uploadFile(@PathVariable Long id, @RequestParam("file") MultipartFile file) {

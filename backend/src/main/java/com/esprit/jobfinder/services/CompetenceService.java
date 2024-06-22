@@ -1,7 +1,7 @@
-package com.yourapp.services;
+package com.esprit.jobfinder.services;
 
-import com.yourapp.models.Competence;
-import com.yourapp.repositories.CompetenceRepository;
+import com.esprit.jobfinder.models.Competence;
+import com.esprit.jobfinder.repository.CompetenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

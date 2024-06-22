@@ -1,7 +1,8 @@
-package com.yourapp.services;
+package com.esprit.jobfinder.services;
 
-import com.yourapp.models.Participation;
-import com.yourapp.repositories.ParticipationRepository;
+import com.esprit.jobfinder.models.Participation;
+import com.esprit.jobfinder.repository.ParticipationRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

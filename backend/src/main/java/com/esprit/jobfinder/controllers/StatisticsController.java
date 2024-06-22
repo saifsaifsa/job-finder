@@ -1,8 +1,8 @@
-package com.yourapp.controllers;
+package com.esprit.jobfinder.controllers;
 
-import com.yourapp.models.Participation;
-import com.yourapp.services.ParticipationService;
-import com.yourapp.services.StatisticsService;
+import com.esprit.jobfinder.models.Participation;
+import com.esprit.jobfinder.services.ParticipationService;
+import com.esprit.jobfinder.services.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

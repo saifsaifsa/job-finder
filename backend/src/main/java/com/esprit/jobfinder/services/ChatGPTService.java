@@ -1,12 +1,12 @@
-package com.yourapp.services;
+package com.esprit.jobfinder.services;
 
+import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
-import org.json.JSONObject;
 
 @Service
 public class ChatGPTService {
