@@ -27,7 +27,7 @@ public class UserSpecification {
                 email == null ? null : criteriaBuilder.like(root.get("email"), "%" + email + "%");
     }
 
-    public static Specification<User> hasRole(ERole role) {
+    public static Specification<User> hasRole(String role) {
         return (root, query, criteriaBuilder) ->
                 role == null ? null : criteriaBuilder.equal(root.get("role"), role);
     }

@@ -37,7 +37,7 @@ public class UserController {
     public ResponseEntity<Page<User>> getAllUsers(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String email,
-            @RequestParam(required = false) ERole role,
+            @RequestParam(required = false) String role,
             @RequestParam(required = false) String phone,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,

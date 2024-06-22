@@ -16,5 +16,5 @@ public interface IUserService {
     void deleteUserById(Long id);
 
     User patchUser(Long id,PatchUserRequest user);
-    public Page<User> getAllUsers(String name, String email, ERole role, String phone, int page, int size, String sortBy,String sortOrder);
+    public Page<User> getAllUsers(String name, String email, String role, String phone, int page, int size, String sortBy,String sortOrder);
 }
