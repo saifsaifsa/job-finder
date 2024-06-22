@@ -1,0 +1,9 @@
+
+Ü
+java:S1598"¹This file "ChatGPTService.java" should be located in "com\yourapp\services" directory, not in "D:\Ingenierie\5eme\PI dev\job-finder\backend\src\main\java\com\esprit\jobfinder\services".(Ø¨°§üÿÿÿÿ8õ“Àçƒ2
+m	java:S116"RRename this field "API_URL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤¢ÎU8û“Àçƒ2
+n	java:S116"RRename this field "API_KEY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚Ûïƒ8ü“Àçƒ2
+=
+java:S1170"!Make this final field static too.(¤¢ÎU8ş“Àçƒ2
+>
+java:S1170"!Make this final field static too.(‚Ûïƒ8ÿ“Àçƒ2

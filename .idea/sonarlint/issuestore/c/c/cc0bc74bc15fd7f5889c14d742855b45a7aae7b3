@@ -1,0 +1,13 @@
+
+ø
+java:S1598"´This file "Participation.java" should be located in "com\yourapp\models" directory, not in "D:\Ingenierie\5eme\PI dev\job-finder\backend\src\main\java\com\esprit\jobfinder\models".(é„•©8íòÏæƒ2J$2d578fe3-3673-42aa-b239-16dd6d6d892d
+r
+java:S1068"*Remove this unused "userId" private field.(Â—‹¼úÿÿÿÿ8ùòÏæƒ2J$331572d7-9d3d-450a-bcf9-978a2b8a9968
+r
+java:S1068"*Remove this unused "quizId" private field.(çéà„øÿÿÿÿ8úòÏæƒ2J$ae731d36-8d00-4d4c-8a6b-2f91f3e57e0b
+u
+java:S1068"-Remove this unused "startTime" private field.(Ã«ùÿÿÿÿ8úòÏæƒ2J$f30900b3-1d9a-4db2-9bee-cd5470077ba7
+n
+java:S1068"+Remove this unused "endTime" private field.(±ı’Ø8ûòÏæƒ2J$82611c13-27a1-4265-8c9a-107f5d668ec2
+q
+java:S1068")Remove this unused "score" private field.(·”šüşÿÿÿÿ8ûòÏæƒ2J$75392fb3-cdeb-4d0e-b454-29384db8046d

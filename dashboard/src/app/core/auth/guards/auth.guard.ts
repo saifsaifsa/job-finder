@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
-import { Observable, of } from 'rxjs';
 import { AuthService } from 'app/core/auth/auth.service';
+import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Injectable({
@@ -31,7 +31,10 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
      */
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
     {
+        console.log("can activate")
         const redirectUrl = state.url === '/sign-out' ? '/' : state.url;
+        console.log("redirectUrl: ",redirectUrl)
+
         return this._check(redirectUrl);
     }
 

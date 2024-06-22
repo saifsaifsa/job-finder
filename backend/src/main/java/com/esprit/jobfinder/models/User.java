@@ -1,11 +1,14 @@
 package com.esprit.jobfinder.models;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.esprit.jobfinder.models.enums.ERole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -19,24 +22,27 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank
-  @Size(max = 20)
+  @NotBlank(message = "Username cannot be blank")
   private String username;
+  private String firstName;
 
-  @NotBlank
-  @Size(max = 50)
-  @Email
+  private String lastName;
+  @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+  private Boolean active = false;
+  @Email(message = "Invalid email format")
   private String email;
 
-  @NotBlank
+  @NotBlank(message = "password cannot be blank")
   @Size(max = 120)
+  @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", message = "Password must have at least one lowercase letter, one uppercase letter, and one digit, and its length should be at least 8 characters")
   private String password;
 
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(  name = "user_roles", 
-        joinColumns = @JoinColumn(name = "user_id"), 
-        inverseJoinColumns = @JoinColumn(name = "role_id"))
-  private Set<Role> roles = new HashSet<>();
+  @NotBlank(message = "phone cannot be blank")
+  @Pattern(regexp = "^\\+216(20|21|22|23|24|25|26|27|28|29|50|52|53|54|55|56|58|90|91|92|93|94|95|96|97|98|99)\\d{6}$", message = "Phone number must be a valid Tunisian phone number")
+  private String phone;
+
+  @Enumerated(EnumType.ORDINAL)
+  private ERole role;
   @ManyToMany
   Set<Training> trainings;
   public User() {
@@ -46,6 +52,13 @@ public class User {
     this.username = username;
     this.email = email;
     this.password = password;
+  }
+  public User(String firstName,String lastName,String username, String email, String password) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.lastName = lastName;
+    this.firstName = firstName;
   }
 
   public Long getId() {
@@ -80,11 +93,46 @@ public class User {
     this.password = password;
   }
 
-  public Set<Role> getRoles() {
-    return roles;
+  public String getFirstName() {
+    return firstName;
   }
 
-  public void setRoles(Set<Role> roles) {
-    this.roles = roles;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public Boolean getActive() {
+    return active;
+  }
+
+  public void setActive(Boolean active) {
+    this.active = active;
+  }
+
+  public ERole getRole() {
+    return role;
+  }
+
+  public void setRole(ERole role) {
+    this.role = role;
+  }
+  public String getFullName(){
+    return firstName+" "+lastName;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 }

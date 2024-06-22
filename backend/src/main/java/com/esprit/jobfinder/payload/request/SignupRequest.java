@@ -2,22 +2,23 @@ package com.esprit.jobfinder.payload.request;
 
 import java.util.Set;
 
+import com.esprit.jobfinder.models.enums.ERole;
 import jakarta.validation.constraints.*;
 
 public class SignupRequest {
-  @NotBlank
-  @Size(min = 3, max = 20)
+  @NotBlank(message = "Username cannot be blank")
+  @Size(max = 20, message = "Username must be less than or equal to 20 characters")
   private String username;
 
-  @NotBlank
+  @NotBlank(message = "Email cannot be blank")
   @Size(max = 50)
-  @Email
+  @Email(message = "Invalid email format")
   private String email;
 
-  private Set<String> role;
+  private ERole role;
 
-  @NotBlank
-  @Size(min = 6, max = 40)
+  @NotBlank(message = "Password cannot be blank")
+  @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", message = "Password must have at least one lowercase letter, one uppercase letter, and one digit, and its length should be at least 8 characters")
   private String password;
 
   public String getUsername() {
@@ -44,11 +45,11 @@ public class SignupRequest {
     this.password = password;
   }
 
-  public Set<String> getRole() {
-    return this.role;
+  public ERole getRole() {
+    return role;
   }
 
-  public void setRole(Set<String> role) {
+  public void setRole(ERole role) {
     this.role = role;
   }
 }
