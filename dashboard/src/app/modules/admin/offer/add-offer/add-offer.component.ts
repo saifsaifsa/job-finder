@@ -15,6 +15,7 @@ export class AddCustomerComponent implements OnInit {
   public lname: string = `Suresh`;
   public addCusForm: FormGroup;
   wasFormChanged = false;
+  public errorMessage: string = '';
 
   constructor(
     public offerService: OfferService,
@@ -95,27 +96,30 @@ export class AddCustomerComponent implements OnInit {
 
 
   public onUpdate(): void {
-    if (this.addCusForm.valid) {
+    if (this.addCusForm.valid && this.addCusForm.value.title && this.addCusForm.value.description && this.addCusForm.value.type && this.addCusForm.value.experienceLevel) {
       this.offerService.updateOffer(this.data.id, this.addCusForm.value).subscribe(() => {
         this.dialog.closeAll();
-
       }, error => {
         console.error(error);
+        this.errorMessage = 'An error occurred while updating the offer.';
       });
+    } else {
+      this.errorMessage = 'Form is not valid or some fields are empty';
     }
   }
-
+  
   public onadd(): void {
-    if (this.addCusForm.valid) {
-      this.offerService.addOffer( this.addCusForm.value).subscribe(() => {
+    if (this.addCusForm.valid && this.addCusForm.value.title && this.addCusForm.value.description && this.addCusForm.value.type && this.addCusForm.value.experienceLevel) {
+      this.offerService.addOffer(this.addCusForm.value).subscribe(() => {
         this.dialog.closeAll();
-
       }, error => {
         console.error(error);
+        this.errorMessage = 'An error occurred while adding the offer.';
       });
+    } else {
+      this.errorMessage = 'Form is not valid or some fields are empty';
     }
   }
-
 
  
 }

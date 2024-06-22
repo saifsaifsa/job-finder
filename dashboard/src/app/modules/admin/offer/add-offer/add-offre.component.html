@@ -28,6 +28,9 @@
         <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" *ngIf="isDataExist()"  (click)="onUpdate()" >Update</button>
         <button class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="openDialog()">Cancel</button>
       </div>
+      <div *ngIf="errorMessage" class="error-message text-red-500">
+        {{ errorMessage }}
+      </div>
 
     </form>
   </div>
