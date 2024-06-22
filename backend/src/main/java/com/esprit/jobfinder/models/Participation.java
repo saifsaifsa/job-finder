@@ -1,9 +1,6 @@
 package com.esprit.jobfinder.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -16,9 +13,10 @@ public class Participation {
     private Long id;
     private Long userId;
     private Long quizId;
+    @Temporal(TemporalType.DATE)
     private Date startTime;
+    @Temporal(TemporalType.DATE)
     private Date endTime;
     private double score;
 
-    // Getters and Setters
 }
