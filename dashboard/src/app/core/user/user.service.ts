@@ -122,7 +122,7 @@ export class UserService
     addUser(data:any){
         return this._httpClient.post(`${environment.baseUrl}api/users`,data)
     }
-    toggleConfirmation(id:string,confirmed:boolean){
-        return this._httpClient.patch(`${environment.baseUrl}api/users/${id}/confirmed`,{confirmed})
+    toggleConfirmation(id:string,active:boolean){
+        return this._httpClient.patch(`${environment.baseUrl}api/users/${id}`,{active})
     }
 }

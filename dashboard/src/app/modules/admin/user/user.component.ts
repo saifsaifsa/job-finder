@@ -110,7 +110,7 @@ export class UserComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             if (result === true) {
                 this.showAlert = false;
-                if (this.authentifiedUser._id == userId) {
+                if (this.authentifiedUser.id == userId) {
                     this.alert = {
                         type: 'error',
                         message: "You can't delete your owen account",
@@ -121,7 +121,7 @@ export class UserComponent implements OnInit {
                 this.userService.deleteUser(userId).subscribe((res) => {
                     this.usersDataSource.data =
                         this.usersDataSource.data.filter((u) => {
-                            return u._id != userId;
+                            return u.id != userId;
                         });
                 });
             }
@@ -129,7 +129,7 @@ export class UserComponent implements OnInit {
     }
     toggleConfirmation(userId: string, value: any) {
         this.showAlert = false;
-        if (this.authentifiedUser._id == userId) {
+        if (this.authentifiedUser.id == userId) {
             value.source.checked = true;
             this.alert = {
                 type: 'error',

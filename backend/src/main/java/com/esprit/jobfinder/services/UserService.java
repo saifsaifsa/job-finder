@@ -1,6 +1,8 @@
 package com.esprit.jobfinder.services;
 
+import com.esprit.jobfinder.exceptions.NotFoundException;
 import com.esprit.jobfinder.models.User;
+import com.esprit.jobfinder.payload.request.PatchUserRequest;
 import com.esprit.jobfinder.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +35,7 @@ public class UserService implements IUserService{
         if (userRepository.existsById(user.getId())) {
             return userRepository.save(user);
         } else {
-            throw new RuntimeException("User not found with id: " + user.getId());
+            throw new NotFoundException("User not found with id: " + user.getId());
         }
     }
 
@@ -42,7 +44,39 @@ public class UserService implements IUserService{
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
         } else {
-            throw new RuntimeException("User not found with id: " + id);
+            throw new NotFoundException("User not found with id: " + id);
         }
+    }
+
+    @Override
+    public User patchUser(Long userId,PatchUserRequest patchUserRequest) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        if (patchUserRequest.getUsername() != null) {
+            user.setUsername(patchUserRequest.getUsername());
+        }
+        if (patchUserRequest.getFirstName() != null) {
+            user.setFirstName(patchUserRequest.getFirstName());
+        }
+        if (patchUserRequest.getLastName() != null) {
+            user.setLastName(patchUserRequest.getLastName());
+        }
+        if (patchUserRequest.getActive() != null) {
+            user.setActive(patchUserRequest.getActive());
+        }
+        if (patchUserRequest.getEmail() != null) {
+            user.setEmail(patchUserRequest.getEmail());
+        }
+        if (patchUserRequest.getPassword() != null) {
+            user.setPassword(patchUserRequest.getPassword());
+        }
+        if (patchUserRequest.getPhone() != null) {
+            user.setPhone(patchUserRequest.getPhone());
+        }
+        if (patchUserRequest.getRole() != null) {
+            user.setRole(patchUserRequest.getRole());
+        }
+        return userRepository.save(user);
     }
 }

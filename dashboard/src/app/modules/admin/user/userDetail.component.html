@@ -8,16 +8,43 @@
     <form [formGroup]="userDetailsForm" (ngSubmit)="onSubmit()" #userDetailNgForm="ngForm">
         <div class="sm:col-span-4">
             <mat-form-field class="w-3/4 mt-4 mx-4">
-                <mat-label>Name</mat-label>
-                <input matInput placeholder="Name" formControlName="name" />
+                <mat-label>Username</mat-label>
+                <input matInput placeholder="Username" formControlName="username" />
                 <mat-error *ngIf="
-                        userDetailsForm.get('name').invalid &&
-                        userDetailsForm.get('name').touched
+                        userDetailsForm.get('username').invalid &&
+                        userDetailsForm.get('username').touched
                     ">
-                    Name is required
+                    Username is required
                 </mat-error>
             </mat-form-field>
         </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>Lastname</mat-label>
+                <input matInput placeholder="lastName" formControlName="lastName" />
+                <mat-error *ngIf="
+                        userDetailsForm.get('lastName').invalid &&
+                        userDetailsForm.get('lastName').touched
+                    ">
+                    Lasrname is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>Firstname</mat-label>
+                <input matInput placeholder="firstName" formControlName="firstName" />
+                <mat-error *ngIf="
+                        userDetailsForm.get('firstName').invalid &&
+                        userDetailsForm.get('firstName').touched
+                    ">
+                    firstName is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
         <div class="sm:col-span-4">
             <mat-form-field class="w-3/4 mt-4 mx-4">
                 <mat-label>Email</mat-label>
@@ -43,18 +70,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="sm:col-span-4">
-            <mat-form-field class="w-3/4 mt-4 mx-4">
-                <mat-label>Address</mat-label>
-                <input matInput placeholder="Address" formControlName="address" />
-                <mat-error *ngIf="
-                        userDetailsForm.get('address').invalid &&
-                        userDetailsForm.get('address').touched
-                    ">
-                    Address is required
-                </mat-error>
-            </mat-form-field>
-        </div>
+
         <div class="sm:col-span-4" *ngIf="!isUpdating">
             <mat-form-field class="w-3/4 mt-4 mx-4">
                 <mat-label>Password</mat-label>
@@ -72,8 +88,9 @@
             <mat-form-field class="w-3/4 mt-4 mx-4">
                 <mat-label>Role</mat-label>
                 <mat-select formControlName="role">
-                    <mat-option value="99">Admin</mat-option>
-                    <mat-option value="1">Client</mat-option>
+                    <mat-option value="2">Admin</mat-option>
+                    <mat-option value="0">User</mat-option>
+                    <mat-option value="1">Publisher</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -105,7 +122,7 @@
             <button mat-stroked-button type="button" (click)="goToUsersList()">
                 Cancel
             </button>
-            <button class="ml-4" [class.orangeBtn]="!userDetailsForm.invalid" mat-flat-button type="submit"
+            <button class="ml-4" [class.greenBtn]="!userDetailsForm.invalid" mat-flat-button type="submit"
                 [disabled]="userDetailsForm.invalid">Save
             </button>
         </div>

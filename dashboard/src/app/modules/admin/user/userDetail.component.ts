@@ -15,8 +15,9 @@ export class UserDetailComponent implements OnInit {
     @ViewChild('userDetailNgForm') userDetailNgForm: NgForm;
 
     roles = {
-        1: 'Client',
-        99: 'Admin',
+        "ROLE_USER":0,
+        "ROLE_MODERATOR":1,
+        "ROLE_ADMIN":2,
     };
 
     alert: { type: FuseAlertType; message: string } = {
@@ -40,7 +41,9 @@ export class UserDetailComponent implements OnInit {
             this.authentifiedUser = user
         })
         this.userDetailsForm = new FormGroup({
-            name: new FormControl('', Validators.required),
+            lastName: new FormControl('', Validators.required),
+            firstName: new FormControl('', Validators.required),
+            username: new FormControl('', Validators.required),
             email: new FormControl('', [
                 Validators.required,
                 Validators.minLength(8),
@@ -54,7 +57,6 @@ export class UserDetailComponent implements OnInit {
                 Validators.required,
                 Validators.pattern(/^\+216(20|21|22|23|24|25|26|27|28|29|50|52|53|54|55|56|58|90|91|92|93|94|95|96|97|98|99)\d{6}$/)
             ]),
-            address: new FormControl('', Validators.required),
             role: new FormControl(this.roles[1], Validators.required),
             photo: new FormControl(null),
         });
@@ -65,7 +67,9 @@ export class UserDetailComponent implements OnInit {
             if (userId) {
                 this.isUpdating = true;
                 this.userDetailsForm = new FormGroup({
-                    name: new FormControl('', Validators.required),
+                    lastName: new FormControl('', Validators.required),
+                    firstName: new FormControl('', Validators.required),
+                    username: new FormControl('', Validators.required),
                     email: new FormControl('', [
                         Validators.required,
                         Validators.minLength(8),
@@ -74,20 +78,20 @@ export class UserDetailComponent implements OnInit {
                         Validators.required,
                         Validators.pattern(/^\+216(20|21|22|23|24|25|26|27|28|29|50|52|53|54|55|56|58|90|91|92|93|94|95|96|97|98|99)\d{6}$/)
                     ]),
-                    address: new FormControl('', Validators.required),
                     role: new FormControl(this.roles[1], Validators.required),
                     photo: new FormControl(null),
                 });
                 this.userService.getUser(userId).subscribe((user: any) => {
                     this.avatar = user.image
                     this.userDetailsForm.patchValue({
-                        name: user.name,
+                        lastName: user.lastName,
+                        firstName: user.firstName,
                         email: user.email,
                         password: '',
                         phone: user.phone,
-                        address: user.address,
-                        role: user.role+ '',
-                        photo:user.image
+                        role: this.roles[user.role],
+                        photo:user.image,
+                        username:user.username
                     });
                 });
             }
@@ -122,7 +126,7 @@ export class UserDetailComponent implements OnInit {
       
 
     goToUsersList() {
-        this.router.navigateByUrl('/utilisateurs');
+        this.router.navigateByUrl('/users');
     }
     upload(event: Event) {
         console.log(event);
@@ -130,23 +134,34 @@ export class UserDetailComponent implements OnInit {
     onSubmit(): void {
         this.showAlert = false;
         this.userDetailsForm.disable();
-        const formData = new FormData();
-        formData.append('name', this.userDetailsForm.get('name').value);
-        formData.append('email', this.userDetailsForm.get('email').value);
-        if (!this.isUpdating) {
-            formData.append(
-                'password',
-                this.userDetailsForm.get('password').value
-            );
+        // const formData = new FormData();
+        // formData.append('lastName', this.userDetailsForm.get('lastName').value);
+        // formData.append('firstName', this.userDetailsForm.get('firstName').value);
+        // formData.append('email', this.userDetailsForm.get('email').value);
+        // if (!this.isUpdating) {
+        //     formData.append(
+        //         'password',
+        //         this.userDetailsForm.get('password').value
+        //     );
+        // }
+        // formData.append('phone', this.userDetailsForm.get('phone').value);
+        // formData.append('role', this.userDetailsForm.get('role').value);
+        // formData.append('photo', this.userDetailsForm.get('photo').value);
+        let user = {
+            lastName:this.userDetailsForm.get("lastName").value,
+            firstName:this.userDetailsForm.get("firstName").value,
+            email:this.userDetailsForm.get("email").value,
+            phone:this.userDetailsForm.get("phone").value,
+            role:this.userDetailsForm.get("role").value,
+            username:this.userDetailsForm.get("username").value,
         }
-        formData.append('phone', this.userDetailsForm.get('phone').value);
-        formData.append('address', this.userDetailsForm.get('address').value);
-        formData.append('role', this.userDetailsForm.get('role').value);
-        formData.append('photo', this.userDetailsForm.get('photo').value);
-
+        if (!this.isUpdating) {
+            user = {...{password:this.userDetailsForm.get("password").value},...user}
+        }
+        
         if (this.isUpdating) {
             const userId = this.route.snapshot.params['id'];
-            this.userService.updateUser(userId, formData).subscribe(
+            this.userService.updateUser(userId, user).subscribe(
                 (res:any) => {
                     this.userService.getLoggedInUser().subscribe((user)=>{
                     if(user.id == userId){
@@ -183,7 +198,7 @@ export class UserDetailComponent implements OnInit {
             );
         } else {
             // Perform add operation
-            this.userService.addUser(formData).subscribe(
+            this.userService.addUser(user).subscribe(
                 () => {
                     this.goToUsersList();
                 },
@@ -194,7 +209,6 @@ export class UserDetailComponent implements OnInit {
                             message: 'E-mail or phone number already used',
                         };
                     } else if (error.status === 400) {
-                        console.log(error);
                         this.alert = {
                             type: 'error',
                             message: 'error occured',

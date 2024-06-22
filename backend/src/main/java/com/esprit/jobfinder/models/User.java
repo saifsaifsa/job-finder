@@ -40,6 +40,11 @@ public class User {
   @Size(max = 120)
   private String password;
 
+
+  @NotBlank
+  @Size(max = 12)
+  private String phone;
+
   @Enumerated(EnumType.ORDINAL)
   private ERole role;
   @ManyToMany
@@ -123,5 +128,15 @@ public class User {
   public void setRole(ERole role) {
     this.role = role;
   }
+  public String getFullName(){
+    return firstName+" "+lastName;
+  }
 
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
 }

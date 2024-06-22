@@ -1,6 +1,7 @@
 package com.esprit.jobfinder.controllers;
 
 import com.esprit.jobfinder.models.User;
+import com.esprit.jobfinder.payload.request.PatchUserRequest;
 import com.esprit.jobfinder.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,5 +46,11 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<User> patchUser(@PathVariable Long id, @RequestBody PatchUserRequest userDetails) {
+        User updatedUser = userService.patchUser(id,userDetails);
+        return ResponseEntity.ok(updatedUser);
     }
 }
