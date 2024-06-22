@@ -19,12 +19,13 @@
         </div>
         <div>
           <label class="block text-gray-700 text-sm font-bold mb-2" for="Experience">Experience</label>
-          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="experience" type="text" placeholder="Experience" formControlName="experience" required>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="experienceLevel" type="text" placeholder="Experience" formControlName="experienceLevel" required>
         </div>
       </div>
 
       <div class="mt-6">
-        <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" (click)="onAddCus()">Save</button>
+        <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" (click)="onadd()"  *ngIf="!isDataExist()">Save</button>
+        <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" *ngIf="isDataExist()"  (click)="onUpdate()" >Update</button>
         <button class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="openDialog()">Cancel</button>
       </div>
 
