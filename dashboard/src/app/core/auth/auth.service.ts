@@ -76,19 +76,13 @@ export class AuthService {
             .post(`${environment.baseUrl}api/auth/signin`, credentials)
             .pipe(
                 switchMap((response: any) => {
-//                   "sub": "mohamedsr2",
-//   "id": 5,
-//   "email": "mohamedsr09@gmail.com",
-//   "role": [
-//     {
-//       "authority": "ROLE_USER"
-//     }
-//   ],
+
                     const  user  = this.decodeJwt(response.accessToken);                    
                     if (user.role[0].authority !== "ROLE_ADMIN") {
                         return throwError('User role is not authorized.'); // Throw an error if the user's role is not 99
                     }
                     user.role = user.role[0].authority
+                    localStorage.setItem("user",JSON.stringify(user))
                     this.accessToken = response.accessToken;
                     this._authenticated = true;
                     this._userService.setLoggedInUser(user)
@@ -199,7 +193,11 @@ export class AuthService {
         }
 
         // If the access token exists and it didn't expire, sign in using it
-        return this.signInUsingToken();
+        const user = JSON.parse(localStorage.getItem("user"))
+        this._authenticated = true;
+        this._userService.setLoggedInUser(user)
+        this._userService.user = user;
+        return of(true);
     }
 
     login(credentials: { email: string; password: string }) {
