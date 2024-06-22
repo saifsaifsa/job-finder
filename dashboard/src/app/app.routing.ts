@@ -115,21 +115,10 @@ export const appRoutes: Route[] = [
             initialData: InitialDataResolver,
         },
         children: [
-            {
-                path: 'home',
-                loadChildren: () =>
-                    import('app/modules/admin/example/example.module').then(
-                        (m) => m.ExampleModule
-                    ),
-            },
-            {
-                path: 'users',
-                loadChildren: () =>
-                    import('app/modules/admin/user/user.module').then(
-                        (m) => m.UserModule
-                    ),
-            },
-            
+            {path: 'home',loadChildren: () => import('app/modules/admin/example/example.module').then((m) => m.ExampleModule),},
+            {path: 'users',loadChildren: () =>import('app/modules/admin/user/user.module').then((m) => m.UserModule),},
+            {path: 'offre', loadChildren: () => import('app/modules/admin/offer/offerData.module').then(m => m.OfferModule)},
+            {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
         ],
     },
 ];
