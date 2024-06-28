@@ -1,10 +1,13 @@
 package com.esprit.jobfinder.controllers;
 
 import com.esprit.jobfinder.models.Training;
+import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.enums.TrainingCategories;
 import com.esprit.jobfinder.services.ITrainingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,10 +30,6 @@ public class TrainingController {
     public Training getTraining(@PathVariable long id){
         return trainingService.getTraining(id);
     }
-    @GetMapping()
-    public List<Training> getAllTraining(){
-        return trainingService.getAll();
-    }
     @GetMapping("/likes/{direction}")
     public List<Training> getAllOrderByLikes(@PathVariable String direction){
         return trainingService.getAllOrderByLikes(direction);
@@ -50,6 +49,16 @@ public class TrainingController {
     @GetMapping("/findTrainingByCategories/{trainingCategories}")
     public Set<Training> findTrainingByCategories(@PathVariable TrainingCategories trainingCategories) {
         return trainingService.findTrainingByCategories(trainingCategories);
+    }
+    @GetMapping()
+    public ResponseEntity<Page<Training>> getAllTrainings(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder) {
+
+    Page<Training> trainings = trainingService.getAllTrainings(page, size, sortBy, sortOrder);
+        return ResponseEntity.ok(trainings);
     }
 
 }
