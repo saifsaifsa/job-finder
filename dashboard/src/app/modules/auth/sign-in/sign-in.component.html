@@ -78,8 +78,7 @@
                       signInForm.get('password').touched
                   "
               >
-                  Password is required and should have a minimum of 8
-                  characters
+              Password must have at least one lowercase letter, one uppercase letter, and one digit, and its length should be at least 8 characters
               </mat-error>
                 </mat-form-field>
 
@@ -100,7 +99,7 @@
                 <button
                     class="fuse-mat-button-large w-full mt-6"
                     mat-flat-button
-                    [class.greenBtn]="!signInForm.disabled && !signInForm.invalid"
+                    [class.bleuBtn]="!signInForm.disabled && !signInForm.invalid"
                     [disabled]="signInForm.disabled || signInForm.invalid"
                     (click)="signIn()">
                     <span *ngIf="!signInForm.disabled">

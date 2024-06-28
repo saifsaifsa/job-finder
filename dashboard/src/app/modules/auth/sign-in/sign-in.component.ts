@@ -56,6 +56,22 @@ export class AuthSignInComponent implements OnInit {
             return null;
         };
     }
+    
+    passwordRegexValidator(): ValidatorFn {
+        const passwordRegex: RegExp =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+        return (control: AbstractControl): { [key: string]: any } | null => {
+            const password: string = control.value;
+
+            if (password && !passwordRegex.test(password)) {
+                return { invalidPasswordFormat: true };
+            }
+
+            return null;
+        };
+    }
+    
     /**
      * On init
      */
@@ -63,7 +79,7 @@ export class AuthSignInComponent implements OnInit {
         // Create the form
         this.signInForm = this._formBuilder.group({
             email: ['', [Validators.required, this.emailRegexValidator()]],
-            password: ['', [Validators.required, Validators.minLength(8)]],
+            password: ['', [Validators.required, this.passwordRegexValidator()]],
         });
     }
 
@@ -106,7 +122,7 @@ export class AuthSignInComponent implements OnInit {
                         message:
                             "You don't have permission to access",
                     };
-                }else if (response.error.description == 'Account not confirmed') {
+                }else if (response.error.message == 'Le compte utilisateur est désactivé') {
                     this.alert = {
                         type: 'error',
                         message: 'You Account is not active',
