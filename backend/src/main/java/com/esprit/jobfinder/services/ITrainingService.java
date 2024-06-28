@@ -13,4 +13,6 @@ public interface ITrainingService {
     public Training updateTraining(Training training);
     public void DeleteTraining(long id);
     public Set<Training> findTrainingByCategories(TrainingCategories trainingCategories);
+    public List<Training> getAllOrderByPrice(String direction);
+    public List<Training> getAllOrderByLikes(String direction);
 }

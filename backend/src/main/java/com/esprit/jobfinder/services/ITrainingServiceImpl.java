@@ -6,6 +6,7 @@ import com.esprit.jobfinder.repository.ITrainingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Set;
@@ -45,4 +46,19 @@ public class ITrainingServiceImpl implements ITrainingService{
     public Set<Training> findTrainingByCategories(TrainingCategories trainingCategories) {
         return trainingRepository.findTrainingByTrainingCategories(trainingCategories);
     }
+    @Override
+    public List<Training> getAllOrderByPrice(String direction) {
+        if(direction.equals("asc"))
+            return trainingRepository.findAll(Sort.by(Sort.Direction.ASC,"price"));
+        else
+            return trainingRepository.findAll(Sort.by(Sort.Direction.DESC,"price"));
+    }
+    @Override
+    public List<Training> getAllOrderByLikes(String direction) {
+        if(direction.equals("asc"))
+            return trainingRepository.findAll(Sort.by(Sort.Direction.ASC,"likes"));
+        else
+            return trainingRepository.findAll(Sort.by(Sort.Direction.DESC,"likes"));
+    }
+
 }

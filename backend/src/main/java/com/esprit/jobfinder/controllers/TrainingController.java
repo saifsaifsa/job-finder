@@ -31,6 +31,14 @@ public class TrainingController {
     public List<Training> getAllTraining(){
         return trainingService.getAll();
     }
+    @GetMapping("/likes/{direction}")
+    public List<Training> getAllOrderByLikes(@PathVariable String direction){
+        return trainingService.getAllOrderByLikes(direction);
+    }
+    @GetMapping("/price/{direction}")
+    public List<Training> getAllOrderByPrice(@PathVariable String direction){
+        return trainingService.getAllOrderByPrice(direction);
+    }
     @DeleteMapping("{id}")
     public void deleteTraining(@PathVariable long id){
         trainingService.DeleteTraining(id);
