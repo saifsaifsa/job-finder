@@ -40,6 +40,14 @@ export class TrainingService {
         )
     }
 
+    getFilteredTrainings(category): Observable<Training[]>{
+        return this._httpClient.get<Training[]>(`${environment.apiUrl}training/findTrainingByCategories/${category}`).pipe(
+            map(data =>{
+                return data;
+            })
+        )
+    }
+
     getTraining(id:string){
         return this._httpClient.get(`${environment.apiUrl}training/${id}`)
     }

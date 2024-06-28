@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TrainingService } from 'app/core/training/trainingService';
 import { Training } from 'app/core/training/training.types';
+import { TrainingCategories } from 'app/core/training/training.enums';
 
 @Component({
     selector: 'app-training',
@@ -13,6 +14,8 @@ import { Training } from 'app/core/training/training.types';
 export class TrainingComponent {
     trainingsDataSource: MatTableDataSource<Training> = new MatTableDataSource();
     recentTransactionsTableColumns: string[] = ['title', 'trainingCategories', 'rating', 'price', 'dateDebut',  "actions"];
+    trainingCategories = Object.values(TrainingCategories);
+    routerLink: string[] = ['/training', ''];
     /**
      * Constructor
      */
@@ -22,6 +25,20 @@ export class TrainingComponent {
             this.trainingsDataSource.data = res;
         })
     }
+
+    onTrainingCategoryChange(selectedCategory: string): void {
+        if (selectedCategory == 'None') {
+            this.trainingService.getTrainings().subscribe(res => {
+                console.log(res);
+                this.trainingsDataSource.data = res;
+            });
+        } else {
+            this.trainingService.getFilteredTrainings(selectedCategory).subscribe(res => {
+                console.log(res);
+                this.trainingsDataSource.data = res;
+            })
+        }
+      }
     trackByFn(index: number, item: any): any {
         return item.id || index;
     }
