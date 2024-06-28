@@ -80,6 +80,7 @@ public class AuthService implements IAuthService{
         }
         user.setActive(true);
         userRepository.save(user);
+        tokenRepository.delete(verificationToken);
     }
     @Override
     public String login(String userName, String email, String password) {

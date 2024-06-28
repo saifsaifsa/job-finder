@@ -1,5 +1,6 @@
 package com.esprit.jobfinder.models;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,7 +32,6 @@ public class User {
   private Boolean active = false;
   @Email(message = "Invalid email format")
   private String email;
-
   @NotBlank(message = "password cannot be blank")
   @Size(max = 120)
   @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", message = "Password must have at least one lowercase letter, one uppercase letter, and one digit, and its length should be at least 8 characters")
@@ -45,9 +45,13 @@ public class User {
   private ERole role;
   @ManyToMany
   Set<Training> trainings;
+
+  @Temporal(TemporalType.DATE)
+  private LocalDate birthDay;
   public User() {
   }
-
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  private VerificationToken verificationToken;
   public User(String username, String email, String password) {
     this.username = username;
     this.email = email;
@@ -134,5 +138,13 @@ public class User {
 
   public void setPhone(String phone) {
     this.phone = phone;
+  }
+
+  public LocalDate getBirthDay() {
+    return birthDay;
+  }
+
+  public void setBirthDay(LocalDate birthDay) {
+    this.birthDay = birthDay;
   }
 }
