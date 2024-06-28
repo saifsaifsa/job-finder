@@ -28,8 +28,8 @@
             </mat-form-field>
             
           <div class="overflow-x-auto mx-6">
-              <table class="w-full bg-transparent" mat-table matSort [dataSource]="trainingsDataSource" 
-                  #trainingsTable>
+              <table class="w-full bg-transparent" mat-table (matSortChange)="applySort($event)" matSort [dataSource]="trainingsDataSource" 
+                [trackBy]="trackByFn" #trainingsTable>
 
                   <ng-container matColumnDef="title">
                       <th mat-header-cell mat-sort-header *matHeaderCellDef>
