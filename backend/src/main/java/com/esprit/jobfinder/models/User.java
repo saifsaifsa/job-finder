@@ -147,4 +147,20 @@ public class User {
   public void setBirthDay(LocalDate birthDay) {
     this.birthDay = birthDay;
   }
+
+  @Override
+  public String toString() {
+    return "User{" +
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", active=" + active +
+            ", email='" + email + '\'' +
+            ", password='" + password + '\'' +
+            ", phone='" + phone + '\'' +
+            ", role=" + role +
+            ", birthDay=" + birthDay +
+            '}';
+  }
 }
