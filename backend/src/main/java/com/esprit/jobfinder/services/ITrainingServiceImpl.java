@@ -1,9 +1,14 @@
 package com.esprit.jobfinder.services;
 
 import com.esprit.jobfinder.models.Training;
+import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.enums.TrainingCategories;
 import com.esprit.jobfinder.repository.ITrainingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.data.domain.Sort;
@@ -59,6 +64,12 @@ public class ITrainingServiceImpl implements ITrainingService{
             return trainingRepository.findAll(Sort.by(Sort.Direction.ASC,"likes"));
         else
             return trainingRepository.findAll(Sort.by(Sort.Direction.DESC,"likes"));
+    }
+
+    @Override
+    public Page<Training> getAllTrainings(int page, int size, String sortBy, String sortOrder) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortOrder), sortBy));
+        return trainingRepository.findAll(pageable);
     }
 
 }
