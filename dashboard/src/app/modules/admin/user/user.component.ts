@@ -76,7 +76,7 @@ export class UserComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     this.usersDataSource.data = data.content;
-                    this.totalItems = data.total
+                    this.totalItems = data.totalElements
                 },
                 (err) => {
                     console.log('errors: ', err);
@@ -94,7 +94,7 @@ export class UserComponent implements OnInit {
     }
 
     onPageChange(event: any) {
-        this.currentPage = event.pageIndex + 1;
+        this.currentPage = event.pageIndex;
         this.pageSize = event.pageSize;
         this.getUsers();
     }

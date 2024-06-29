@@ -177,7 +177,7 @@
                         *matFooterRowDef="['recentOrdersTableFooter']"></tr> -->
                 </table>
                 <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageIndex]="currentPage - 1"
-                    [pageSizeOptions]="[5,10, 20, 50]" (page)="onPageChange($event)">
+                    [pageSizeOptions]="[1,5,10, 20, 50]" (page)="onPageChange($event)">
                 </mat-paginator>
             </div>
         </div>
