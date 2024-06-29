@@ -33,11 +33,13 @@ w
 Gbackend/src/main/java/com/esprit/jobfinder/services/ChatGPTService.java,a\9\a9f4652b72da1f35c72c0aabfa74e16e3040ff76
 €
 Pbackend/src/main/java/com/esprit/jobfinder/controllers/StatisticsController.java,1\6\165daa432870e20504b5662c02c30d3d5387694a
-q
-Abackend/src/main/java/com/esprit/jobfinder/models/Enrollment.java,8\7\87efb7d4c8e3d28b7d1a35ab1bc412e293f0dc0f
 {
 Kbackend/src/main/java/com/esprit/jobfinder/controllers/SkillController.java,6\b\6b158f7b1d5649f9d499a7f1a02516d00216b39a
 ~
 Nbackend/src/main/java/com/esprit/jobfinder/controllers/TrainingController.java,7\6\768c270c539eea04a06d096172d041a8115c9526
 z
 Jbackend/src/main/java/com/esprit/jobfinder/controllers/UserController.java,1\2\12f6a9c365e40f7428848fcf06898dab1134eb80
+?
+backend/pom.xml,f\9\f9590cd73598b6f2427c8b1327d922c50d1dc504
+t
+Dbackend/src/main/java/com/esprit/jobfinder/JobFinderApplication.java,1\e\1e1d0020f62a6190b2512470d8e3a008fe32534c
