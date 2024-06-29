@@ -4,7 +4,9 @@ import com.esprit.jobfinder.models.Cv;
 import com.esprit.jobfinder.models.Skill;
 import com.esprit.jobfinder.services.CvService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -68,4 +70,14 @@ public class CvController {
     public Cv removeSkillFromCv(@PathVariable Long id, @PathVariable Long skillId) {
         return cvService.removeSkillFromCv(id, skillId);
     }
+    @GetMapping("/{id}/export-pdf")
+    public ResponseEntity<byte[]> exportCvToPDF(@PathVariable Long id) {
+        byte[] pdfData = cvService.exportCvToPDF(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "cv.pdf");
+        return new ResponseEntity<>(pdfData, headers, HttpStatus.OK);
+    }
+
+
 }

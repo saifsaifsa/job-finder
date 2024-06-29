@@ -103,6 +103,12 @@
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>2.0.23</version> <!-- Use a version that is available -->
+		</dependency>
+
 	</dependencies>
 
 	<build>

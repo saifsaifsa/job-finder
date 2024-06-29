@@ -5,8 +5,15 @@ import com.esprit.jobfinder.models.Skill;
 import com.esprit.jobfinder.repository.CvRepository;
 import com.esprit.jobfinder.repository.SkillRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.springframework.stereotype.Service;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -55,9 +62,70 @@ public class CvServiceImp implements CvService {
 
     @Override
     public byte[] exportCvToPDF(Long id) {
-        // Implement this method if needed
-        return new byte[0];
+        Cv cv = cvRepository.findById(id).orElseThrow(() -> new RuntimeException("CV not found"));
+
+        PDDocument document = new PDDocument();
+        try {
+            PDPage page = new PDPage(PDRectangle.A4);
+            document.addPage(page);
+
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+            float yPosition = page.getMediaBox().getHeight() - 50;
+            float margin = 50;
+
+
+            addHeading(contentStream, "CV Details", margin, yPosition);
+            yPosition -= 30;
+
+            addSection(contentStream, "Name", cv.getUser().getFullName(), margin, yPosition);
+            yPosition -= 20;
+
+            addSection(contentStream, "Email", cv.getUser().getEmail(), margin, yPosition);
+            yPosition -= 20;
+
+            addSection(contentStream, "Content", cv.getContent(), margin, yPosition);
+            yPosition -= 20;
+
+            addSection(contentStream, "Views", String.valueOf(cv.getViews()), margin, yPosition);
+            yPosition -= 20;
+
+            addSection(contentStream, "Downloads", String.valueOf(cv.getDownloads()), margin, yPosition);
+            yPosition -= 20;
+
+            contentStream.close();
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            document.save(byteArrayOutputStream);
+            document.close();
+
+            return byteArrayOutputStream.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error generating PDF");
+        }
     }
+
+    private void addHeading(PDPageContentStream contentStream, String text, float x, float y) throws IOException {
+        contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);
+        contentStream.beginText();
+        contentStream.newLineAtOffset(x, y);
+        contentStream.showText(text);
+        contentStream.endText();
+    }
+
+    private void addSection(PDPageContentStream contentStream, String label, String value, float x, float y) throws IOException {
+        contentStream.setFont(PDType1Font.HELVETICA, 12);
+        contentStream.beginText();
+        contentStream.newLineAtOffset(x, y);
+        contentStream.showText(label + ": ");
+        contentStream.showText(value);
+        contentStream.endText();
+    }
+
+
+
+
 
     @Override
     public Cv addSkillToCv(Long cvId, Skill skill) {
@@ -79,4 +147,5 @@ public class CvServiceImp implements CvService {
         cv.getSkills().remove(skill);
         return cvRepository.save(cv);
     }*/
+
 }

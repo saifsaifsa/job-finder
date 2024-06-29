@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { CvService } from '../Cv/CvService'; 
+import { CvService } from '../Cv/CvService';
 
 @Component({
   selector: 'app-cv-create',
@@ -16,7 +16,7 @@ export class CvCreateComponent implements OnInit {
     this.cvForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      skills: this.fb.array([this.createSkill()])
+      skills: this.fb.array([])
     });
   }
 
@@ -41,15 +41,19 @@ export class CvCreateComponent implements OnInit {
   onSubmit(): void {
     if (this.cvForm.valid) {
       const formValue = this.cvForm.value;
+      console.log(formValue);
+      
       const cvData = {
         name: formValue.name,
         email: formValue.email,
-        skills: formValue.skills.map(skill => skill.skill)
+        skills: formValue.skills.map((skill: any) => skill.skill)
       };
 
       this.cvService.createCv(cvData).subscribe(
         response => {
           console.log('CV created successfully', response);
+          // Optionally reset the form after successful submission
+          this.cvForm.reset();
         },
         error => {
           console.error('Error creating CV:', error);

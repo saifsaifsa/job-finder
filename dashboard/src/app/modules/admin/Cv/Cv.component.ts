@@ -3,12 +3,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { CvService } from '../Cv/CvService';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-cv',
   templateUrl: './cv.component.html',
   encapsulation: ViewEncapsulation.None
-})
+}) 
 export class CvComponent implements OnInit {
   displayedColumns: string[] = ["Name", "Email", "Views", "Downloads", "Actions"];
   dataSource: MatTableDataSource<any>;
@@ -46,4 +47,16 @@ export class CvComponent implements OnInit {
   editCv(cvId: number) {
     // Implement edit logic here
   }
+  downloadCv(id: number): void {
+    this.cvService.exportCvToPDF(id).subscribe((blob) => {
+      saveAs(blob, `cv-${id}.pdf`);
+    });
+  }
+  openCv(id: number): void {
+    this.cvService.incrementViews(id).subscribe(() => {
+      console.log(`CV with ID ${id} viewed and views incremented.`);
+      
+    });
+  }
+  
 }
