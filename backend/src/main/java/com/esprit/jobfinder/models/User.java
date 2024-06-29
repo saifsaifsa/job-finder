@@ -55,6 +55,9 @@ public class User {
   Set<Skill> skills;
   @ManyToMany
   Set<Quiz> quizs;
+
+  @ManyToMany
+  Set<Offer> offres;
   public User() {
   }
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -193,5 +196,21 @@ public class User {
 
   public void setSkills(Set<Skill> skills) {
     this.skills = skills;
+  }
+
+  public Set<Quiz> getQuizs() {
+    return quizs;
+  }
+
+  public void setQuizs(Set<Quiz> quizs) {
+    this.quizs = quizs;
+  }
+
+  public Set<Offer> getOffres() {
+    return offres;
+  }
+
+  public void setOffres(Set<Offer> offres) {
+    this.offres = offres;
   }
 }
