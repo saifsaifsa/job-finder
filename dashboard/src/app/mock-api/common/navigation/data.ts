@@ -2,12 +2,13 @@
 import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
+    
     {
-        id   : 'example',
-        title: 'Example',
+        id   : 'users',
+        title: 'Users',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/example'
+        link : '/users'
     },
     {
         id   : 'offre',

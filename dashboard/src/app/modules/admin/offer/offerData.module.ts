@@ -16,6 +16,28 @@ import { Route, RouterModule } from '@angular/router';
 import { FuseCardModule } from '@fuse/components/card';
 import { OfferComponent } from 'app/modules/admin/offer/offer.component';
 import { SharedModule } from 'app/shared/shared.module';
+import { DeleteComponent } from './delete-offer/delete.component';
+import { AddCustomerComponent } from './add-offer/add-offer.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
+
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 const offerRoutes: Route[] = [
     {
@@ -26,7 +48,11 @@ const offerRoutes: Route[] = [
 
 @NgModule({
     declarations: [
-        OfferComponent
+        OfferComponent,
+        AddCustomerComponent,
+        DeleteComponent,
+        
+
     ],
     imports     : [
         RouterModule.forChild(offerRoutes),
@@ -34,6 +60,12 @@ const offerRoutes: Route[] = [
         MatTableModule,
         MatCheckboxModule,
         MatButtonModule,
+        MatRadioModule, 
+        MatGridListModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        
+
       
         CommonModule,
         MatButtonModule,
@@ -55,8 +87,34 @@ const offerRoutes: Route[] = [
         MatFormFieldModule,
         MatInputModule,
 
-        ReactiveFormsModule
-
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        
+        MatCheckboxModule,
+        MatDatepickerModule,
+        MatDialogModule,
+       
+        MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatMenuModule,
+        MatProgressSpinnerModule,
+        MatProgressSpinnerModule,
+        MatRadioModule,
+        MatRippleModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatSlideToggleModule,
+        MatSliderModule,
+        MatSnackBarModule,
+        MatStepperModule,
+        MatTableModule,
+        MatTabsModule,
+        MatToolbarModule,
+        MatTooltipModule,
+        MatNativeDateModule,
 
     ],
 

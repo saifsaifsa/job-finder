@@ -19,10 +19,11 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtils {
   private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-  @Value("${jobfinder.app.jwtSecret}")
+  @Value("${jwt.secret}")
+
   private String jwtSecret;
 
-  @Value("${jobfinder.app.jwtExpirationMs}")
+  @Value("${jwt.expiration}")
   private int jwtExpirationMs;
 
   public String generateJwtToken(Authentication authentication) {
@@ -31,6 +32,12 @@ public class JwtUtils {
 
     return Jwts.builder()
         .setSubject((userPrincipal.getUsername()))
+            .claim("id", userPrincipal.getId())
+            .claim("email", userPrincipal.getEmail())
+            .claim("role", userPrincipal.getAuthorities())
+            .claim("confirmed", userPrincipal.isEnabled())
+            .claim("phone", userPrincipal.getUser().getPhone())
+            .claim("name", userPrincipal.getUser().getFullName())
         .setIssuedAt(new Date())
         .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
         .signWith(key(), SignatureAlgorithm.HS256)

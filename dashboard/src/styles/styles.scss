@@ -1,4 +1,34 @@
 /* ----------------------------------------------------------------------------------------------------- */
 /*  @ Import/write your custom styles here.
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
+/* green #69b550
+/* orange #f58634
 /* ----------------------------------------------------------------------------------------------------- */
+:root {
+    --green2:#32CD32;
+    --green: #69b550;
+    --orange: #f58634;
+    --orange2: #FFA500;
+    --bleu: #2895FF;
+  }
+
+  .orangeBtn {
+    color: white !important;
+    background-color: var(--orange) !important;
+  }
+
+  .greenBtn {
+    color: white  !important;
+    background-color: var(--green) !important;
+  }
+  .green-bg {
+    background-color: var(--green) !important;
+  }
+
+  .orange-bg {
+    background-color: var(--orange) !important;
+  }
+  .bleuBtn {
+    color: white !important;
+    background-color: var(--bleu) !important;
+  }

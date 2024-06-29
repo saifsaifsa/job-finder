@@ -13,4 +13,16 @@ export class OfferService {
     getOffer(): Observable<any> {
         return this.http.get(this.apiUrl);
     }
+
+    updateOffer(id: number, offerDetails: any): Observable<any> {
+        return this.http.put(`${this.apiUrl}/${id}`, offerDetails);
+    }
+
+    deleteOffer(id: number): Observable<any> {
+        return this.http.delete(`${this.apiUrl}/${id}`);
+    }
+
+    addOffer(offerDetails: any): Observable<any> {
+        return this.http.post(this.apiUrl, offerDetails);
+    }
 }

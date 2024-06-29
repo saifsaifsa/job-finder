@@ -1,0 +1,37 @@
+<div class="p-6">
+  <div class="mb-4">
+    <h2 class="text-2xl font-bold text-primary-600">Add customer</h2>
+  </div>
+  <div>
+    <form [formGroup]="addCusForm" (change)="formChanged()">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="Title">Title</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="Title" type="text" placeholder="title" formControlName="title" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="Description">Description</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="Description" type="text" placeholder="description" formControlName="description" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="Type">Type</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="type" type="text" placeholder="type" formControlName="type" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="Experience">Experience</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="experienceLevel" type="text" placeholder="Experience" formControlName="experienceLevel" required>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" (click)="onadd()"  *ngIf="!isDataExist()">Save</button>
+        <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" *ngIf="isDataExist()"  (click)="onUpdate()" >Update</button>
+        <button class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="openDialog()">Cancel</button>
+      </div>
+      <div *ngIf="errorMessage" class="error-message text-red-500">
+        {{ errorMessage }}
+      </div>
+
+    </form>
+  </div>
+</div>
