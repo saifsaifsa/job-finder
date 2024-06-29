@@ -80,8 +80,8 @@ export class TrainingService {
     * @param data @param id 
     */
     updateTraining(id:string,data:any){
-        let headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this._httpClient.put(`${environment.apiUrl}training`,data,{headers: headers})
+        // let headers = new HttpHeaders({'Content-Type': 'application/json'});
+        return this._httpClient.put(`${environment.apiUrl}training`,data)
     }
     
     /**
@@ -99,7 +99,7 @@ export class TrainingService {
     * @param data 
     */    
     createTraining(data:any){
-        let headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this._httpClient.post(`${environment.apiUrl}training`,data,{headers: headers})
+        // let headers = new HttpHeaders({'Content-Type': 'application/json'});
+        return this._httpClient.post(`${environment.apiUrl}training`,data)
     }
 }

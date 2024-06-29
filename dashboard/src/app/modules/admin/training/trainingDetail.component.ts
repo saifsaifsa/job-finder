@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { fuseAnimations } from "@fuse/animations";
 import { FuseAlertType } from "@fuse/components/alert";
 import { TrainingCategories } from "app/core/training/training.enums";
+import { DatePipe } from '@angular/common';
 import { TrainingService } from "app/core/training/trainingService";
 
 @Component({
@@ -11,9 +12,12 @@ import { TrainingService } from "app/core/training/trainingService";
     templateUrl: './trainingDetail.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
+    providers: [DatePipe]
 })
 export class TrainingDetailComponent implements OnInit {
     @ViewChild('TrainingDetailsNgForm') trainingDetailsNgForm: NgForm;
+    private fileUrl = 'http://localhost:8080/api/files/';
+    photo: string | ArrayBuffer | null = null;
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
@@ -27,9 +31,15 @@ export class TrainingDetailComponent implements OnInit {
     constructor(
         private trainingService: TrainingService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private datePipe: DatePipe
     ) { }
-
+    private formatDate(date: Date): string {
+        console.log("date:",date);
+        console.log("this.datePipe.transform(date, 'yyyy/MM/dd')",this.datePipe.transform(date, 'yyyy/MM/dd'));
+        
+        return this.datePipe.transform(date, 'yyyy/MM/dd') || '';
+      }
     ngOnInit(): void {
         this.trainingDetailsForm = new FormGroup({
             title: new FormControl('', Validators.required),
@@ -39,9 +49,9 @@ export class TrainingDetailComponent implements OnInit {
             rating: new FormControl('', [Validators.required,Validators.min(1)]),
             likes: new FormControl('', Validators.required),
             dislikes: new FormControl('', Validators.required),
-            dateDebut: new FormControl('', Validators.required),
-            dateFin: new FormControl('', Validators.required),
-            // image: new FormControl('', Validators.required),
+            dateDebut: new FormControl(this.formatDate(new Date()), Validators.required),
+            dateFin: new FormControl(this.formatDate(new Date()), Validators.required),
+            image: new FormControl(null),
         });
 
         this.route.params.subscribe((params) => {
@@ -57,11 +67,12 @@ export class TrainingDetailComponent implements OnInit {
                     rating: new FormControl('', [Validators.required,Validators.min(1)]),
                     likes: new FormControl('', Validators.required),
                     dislikes: new FormControl('', Validators.required),
-                    dateDebut: new FormControl('', Validators.required),
-                    dateFin: new FormControl('', Validators.required),
-                    // image: new FormControl('', Validators.required),
+                    dateDebut: new FormControl(this.formatDate(new Date()), Validators.required),
+                    dateFin: new FormControl(this.formatDate(new Date()), Validators.required),
+                    image: new FormControl(null),
                 });
                 this.trainingService.getTraining(trainingId).subscribe((training: any) => {
+                    this.photo = this.fileUrl+training.image 
                     this.trainingDetailsForm.patchValue({
                         title: training.title,
                         description: training.description,
@@ -79,13 +90,27 @@ export class TrainingDetailComponent implements OnInit {
         });
     }
 
-    onAvatarChange(event: Event): void {
+    // onAvatarChange(event: Event): void {
+    //     const inputElement = event.target as HTMLInputElement;
+    //     if (inputElement?.files && inputElement.files.length > 0) {
+    //         const file = inputElement.files[0];
+    //         this.trainingDetailsForm.patchValue({
+    //             image: file,
+    //         });
+    //     }
+    // }
+    onAvatarChange(event: any): void {
         const inputElement = event.target as HTMLInputElement;
         if (inputElement?.files && inputElement.files.length > 0) {
-            const file = inputElement.files[0];
-            this.trainingDetailsForm.patchValue({
-                image: file,
-            });
+          const file = inputElement.files[0];
+      
+          // Create a FileReader to read the selected image and create an Object URL
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.photo = e.target.result; // Set the Object URL as the image preview
+            this.trainingDetailsForm.get('image').setValue(file); // Update the form control value with the selected file
+          };
+          reader.readAsDataURL(file);
         }
     }
 
@@ -106,21 +131,22 @@ export class TrainingDetailComponent implements OnInit {
         formData.append('price', this.trainingDetailsForm.get('price').value);
         formData.append('likes', this.trainingDetailsForm.get('likes').value);
         formData.append('dislikes', this.trainingDetailsForm.get('dislikes').value);
-        formData.append('dateDebut', this.trainingDetailsForm.get('dateDebut').value);
-        formData.append('dateFin', this.trainingDetailsForm.get('dateFin').value);
+        formData.append('dateDebut', this.formatDate(this.trainingDetailsForm.get('dateDebut').value));
+        formData.append('dateFin', this.formatDate(this.trainingDetailsForm.get('dateFin').value));
         // formData.append('image', this.trainingDetailsForm.get('image').value);
+        if(this.trainingDetailsForm.get('image').value){formData.append('image', this.trainingDetailsForm.get('image').value);}
 
         if (this.isUpdating) {
             const trainingId = this.route.snapshot.params['id'];
-            var object = {};
-            formData.forEach(function(value, key){
-                object[key] = value;
-            });
-            object['id'] = trainingId;
-            var json = JSON.stringify(object);
-            console.log(json)
+            // var object = {};
+            // formData.forEach(function(value, key){
+            //     object[key] = value;
+            // });
+            // object['id'] = trainingId;
+            // var json = JSON.stringify(object);
+            // console.log(json)
             this.trainingService
-                .updateTraining(trainingId, json)
+                .updateTraining(trainingId, formData)
                 .subscribe(
                     () => {
                         this.goToTrainingsList();
@@ -144,13 +170,13 @@ export class TrainingDetailComponent implements OnInit {
                     }
                 );
         } else {
-            var object = {};
-            formData.forEach(function(value, key){
-                object[key] = value;
-            });
-            var json = JSON.stringify(object);
+            // var object = {};
+            // formData.forEach(function(value, key){
+            //     object[key] = value;
+            // });
+            // var json = JSON.stringify(object);
             // Perform add operation
-            this.trainingService.createTraining(json).subscribe(
+            this.trainingService.createTraining(formData).subscribe(
                 () => {
                     this.goToTrainingsList();
                 },

@@ -116,6 +116,16 @@
                     (change)="onAvatarChange($event)" formControlName="image" />
         </div> -->
 
+        <div class="sm:col-span-4 mt-4 mx-4">
+            <div class="relative w-24 h-24">
+                <img class="w-full h-full rounded-full" [src]="photo ? photo : 'assets/images/avatars/avatar.png'" alt="training photo"
+                    (click)="avatarInput.click()" />
+                <input formControlName="image" id="image" type="file" accept=".jpg,.jpeg,.png"
+                    (change)="onAvatarChange($event)" #avatarInput style="display: none" />
+            </div>
+        </div>
+
+
         <div class="mt-4 mb-10 border-t"></div>
 
         <div class="flex items-center justify-end mb-10 mx-4">
