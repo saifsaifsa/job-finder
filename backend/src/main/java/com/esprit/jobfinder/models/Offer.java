@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.esprit.jobfinder.models.enums.ExperienceLevel;
+import com.esprit.jobfinder.utiles.BadWordUtils;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -38,5 +40,17 @@ public class Offer {
     private String tags;
     @Enumerated(EnumType.STRING)
     private ExperienceLevel experienceLevel;
+
+    public void validate() throws Exception {
+        if (BadWordUtils.containsBadWord(title) ||
+            BadWordUtils.containsBadWord(description) ||
+            BadWordUtils.containsBadWord(type) ||
+            BadWordUtils.containsBadWord(status) ||
+            BadWordUtils.containsBadWord(experience) ||
+            BadWordUtils.containsBadWord(niveauEtude) ||
+            BadWordUtils.containsBadWord(tags)) {
+            throw new Exception("The offer contains inappropriate language.");
+        }
+    }
 
 }

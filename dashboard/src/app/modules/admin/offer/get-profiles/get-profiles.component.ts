@@ -13,7 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: []
 })
 export class GetProfilesComponent implements OnInit {
-  displayedColumns: string[] = ["Name", "Prename", "Mail", "ExperienceLevel"];
+  displayedColumns: string[] = ["Name", "Prename", "Mail", "ExperienceLevel", "Actions"];
   dataSource: any;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
