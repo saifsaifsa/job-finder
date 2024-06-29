@@ -1,5 +1,8 @@
 package com.esprit.jobfinder.models;
 
+import java.util.Date;
+import java.util.List;
+
 import com.esprit.jobfinder.models.enums.ExperienceLevel;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,7 +30,12 @@ public class Offer {
     private String title;
     private String description;
     private String type;
-
+    private Date creationDate;
+    private String status;
+    private int nombreVu;
+    private String experience;
+    private String niveauEtude;
+    private String tags;
     @Enumerated(EnumType.STRING)
     private ExperienceLevel experienceLevel;
 
