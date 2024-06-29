@@ -60,5 +60,14 @@ public class TrainingController {
     Page<Training> trainings = trainingService.getAllTrainings(page, size, sortBy, sortOrder);
         return ResponseEntity.ok(trainings);
     }
-
+    @PostMapping("/{postId}/like")
+    public ResponseEntity<Training> likeTraining(@PathVariable Long postId) {
+        Training training = trainingService.likeTraining(postId);
+        return ResponseEntity.ok(training);
+    }
+    @PostMapping("/{postId}/dislike")
+    public ResponseEntity<Training> dislikePost(@PathVariable Long postId) {
+        Training training = trainingService.dislikeTraining(postId);
+        return ResponseEntity.ok(training);
+    }
 }

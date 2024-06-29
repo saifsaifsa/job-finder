@@ -17,4 +17,6 @@ public interface ITrainingService {
     public List<Training> getAllOrderByPrice(String direction);
     public List<Training> getAllOrderByLikes(String direction);
     public Page<Training> getAllTrainings(int page, int size, String sortBy, String sortOrder);
+    public Training likeTraining(long id);
+    public Training dislikeTraining(long id);
 }

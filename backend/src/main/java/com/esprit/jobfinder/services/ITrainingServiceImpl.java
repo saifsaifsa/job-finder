@@ -71,5 +71,23 @@ public class ITrainingServiceImpl implements ITrainingService{
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortOrder), sortBy));
         return trainingRepository.findAll(pageable);
     }
+    @Override
+    public Training likeTraining(long id){
+        Training training = getTraining(id);
+        training.setLikes(training.getLikes() + 1 );
+        training.setRating(rating(training.getLikes(),training.getDislikes()));
+        return updateTraining(training);
+    }
+    @Override
+    public Training dislikeTraining(long id){
+        Training training = getTraining(id);
+        training.setDislikes(training.getDislikes() + 1 );
+        training.setRating(rating(training.getLikes(),training.getDislikes()));
+        return updateTraining(training);
+    }
+
+    private int rating(int like,int dislike){
+        return like * 100 / (like + dislike);
+    }
 
 }
