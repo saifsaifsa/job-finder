@@ -13,19 +13,19 @@
 
       <!-- Prename Column -->
       <ng-container matColumnDef="Prename">
-        <th mat-header-cell *matHeaderCellDef class="px-4 py-2">Prename</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="px-4 py-2">Prename</th>
         <td mat-cell *matCellDef="let element" class="px-4 py-2">{{element.Prename}}</td>
       </ng-container>
 
       <!-- Mail Column -->
       <ng-container matColumnDef="Mail">
-        <th mat-header-cell *matHeaderCellDef class="px-4 py-2">Mail</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="px-4 py-2">Mail</th>
         <td mat-cell *matCellDef="let element" class="px-4 py-2">{{element.Mail}}</td>
       </ng-container>
 
       <!-- Experience Level Column -->
       <ng-container matColumnDef="ExperienceLevel">
-        <th mat-header-cell *matHeaderCellDef class="px-4 py-2">Experience Level</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="px-4 py-2">Experience Level</th>
         <td mat-cell *matCellDef="let element" class="px-4 py-2">{{element.ExperienceLevel}}</td>
       </ng-container>
 
