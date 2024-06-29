@@ -45,4 +45,7 @@ public class CreateUserReq {
     private String role;
 
     private String birthDay;
+    public String getFullName(){
+        return firstName+" "+lastName;
+    }
 }

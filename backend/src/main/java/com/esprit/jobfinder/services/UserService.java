@@ -73,7 +73,7 @@ public class UserService implements IUserService{
         VerificationToken verificationToken = new VerificationToken(token, user);
         tokenRepository.save(verificationToken);
 
-        String verificationUrl = "http://localhost:8080/api/auth/verify?token=" + token;
+        String verificationUrl = "http://localhost:4200/confirmation?token=" + token;
         emailService.sendSimpleMessage(user.getEmail(), "Email Verification", "To verify your email, click the following link: " + verificationUrl);
         return savedUser;
     }

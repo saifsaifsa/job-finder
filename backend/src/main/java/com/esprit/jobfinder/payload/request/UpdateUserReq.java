@@ -37,4 +37,7 @@ public class UpdateUserReq {
     private String role;
     private MultipartFile photo;
     private String birthDay;
+    public String getFullName(){
+        return firstName+" "+lastName;
+    }
 }

@@ -210,4 +210,8 @@ export class AuthService {
             credentials
         );
     }
+
+    confirmation(token:string) {   
+        return this._httpClient.get(`${environment.baseUrl}api/auth/verify?token=${token}`);
+    }
 }

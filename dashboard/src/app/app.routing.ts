@@ -29,7 +29,7 @@ export const appRoutes: Route[] = [
         },
         children: [
             {
-                path: 'confirmation-required',
+                path: 'confirmation',
                 loadChildren: () =>
                     import(
                         'app/modules/auth/confirmation-required/confirmation-required.module'
