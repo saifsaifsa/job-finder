@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, ReplaySubject } from 'rxjs';
 import { Training } from './training.types';
 import { environment } from "environments/environment";
@@ -40,6 +40,36 @@ export class TrainingService {
         )
     }
 
+    getAllTrainings(page: number = 0, size: number = 10, filters: { [key: string]: string } = {},
+        sortBy: string = '', sortOrder: 'asc' | 'desc' = 'asc'): Observable<any> {
+        let params = new HttpParams();
+    
+        params = params.append('page', page.toString());
+        params = params.append('size', size.toString());
+    
+        Object.keys(filters).forEach((key) => {
+          if (filters[key] !== '') {
+            params = params.append(key, filters[key]);
+          }
+        });
+        
+    
+        if (sortBy !== '' && (sortOrder === 'asc' || sortOrder === 'desc')) {
+          params = params.append('sortBy', sortBy);
+          params = params.append('sortOrder', sortOrder);
+        }
+    
+        return this._httpClient.get(`${environment.apiUrl}training`, { params });
+      }
+
+    getFilteredTrainings(category): Observable<Training[]>{
+        return this._httpClient.get<Training[]>(`${environment.apiUrl}training/findTrainingByCategories/${category}`).pipe(
+            map(data =>{
+                return data;
+            })
+        )
+    }
+
     getTraining(id:string){
         return this._httpClient.get(`${environment.apiUrl}training/${id}`)
     }
@@ -50,8 +80,8 @@ export class TrainingService {
     * @param data @param id 
     */
     updateTraining(id:string,data:any){
-        let headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this._httpClient.put(`${environment.apiUrl}training`,data,{headers: headers})
+        // let headers = new HttpHeaders({'Content-Type': 'application/json'});
+        return this._httpClient.put(`${environment.apiUrl}training`,data)
     }
     
     /**
@@ -69,7 +99,7 @@ export class TrainingService {
     * @param data 
     */    
     createTraining(data:any){
-        let headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this._httpClient.post(`${environment.apiUrl}training`,data,{headers: headers})
+        // let headers = new HttpHeaders({'Content-Type': 'application/json'});
+        return this._httpClient.post(`${environment.apiUrl}training`,data)
     }
 }

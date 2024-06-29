@@ -31,6 +31,7 @@ public class Training {
     private LocalDate dateDebut;
     @Temporal(TemporalType.DATE)
     private LocalDate dateFin;
+    private String image;
     @JsonIgnore
     @ManyToMany(mappedBy = "trainings",fetch = FetchType.LAZY)
     Set<User> subscribers;

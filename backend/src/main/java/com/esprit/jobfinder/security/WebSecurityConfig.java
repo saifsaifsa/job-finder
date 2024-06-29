@@ -96,6 +96,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                     auth.requestMatchers("/api/auth/**").permitAll()
                             .requestMatchers("/api/test/**").permitAll()
                             .requestMatchers("/api/**").permitAll()
+                            .requestMatchers("/actuator/**").permitAll()
             )
             .oauth2Login(oauth2 ->
                     oauth2.userInfoEndpoint()
