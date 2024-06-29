@@ -5,8 +5,11 @@
 /* orange #f58634
 /* ----------------------------------------------------------------------------------------------------- */
 :root {
+    --green2:#32CD32;
     --green: #69b550;
     --orange: #f58634;
+    --orange2: #FFA500;
+    --bleu: #2895FF;
   }
 
   .orangeBtn {
@@ -24,4 +27,8 @@
 
   .orange-bg {
     background-color: var(--orange) !important;
+  }
+  .bleuBtn {
+    color: white !important;
+    background-color: var(--bleu) !important;
   }

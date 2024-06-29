@@ -23,6 +23,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+        System.out.println("user: "+user);
         User savedUser = userService.saveUser(user);
         user.setPassword("");
         return ResponseEntity.ok(savedUser);
