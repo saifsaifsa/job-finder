@@ -13,7 +13,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { TrainingDetailComponent } from './trainingDetail.component';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 const TrainingRoutes: Route[] = [
     {
         
@@ -50,7 +51,9 @@ const TrainingRoutes: Route[] = [
         MatIconModule,
         FuseAlertModule,
         CommonModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatPaginatorModule,
+        MatSortModule
     ]
 })
 export class TrainingModule
