@@ -88,9 +88,9 @@
             <mat-form-field class="w-3/4 mt-4 mx-4">
                 <mat-label>Role</mat-label>
                 <mat-select formControlName="role">
-                    <mat-option value="2">Admin</mat-option>
-                    <mat-option value="0">User</mat-option>
-                    <mat-option value="1">Publisher</mat-option>
+                    <mat-option value="ROLE_ADMIN">Admin</mat-option>
+                    <mat-option value="ROLE_USER">User</mat-option>
+                    <mat-option value="ROLE_MODERATOR">Publisher</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -105,7 +105,25 @@
             <input formControlName="photo" id="image" type="file" accept=".jpg,.jpeg,.png"
                 (change)="onAvatarChange($event)" />
         </div> -->
-        <div class="sm:col-span-4  mt-4 mx-4" >
+        <!-- <div class="sm:col-span-4  mt-4 mx-4" >
+            <div class="relative w-24 h-24">
+                <img class="w-full h-full rounded-full" [src]="avatar ? avatar : 'assets/images/avatars/avatar.png'" alt="User avatar"
+                    (click)="avatarInput.click()" />
+                <input formControlName="photo" id="image" type="file" accept=".jpg,.jpeg,.png"
+                    (change)="onAvatarChange($event)" #avatarInput style="display: none" />
+            </div>
+        </div> -->
+
+        <div class="sm:col-span-4 mt-4 mx-4">
+            <mat-form-field class="w-3/4">
+                <mat-label>Birthday</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="birthDay">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4 mt-4 mx-4">
             <div class="relative w-24 h-24">
                 <img class="w-full h-full rounded-full" [src]="avatar ? avatar : 'assets/images/avatars/avatar.png'" alt="User avatar"
                     (click)="avatarInput.click()" />
@@ -113,7 +131,6 @@
                     (change)="onAvatarChange($event)" #avatarInput style="display: none" />
             </div>
         </div>
-
         <!-- Divider -->
         <div class="mt-4 mb-10 border-t"></div>
 

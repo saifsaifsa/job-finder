@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,14 +11,16 @@ import { UserService } from 'app/core/user/user.service';
     templateUrl: './userDetail.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
+    providers: [DatePipe]
+
 })
 export class UserDetailComponent implements OnInit {
     @ViewChild('userDetailNgForm') userDetailNgForm: NgForm;
-
+    private fileUrl = 'http://localhost:8080/api/files/';
     roles = {
-        "ROLE_USER":0,
-        "ROLE_MODERATOR":1,
-        "ROLE_ADMIN":2,
+        "ROLE_USER": "ROLE_USER",
+        "ROLE_MODERATOR": "ROLE_MODERATOR",
+        "ROLE_ADMIN": "ROLE_ADMIN",
     };
 
     alert: { type: FuseAlertType; message: string } = {
@@ -27,15 +30,21 @@ export class UserDetailComponent implements OnInit {
     showAlert: boolean = false;
     userDetailsForm: FormGroup;
     isUpdating: boolean = false;
-    avatar:any;
     authentifiedUser:any
-    
+    avatar: string | ArrayBuffer | null = null;
+
     constructor(
         private userService: UserService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute, 
+        private datePipe: DatePipe
     ) {}
-
+    private formatDate(date: Date): string {
+        console.log("date:",date);
+        console.log("this.datePipe.transform(date, 'yyyy/MM/dd')",this.datePipe.transform(date, 'yyyy/MM/dd'));
+        
+        return this.datePipe.transform(date, 'yyyy/MM/dd') || '';
+      }
     ngOnInit(): void {
         this.userService.getLoggedInUser().subscribe((user)=>{
             this.authentifiedUser = user
@@ -59,6 +68,7 @@ export class UserDetailComponent implements OnInit {
             ]),
             role: new FormControl(this.roles[1], Validators.required),
             photo: new FormControl(null),
+            birthDay: new FormControl(this.formatDate(new Date())),
         });
 
         this.route.params.subscribe((params) => {
@@ -80,9 +90,12 @@ export class UserDetailComponent implements OnInit {
                     ]),
                     role: new FormControl(this.roles[1], Validators.required),
                     photo: new FormControl(null),
+                    birthDay: new FormControl(this.formatDate(new Date())),
                 });
                 this.userService.getUser(userId).subscribe((user: any) => {
-                    this.avatar = user.image
+                    console.log("user:",user);
+                    
+                    this.avatar = this.fileUrl+user.profilePicture
                     this.userDetailsForm.patchValue({
                         lastName: user.lastName,
                         firstName: user.firstName,
@@ -90,8 +103,8 @@ export class UserDetailComponent implements OnInit {
                         password: '',
                         phone: user.phone,
                         role: this.roles[user.role],
-                        photo:user.image,
-                        username:user.username
+                        username:user.username,
+                        birthDay:user.birthDay
                     });
                 });
             }
@@ -108,7 +121,7 @@ export class UserDetailComponent implements OnInit {
     //     }
     // }
 
-    onAvatarChange(event: Event): void {
+    onAvatarChange(event: any): void {
         const inputElement = event.target as HTMLInputElement;
         if (inputElement?.files && inputElement.files.length > 0) {
           const file = inputElement.files[0];
@@ -121,7 +134,7 @@ export class UserDetailComponent implements OnInit {
           };
           reader.readAsDataURL(file);
         }
-      }
+    }
       
       
 
@@ -134,34 +147,37 @@ export class UserDetailComponent implements OnInit {
     onSubmit(): void {
         this.showAlert = false;
         this.userDetailsForm.disable();
-        // const formData = new FormData();
-        // formData.append('lastName', this.userDetailsForm.get('lastName').value);
-        // formData.append('firstName', this.userDetailsForm.get('firstName').value);
-        // formData.append('email', this.userDetailsForm.get('email').value);
-        // if (!this.isUpdating) {
-        //     formData.append(
-        //         'password',
-        //         this.userDetailsForm.get('password').value
-        //     );
-        // }
-        // formData.append('phone', this.userDetailsForm.get('phone').value);
-        // formData.append('role', this.userDetailsForm.get('role').value);
-        // formData.append('photo', this.userDetailsForm.get('photo').value);
-        let user = {
-            lastName:this.userDetailsForm.get("lastName").value,
-            firstName:this.userDetailsForm.get("firstName").value,
-            email:this.userDetailsForm.get("email").value,
-            phone:this.userDetailsForm.get("phone").value,
-            role:this.userDetailsForm.get("role").value,
-            username:this.userDetailsForm.get("username").value,
-        }
+        const formData = new FormData();
+        formData.append('username', this.userDetailsForm.get('username').value);
+        formData.append('lastName', this.userDetailsForm.get('lastName').value);
+        formData.append('firstName', this.userDetailsForm.get('firstName').value);
+        formData.append('email', this.userDetailsForm.get('email').value);
         if (!this.isUpdating) {
-            user = {...{password:this.userDetailsForm.get("password").value},...user}
+            formData.append(
+                'password',
+                this.userDetailsForm.get('password').value
+            );
         }
+        formData.append('phone', this.userDetailsForm.get('phone').value);
+        formData.append('role', this.userDetailsForm.get('role').value);
+        if(this.userDetailsForm.get('photo').value){formData.append('photo', this.userDetailsForm.get('photo').value);}
+        
+        formData.append('birthDay', this.formatDate(this.userDetailsForm.get('birthDay').value));
+        // let user = {
+        //     lastName:this.userDetailsForm.get("lastName").value,
+        //     firstName:this.userDetailsForm.get("firstName").value,
+        //     email:this.userDetailsForm.get("email").value,
+        //     phone:this.userDetailsForm.get("phone").value,
+        //     role:this.userDetailsForm.get("role").value,
+        //     username:this.userDetailsForm.get("username").value,
+        // }
+        // if (!this.isUpdating) {
+        //     user = {...{password:this.userDetailsForm.get("password").value},...user}
+        // }
         
         if (this.isUpdating) {
             const userId = this.route.snapshot.params['id'];
-            this.userService.updateUser(userId, user).subscribe(
+            this.userService.updateUser(userId, formData).subscribe(
                 (res:any) => {
                     this.userService.getLoggedInUser().subscribe((user)=>{
                     if(user.id == userId){
@@ -198,7 +214,7 @@ export class UserDetailComponent implements OnInit {
             );
         } else {
             // Perform add operation
-            this.userService.addUser(user).subscribe(
+            this.userService.addUser(formData).subscribe(
                 () => {
                     this.goToUsersList();
                 },
