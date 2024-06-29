@@ -4,7 +4,6 @@ import com.esprit.jobfinder.exceptions.ConflictException;
 import com.esprit.jobfinder.exceptions.NotFoundException;
 import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.VerificationToken;
-import com.esprit.jobfinder.models.enums.ERole;
 import com.esprit.jobfinder.payload.request.PatchUserRequest;
 import com.esprit.jobfinder.repository.IUserRepository;
 import com.esprit.jobfinder.repository.IVerificationTokenRepository;
@@ -18,8 +17,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,8 +44,11 @@ public class UserService implements IUserService{
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private IFileUploaderService fileUploaderService;
     @Override
-    public User saveUser(User user) {
+    public User saveUser(User user, MultipartFile profilePicture) {
         Boolean userExists = userRepository.existsByEmail(user.getEmail());
         if (userExists) throw new ConflictException("User already exists with email "+user.getEmail());
 
@@ -54,13 +57,23 @@ public class UserService implements IUserService{
 
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
+
+        if (profilePicture != null && !profilePicture.isEmpty()) {
+            String filePath = null;
+            try {
+                filePath = fileUploaderService.uploadFile(profilePicture);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            user.setProfilePicture(filePath);
+        }
         User savedUser = userRepository.save(user);
 
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken(token, user);
         tokenRepository.save(verificationToken);
 
-        String verificationUrl = "http://localhost:8080/api/auth/verify?token=" + token;
+        String verificationUrl = "http://localhost:4200/confirmation?token=" + token;
         emailService.sendSimpleMessage(user.getEmail(), "Email Verification", "To verify your email, click the following link: " + verificationUrl);
         return savedUser;
     }
@@ -85,13 +98,31 @@ public class UserService implements IUserService{
         return userRepository.findAll(spec, pageable);
     }
     @Override
-    public User updateUser(User user) {
-        if (userRepository.existsById(user.getId())) {
-            return userRepository.save(user);
-        } else {
-            throw new NotFoundException("User not found with id: " + user.getId());
+    public User updateUser(User user, MultipartFile profilePicture) throws IOException {
+        User existingUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new NotFoundException("User not found with id: " + user.getId()));
+
+        if (profilePicture != null && !profilePicture.isEmpty()) {
+            String filePath = fileUploaderService.uploadFile(profilePicture);
+            existingUser.setProfilePicture(filePath);
         }
+
+        existingUser.setUsername(user.getUsername());
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setActive(user.getActive());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setBirthDay(user.getBirthDay());
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            String hashedPassword = passwordEncoder.encode(user.getPassword());
+            existingUser.setPassword(hashedPassword);
+        }
+        existingUser.setPhone(user.getPhone());
+        existingUser.setRole(user.getRole());
+
+        return userRepository.save(existingUser);
     }
+
 
     @Override
     public void deleteUserById(Long id) {

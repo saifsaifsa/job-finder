@@ -48,6 +48,9 @@ public class User {
 
   @Temporal(TemporalType.DATE)
   private LocalDate birthDay;
+
+  private String profilePicture;
+
   public User() {
   }
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -162,5 +165,13 @@ public class User {
             ", role=" + role +
             ", birthDay=" + birthDay +
             '}';
+  }
+
+  public String getProfilePicture() {
+    return profilePicture;
+  }
+
+  public void setProfilePicture(String profilePicture) {
+    this.profilePicture = profilePicture;
   }
 }

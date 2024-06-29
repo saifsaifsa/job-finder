@@ -15,6 +15,8 @@ import { UserComponent } from './user.component';
 import { UserDetailComponent } from './userDetail.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
 
 const userRoutes: Route[] = [
     {
@@ -53,7 +55,8 @@ const userRoutes: Route[] = [
         CommonModule,
         MatSlideToggleModule,
         MatPaginatorModule,
-        MatSortModule
+        MatSortModule,
+        MatDatepickerModule
     ]
 })
 export class UserModule
