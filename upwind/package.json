@@ -1,0 +1,48 @@
+{
+  "name": "upwind",
+  "version": "1.0.0",
+  "description": "Angular 16 Landing Page Template",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^16.2.12",
+    "@angular/common": "^16.2.12",
+    "@angular/compiler": "^16.2.12",
+    "@angular/core": "^16.2.12",
+    "@angular/forms": "^16.2.12",
+    "@angular/platform-browser": "^16.2.12",
+    "@angular/platform-browser-dynamic": "^16.2.12",
+    "@angular/router": "^16.2.12",
+    "@ngneat/dialog": "^4.1.0",
+    "@tailwindcss/forms": "^0.5.7",
+    "angular-count-to": "^0.0.3",
+    "autoprefixer": "^10.4.16",
+    "ngx-lightbox": "^3.0.0",
+    "ngx-typed-js": "^2.1.1",
+    "postcss": "^8.4.32",
+    "rxjs": "~7.8.0",
+    "tailwindcss": "^3.4.0",
+    "tiny-slider": "^2.9.4",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.13.3"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^16.2.11",
+    "@angular/cli": "^16.2.11",
+    "@angular/compiler-cli": "^16.2.12",
+    "@types/jasmine": "~4.3.0",
+    "jasmine-core": "~4.6.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.1.6"
+  }
+}

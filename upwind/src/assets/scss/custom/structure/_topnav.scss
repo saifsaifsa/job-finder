@@ -1,0 +1,157 @@
+/*********************************/
+/*             Menu              */
+/*===============================*/
+.navbar {
+  @apply fixed top-0 start-0 end-0 z-999 bg-transparent py-3 transition-all duration-500 font-rubik;
+  .navigation {
+      @apply w-full m-0;
+      .navbar-nav {
+          @apply mt-4 flex flex-row overflow-y-scroll h-24;
+          .nav-item {
+            @apply relative mx-0;
+          }
+          .nav-link {
+              @apply block p-3 text-slate-900 hover:text-orange-600 dark:text-white/60 dark:hover:text-white;
+          }
+          .active {
+              .nav-link {
+                  @apply text-orange-600 dark:text-white;
+              }
+          }
+      }
+  }
+  .navbar-brand {
+      @apply me-12 p-0;
+      .l-dark,
+      .logo-dark-mode {
+          @apply hidden;
+      }
+      .l-light,
+      .logo-light-mode {
+          @apply inline-block;
+      }
+      @media (max-width: 991.98px) {
+          .l-dark {
+              @apply inline-block #{!important};
+          }
+          .l-light {
+              @apply hidden #{!important};
+          }
+      }
+  }
+  .menu-social {
+      .login-btn-primary {
+          @apply hidden;
+      }
+      .login-btn-light {
+          @apply inline-block;
+      }
+
+      @media (max-width: 991.98px) {
+          .login-btn-primary {
+              @apply inline-block #{!important};
+          }
+          .login-btn-light {
+              @apply hidden #{!important};
+          }
+      }
+  }
+  &.is-sticky {
+      @apply bg-white dark:bg-slate-900 shadow dark:shadow-slate-800;
+      .navbar-brand {
+          .l-dark {
+              @apply inline-block;
+          }
+          .l-light {
+              @apply hidden;
+          }
+      }
+
+      .menu-social {
+          .login-btn-primary {
+              @apply inline-block;
+          }
+          .login-btn-light {
+              @apply hidden;
+          }
+      }
+  }
+}
+
+@media (min-width: 992px){
+  .navbar {
+      @apply py-3;
+      .navigation {
+          @apply flex w-auto;
+          .navbar-nav {
+              @apply h-auto mt-0 overflow-visible;
+              .nav-link {
+                  @apply border-0 hover:bg-transparent;
+              }
+
+              &.nav-light {
+                  .nav-link {
+                      @apply block p-3 text-white/60 hover:text-white #{!important};
+                  }
+                  .active {
+                      .nav-link {
+                          @apply text-white #{!important};
+                      }
+                  }
+              }
+          }
+      }
+
+      .nav-icons {
+          .collapse-btn {
+              @apply hidden;
+          }
+      }
+      &.is-sticky {
+          @apply py-3;
+          .navbar-nav {
+              .nav-link {
+                  @apply text-slate-900;
+              }
+              .active {
+                  .nav-link {
+                      @apply text-orange-600;
+                  }
+              }
+
+              &.nav-light {
+                  .nav-link {
+                      @apply text-slate-900 hover:text-orange-600 dark:text-white/60 dark:hover:text-white #{!important};
+                  }
+                  .active {
+                      .nav-link {
+                          @apply text-orange-600 dark:text-white #{!important};
+                      }
+                  }
+              }
+          }
+      }
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar {
+      @apply bg-white shadow dark:shadow-slate-800 dark:bg-slate-900 #{!important};
+      .navigation {
+          .navbar-nav {
+              @apply block h-[21.25rem];
+              .nav-link {
+                  @apply text-slate-900;
+              }
+              .active {
+                  .nav-link {
+                      @apply text-orange-600;
+                  }
+              }
+              .menu-social {
+                  @apply mb-5 #{!important};
+              }
+          }
+      }
+  }
+}
