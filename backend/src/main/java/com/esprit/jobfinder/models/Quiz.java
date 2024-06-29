@@ -1,12 +1,11 @@
 package com.esprit.jobfinder.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
+
+import java.util.Collection;
 
 @Entity
 @Data
@@ -23,4 +22,14 @@ public class Quiz {
 
     private int attempts;
     private double passThreshold;
+    @ManyToMany(mappedBy = "quizs")
+    private Collection<User> users;
+
+    public Collection<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Collection<User> users) {
+        this.users = users;
+    }
 }

@@ -1,15 +1,12 @@
 package com.esprit.jobfinder.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Collection;
 
 @Entity
 @Getter
@@ -30,4 +27,14 @@ public class Skill {
     @JoinColumn(name = "offer_id")
     private Offer offer;
 
+    @ManyToMany(mappedBy = "skills")
+    private Collection<User> users;
+
+    public Collection<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Collection<User> users) {
+        this.users = users;
+    }
 }

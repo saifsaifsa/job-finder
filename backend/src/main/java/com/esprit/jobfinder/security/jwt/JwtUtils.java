@@ -38,6 +38,7 @@ public class JwtUtils {
             .claim("confirmed", userPrincipal.isEnabled())
             .claim("phone", userPrincipal.getUser().getPhone())
             .claim("name", userPrincipal.getUser().getFullName())
+            .claim("profilePicture", userPrincipal.getUser().getProfilePicture())
         .setIssuedAt(new Date())
         .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
         .signWith(key(), SignatureAlgorithm.HS256)

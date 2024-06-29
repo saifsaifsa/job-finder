@@ -9,6 +9,7 @@ import { catchError, switchMap } from 'rxjs/operators';
 @Injectable()
 export class AuthService {
     private _authenticated: boolean = false;
+    private fileUrl = 'http://localhost:8080/api/files/';
 
     /**
      * Constructor
@@ -82,6 +83,7 @@ export class AuthService {
                         return throwError('User role is not authorized.'); // Throw an error if the user's role is not 99
                     }
                     user.role = user.role[0].authority
+                    user.avatar =  this.fileUrl+user.profilePicture
                     localStorage.setItem("user",JSON.stringify(user))
                     this.accessToken = response.accessToken;
                     this._authenticated = true;

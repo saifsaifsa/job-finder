@@ -51,6 +51,10 @@ public class User {
 
   private String profilePicture;
 
+  @ManyToMany
+  Set<Skill> skills;
+  @ManyToMany
+  Set<Quiz> quizs;
   public User() {
   }
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -173,5 +177,21 @@ public class User {
 
   public void setProfilePicture(String profilePicture) {
     this.profilePicture = profilePicture;
+  }
+
+  public Set<Training> getTrainings() {
+    return trainings;
+  }
+
+  public void setTrainings(Set<Training> trainings) {
+    this.trainings = trainings;
+  }
+
+  public Set<Skill> getSkills() {
+    return skills;
+  }
+
+  public void setSkills(Set<Skill> skills) {
+    this.skills = skills;
   }
 }

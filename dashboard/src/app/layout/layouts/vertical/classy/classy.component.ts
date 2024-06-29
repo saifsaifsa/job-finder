@@ -16,6 +16,7 @@ import { UserService } from 'app/core/user/user.service';
 })
 export class ClassyLayoutComponent implements OnInit, OnDestroy
 {
+    private fileUrl = 'http://localhost:8080/api/files/';
     isScreenSmall: boolean;
     navigation: Navigation;
     user: User;
@@ -70,7 +71,9 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
         //         this.user = user;
         //     });
         this._userService.getLoggedInUser().subscribe((user) => {
+            user.avatar =  this.fileUrl+user.profilePicture
             this.user = user;
+            console.log("user getLoggedInUser:",user);
           });
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$
