@@ -111,7 +111,7 @@ public class AuthService implements IAuthService{
             VerificationToken verificationToken = new VerificationToken(token, user);
             tokenRepository.save(verificationToken);
 
-            String resetLink = "http://localhost:3000/reset-password?token=" + token;
+            String resetLink = "http://localhost:4200/reset-password?token=" + token;
             emailService.sendSimpleMessage (user.getEmail(), "Password Reset Request", resetLink);
         }
     }
