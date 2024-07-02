@@ -1,14 +1,14 @@
 package com.esprit.jobfinder.payload.request;
 
 import com.esprit.jobfinder.models.enums.TrainingCategories;
-import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class CreateTrainingReq {
-
+public class UpdateTrainingReq {
     private MultipartFile image;
 
     @Enumerated(EnumType.STRING)
@@ -16,11 +16,13 @@ public class CreateTrainingReq {
 
     @NotBlank(message = "Title cannot be blank")
     private String title;
+    @NotBlank(message = "id cannot be blank")
+    private String id;
 
     @NotBlank(message = "Description cannot be blank")
     private String description;
 
-    @NotBlank(message = "lastName cannot be blank")
+    @NotBlank(message = "price cannot be blank")
     private String price;
     private String rating;
     private String likes;

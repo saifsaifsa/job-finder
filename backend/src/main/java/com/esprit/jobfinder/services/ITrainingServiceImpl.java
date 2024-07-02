@@ -1,7 +1,6 @@
 package com.esprit.jobfinder.services;
 
 import com.esprit.jobfinder.models.Training;
-import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.enums.TrainingCategories;
 import com.esprit.jobfinder.repository.ITrainingRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.data.domain.Sort;
@@ -29,7 +27,7 @@ public class ITrainingServiceImpl implements ITrainingService{
     @Override
     public Training addTraining(Training training, MultipartFile image) {
         if (image != null && !image.isEmpty()) {
-            String filePath = null;
+            String filePath;
             try {
                 filePath = fileUploaderService.uploadFile(image);
             } catch (IOException e) {
@@ -51,8 +49,19 @@ public class ITrainingServiceImpl implements ITrainingService{
     }
 
     @Override
-    public Training updateTraining(Training training) {
+public Training updateTraining(Training training, MultipartFile image) {
         Assert.notNull(training.getId(),"Training Id must not be null");
+
+        if (image != null && !image.isEmpty()) {
+            String filePath;
+            try {
+                filePath = fileUploaderService.uploadFile(image);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            training.setImage(filePath);
+        }
+
         return trainingRepository.save(training);
     }
 
@@ -90,14 +99,14 @@ public class ITrainingServiceImpl implements ITrainingService{
         Training training = getTraining(id);
         training.setLikes(training.getLikes() + 1 );
         training.setRating(rating(training.getLikes(),training.getDislikes()));
-        return updateTraining(training);
+        return updateTraining(training,null);
     }
     @Override
     public Training dislikeTraining(long id){
         Training training = getTraining(id);
         training.setDislikes(training.getDislikes() + 1 );
         training.setRating(rating(training.getLikes(),training.getDislikes()));
-        return updateTraining(training);
+        return updateTraining(training,null);
     }
 
     private int rating(int like,int dislike){
