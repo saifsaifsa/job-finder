@@ -34,6 +34,7 @@
         "@fullcalendar/rrule": "4.4.2",
         "@fullcalendar/timegrid": "4.4.2",
         "@ngneat/transloco": "2.22.0",
+        "angular-oauth2-oidc": "^17.0.2",
         "apexcharts": "3.28.1",
         "crypto-js": "3.3.0",
         "highlight.js": "11.2.0",
