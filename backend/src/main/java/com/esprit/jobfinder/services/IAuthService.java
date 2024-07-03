@@ -10,4 +10,5 @@ public interface IAuthService {
     void generatePasswordResetToken(String email);
     void resetPassword(String token, String newPassword);
     void generateSuperAdmin();
+    String oauthLinkedin(String code) throws Exception;
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'app/core/auth/auth.service';
 
 @Component({
   selector: 'linkedin-oauth',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LinkedinOauthComponent implements OnInit {
 
-  constructor() { }
+  constructor(private readonly _authService:AuthService) { }
 
   ngOnInit(): void {
   }
-
+login(){
+  this._authService.linkedInLogin()
+}
 }

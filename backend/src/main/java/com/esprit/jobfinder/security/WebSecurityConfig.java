@@ -98,12 +98,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                             .requestMatchers("/api/**").permitAll()
                             .requestMatchers("/actuator/**").permitAll()
             )
-            .oauth2Login(oauth2Login ->
-                    oauth2Login
-                            .loginPage("/oauth2/authorization/linkedin")
-                            .defaultSuccessUrl("/home", true)
-                            .failureUrl("/login?error=true")
-            ).cors();
+            .cors();
 
     http.authenticationProvider(authenticationProvider());
 

@@ -63,6 +63,13 @@ export const appRoutes: Route[] = [
                         (m) => m.AuthSignUpModule
                     ),
             },
+            {
+                path: 'callback',
+                loadChildren: () =>
+                    import('app/modules/auth/oauth-callback/oauth-callback.module').then(
+                        (m) => m.OauthCallBack
+                    ),
+            },
         ],
     },
 

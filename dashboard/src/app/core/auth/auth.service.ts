@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
@@ -216,5 +216,51 @@ export class AuthService {
 
     confirmation(token:string) {   
         return this._httpClient.get(`${environment.baseUrl}api/auth/verify?token=${token}`);
+    }
+
+
+    linkedInLogin() {
+        const clientId = '77lz7wunm0s5jn';
+        const redirectUri = encodeURIComponent(window.location.origin + '/callback');
+        const scope = 'openid profile email';
+        const responseType = 'code';
+        const state = 'random_string';
+
+        const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&state=${state}`;
+
+        const width = 600;
+        const height = 600;
+        const left = (window.screen.width / 2) - (width / 2);
+        const top = (window.screen.height / 2) - (height / 2);
+
+        const popup = window.open(url, 'LinkedIn Login', `width=${width},height=${height},top=${top},left=${left}`);
+
+        window.addEventListener('message', (event) => {
+            if (event.origin === window.location.origin) {
+                const code = event.data.code;
+                this.exchangeCodeForToken(code);
+            }
+        });
+    }
+
+    exchangeCodeForToken(code: string) {
+        const params = new HttpParams({
+            fromObject: {
+                client_id: '77lz7wunm0s5jn',
+                client_secret: '24uSXbMPN9VSXjPm',
+                redirect_uri: window.location.origin + '/callback',
+                grant_type: 'authorization_code',
+                code: code,
+            }
+        });
+
+        this._httpClient.post('http://localhost:8080/api/auth/linkedin', params.toString(), {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).subscribe((response: any) => {
+            console.log("response: ",response);
+            alert(JSON.stringify(response))
+        });
     }
 }
