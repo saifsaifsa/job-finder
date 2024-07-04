@@ -1,7 +1,6 @@
 package com.esprit.jobfinder.controllers;
 
-import com.esprit.jobfinder.payload.request.ForgotPasswordRequest;
-import com.esprit.jobfinder.payload.request.ResetPasswordRequest;
+import com.esprit.jobfinder.payload.request.*;
 import com.esprit.jobfinder.services.IAuthService;
 import jakarta.validation.Valid;
 
@@ -11,8 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.esprit.jobfinder.payload.request.LoginRequest;
-import com.esprit.jobfinder.payload.request.SignupRequest;
 import com.esprit.jobfinder.payload.response.JwtResponse;
 import com.esprit.jobfinder.payload.response.MessageResponse;
 
@@ -64,4 +61,17 @@ public class AuthController {
     authService.resetPassword(request.getToken(), request.getNewPassword());
     return ResponseEntity.ok(new MessageResponse("Password reset successfully!"));
   }
+
+    @PostMapping("/generate-admin")
+    public ResponseEntity<?> generateSuperAdmin(@RequestBody AdminRequest request) {
+      if (request.getCode().equals("12345678")){
+          authService.generateSuperAdmin();
+          return ResponseEntity.ok(new MessageResponse("admin generated!"));
+      }
+        return ResponseEntity
+                .badRequest()
+                .body(new MessageResponse("code invalid"));
+    }
+
 }
+

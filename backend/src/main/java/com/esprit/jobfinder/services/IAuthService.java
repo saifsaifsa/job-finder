@@ -7,4 +7,5 @@ public interface IAuthService {
     public String login(String userName,String email,String password);
     void generatePasswordResetToken(String email);
     void resetPassword(String token, String newPassword);
+    void generateSuperAdmin();
 }

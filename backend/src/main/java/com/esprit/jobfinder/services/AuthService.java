@@ -128,4 +128,19 @@ public class AuthService implements IAuthService{
             throw new RuntimeException("Invalid or expired token");
         }
     }
+
+    @Override
+    public void generateSuperAdmin() {
+        Optional<User> userOptional = userRepository.findByEmail("admin@jobfinder.tn");
+        if (!userOptional.isPresent()) {
+            String hashedPassword = passwordEncoder.encode("Admin1234");
+            User savedUser = new User("admin","admin@jobfinder.tn",hashedPassword);
+            savedUser.setRole(ERole.ROLE_ADMIN);
+            savedUser.setActive(true);
+            savedUser.setFirstName("admin");
+            savedUser.setLastName("jobFinder");
+            savedUser.setPhone("+21622001003");
+            userRepository.save(savedUser);
+        }
+    }
 }
