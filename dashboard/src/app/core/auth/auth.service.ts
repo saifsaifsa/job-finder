@@ -261,6 +261,9 @@ export class AuthService {
         }).subscribe((response: any) => {
             console.log("response: ",response);
             alert(JSON.stringify(response))
+        },(error)=>{
+            console.log("error: ",error);
+            alert(JSON.stringify(error))
         });
     }
 }

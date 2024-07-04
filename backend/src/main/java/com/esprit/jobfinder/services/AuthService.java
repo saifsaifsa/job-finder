@@ -10,6 +10,7 @@ import com.esprit.jobfinder.models.enums.ERole;
 import com.esprit.jobfinder.payload.response.AccessTokenResponse;
 import com.esprit.jobfinder.repository.IUserRepository;
 import com.esprit.jobfinder.repository.IVerificationTokenRepository;
+import com.esprit.jobfinder.security.OAuthAuthenticationToken;
 import com.esprit.jobfinder.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -20,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -51,6 +53,7 @@ public class AuthService implements IAuthService{
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
     private final RestTemplate restTemplate;
+
     public AuthService(IUserRepository userRepository,RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
         this.userRepository = userRepository;
@@ -185,9 +188,8 @@ public class AuthService implements IAuthService{
             LinkedInUserInfo userProfile = fetchLinkedinProfile(accessToken);
             Optional<User> existingUser = userRepository.findByEmail(userProfile.getEmail());
             if (existingUser.isPresent()) {
-                Authentication authentication = authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken (existingUser.get().getUsername(), "")
-                );
+                UserDetailsImpl userDetailsImpl =new UserDetailsImpl(existingUser.get());
+                Authentication authentication = new OAuthAuthenticationToken(userDetailsImpl.getUsername(), userDetailsImpl.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 return jwtUtil.generateJwtToken ( authentication );
             } else {
@@ -196,9 +198,10 @@ public class AuthService implements IAuthService{
                 savedUser.setActive(true);
                 savedUser.setRole(ERole.ROLE_USER);
                 userRepository.save(savedUser);
-                Authentication authentication = authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken (savedUser.getUsername(), "")
-                );
+                UserDetailsImpl userDetailsImpl =new UserDetailsImpl(savedUser);
+
+                Authentication authentication = new OAuthAuthenticationToken(userDetailsImpl.getUsername(), userDetailsImpl.getAuthorities());
+
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 return jwtUtil.generateJwtToken ( authentication );
             }

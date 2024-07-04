@@ -71,7 +71,7 @@ public class AuthController {
     authService.resetPassword(request.getToken(), request.getNewPassword());
     return ResponseEntity.ok(new MessageResponse("Password reset successfully!"));
   }
-    @PostMapping("/generate-admin")
+  @PostMapping("/generate-admin")
     public ResponseEntity<?> generateSuperAdmin(@RequestBody AdminRequest request) {
         if (request.getCode().equals("12345678")) {
             authService.generateSuperAdmin();
@@ -81,7 +81,7 @@ public class AuthController {
                 .badRequest()
                 .body(new MessageResponse("code invalid"));
     }
-    @PostMapping("/linkedin")
+    @PostMapping(  value = "/linkedin",consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
     public ResponseEntity<?> oauthLinkedin(@RequestParam("code") String code) throws Exception {
         String token = authService.oauthLinkedin(code);
         return ResponseEntity.ok(new JwtResponse(token));

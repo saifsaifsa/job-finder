@@ -12,7 +12,7 @@ export class LinkedinOauthComponent implements OnInit {
 
   ngOnInit(): void {
   }
-login(){
+linkedInAuth(){
   this._authService.linkedInLogin()
 }
 }
