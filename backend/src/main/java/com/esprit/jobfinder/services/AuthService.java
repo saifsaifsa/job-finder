@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Optional;
 import java.util.UUID;
@@ -85,21 +86,21 @@ public class AuthService implements IAuthService{
     @Override
     public String login(String userName, String email, String password) {
         UserDetails userDetails;
-        if (userName != null) {
-            userDetails = userDetailsService.loadUserByUsername(userName);
-        } else {
+//        if (userName != null) {
+//            userDetails = userDetailsService.loadUserByUsername(userName);
+//        }
             Optional<User> user = userRepository.findByEmail(email);
             if (!user.isPresent ()) {
                 throw new UnauthorizedException ("Bad credentials");
             }
             userDetails = new UserDetailsImpl(user.get ());
-        }
-
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken (userDetails.getUsername(), password)
         );
+        User existsUser = user.get();
+        existsUser.setLastLogin(LocalDateTime.now());
+        userRepository.save(existsUser);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         return jwtUtil.generateJwtToken ( authentication );
     }
     @Override

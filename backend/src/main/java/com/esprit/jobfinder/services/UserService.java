@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -163,5 +165,12 @@ public class UserService implements IUserService{
             user.setRole(patchUserRequest.getRole());
         }
         return userRepository.save(user);
+    }
+
+    public void deleteInactiveUsers() {
+        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+        List<User> inactiveUsers = userRepository.findInactiveUsers(oneMonthAgo);
+        List<Long> ids = inactiveUsers.stream().map(User::getId).toList();
+        userRepository.deleteAllByIdIn(ids);
     }
 }

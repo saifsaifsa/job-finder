@@ -1,6 +1,7 @@
 package com.esprit.jobfinder.models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -58,9 +59,12 @@ public class User {
 
   @ManyToMany
   Set<Offer> offres;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  private LocalDateTime lastLogin;
   public User() {
   }
-  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
   private VerificationToken verificationToken;
   public User(String username, String email, String password) {
     this.username = username;
@@ -212,5 +216,13 @@ public class User {
 
   public void setOffres(Set<Offer> offres) {
     this.offres = offres;
+  }
+
+  public LocalDateTime getLastLogin() {
+    return lastLogin;
+  }
+
+  public void setLastLogin(LocalDateTime lastLogin) {
+    this.lastLogin = lastLogin;
   }
 }
