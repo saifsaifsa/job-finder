@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { emailRegex } from 'app/layout/common/constants/regex';
+import { emailRegexValidator, passwordRegexValidator } from 'app/layout/common/validators/validators';
 
 @Component({
     selector: 'auth-sign-in',
@@ -42,35 +44,6 @@ export class AuthSignInComponent implements OnInit {
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
 
-    emailRegexValidator(): ValidatorFn {
-        const emailRegex: RegExp =
-            /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
-        return (control: AbstractControl): { [key: string]: any } | null => {
-            const email: string = control.value;
-
-            if (email && !emailRegex.test(email)) {
-                return { invalidEmailFormat: true };
-            }
-
-            return null;
-        };
-    }
-    
-    passwordRegexValidator(): ValidatorFn {
-        const passwordRegex: RegExp =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-
-        return (control: AbstractControl): { [key: string]: any } | null => {
-            const password: string = control.value;
-
-            if (password && !passwordRegex.test(password)) {
-                return { invalidPasswordFormat: true };
-            }
-
-            return null;
-        };
-    }
     
     /**
      * On init
@@ -78,8 +51,8 @@ export class AuthSignInComponent implements OnInit {
     ngOnInit(): void {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            email: ['', [Validators.required, this.emailRegexValidator()]],
-            password: ['', [Validators.required, this.passwordRegexValidator()]],
+            email: ['', [Validators.required, emailRegexValidator()]],
+            password: ['', [Validators.required, passwordRegexValidator()]],
         });
     }
 
