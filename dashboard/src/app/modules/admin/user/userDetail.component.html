@@ -84,7 +84,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="sm:col-span-4">
+        <div class="sm:col-span-4" *ngIf="showRole">
             <mat-form-field class="w-3/4 mt-4 mx-4">
                 <mat-label>Role</mat-label>
                 <mat-select formControlName="role">

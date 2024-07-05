@@ -32,7 +32,7 @@ export class UserDetailComponent implements OnInit {
     isUpdating: boolean = false;
     authentifiedUser:any
     avatar: string | ArrayBuffer | null = null;
-
+    showRole:boolean;
     constructor(
         private userService: UserService,
         private router: Router,
@@ -40,10 +40,7 @@ export class UserDetailComponent implements OnInit {
         private datePipe: DatePipe
     ) {}
     private formatDate(date: Date): string {
-        console.log("date:",date);
-        console.log("this.datePipe.transform(date, 'yyyy/MM/dd')",this.datePipe.transform(date, 'yyyy/MM/dd'));
-        
-        return this.datePipe.transform(date, 'yyyy/MM/dd') || '';
+         return this.datePipe.transform(date, 'yyyy/MM/dd') || '';
       }
     ngOnInit(): void {
         this.userService.getLoggedInUser().subscribe((user)=>{
@@ -73,7 +70,7 @@ export class UserDetailComponent implements OnInit {
 
         this.route.params.subscribe((params) => {
             const userId = params['id'];
-
+            this.showRole = userId != this.authentifiedUser.id
             if (userId) {
                 this.isUpdating = true;
                 this.userDetailsForm = new FormGroup({
@@ -88,12 +85,11 @@ export class UserDetailComponent implements OnInit {
                         Validators.required,
                         Validators.pattern(/^\+216(20|21|22|23|24|25|26|27|28|29|50|52|53|54|55|56|58|90|91|92|93|94|95|96|97|98|99)\d{6}$/)
                     ]),
-                    role: new FormControl(this.roles[1], Validators.required),
+                    role: new FormControl(this.roles["ROLE_USER"], this.showRole ? Validators.required:null),
                     photo: new FormControl(null),
                     birthDay: new FormControl(this.formatDate(new Date())),
                 });
                 this.userService.getUser(userId).subscribe((user: any) => {
-                    console.log("user:",user);
                     
                     this.avatar = this.fileUrl+user.profilePicture
                     this.userDetailsForm.patchValue({
@@ -159,7 +155,7 @@ export class UserDetailComponent implements OnInit {
             );
         }
         formData.append('phone', this.userDetailsForm.get('phone').value);
-        formData.append('role', this.userDetailsForm.get('role').value);
+        formData.append('role', this.showRole ? this.userDetailsForm.get('role').value:this.authentifiedUser.role);
         if(this.userDetailsForm.get('photo').value){formData.append('photo', this.userDetailsForm.get('photo').value);}
         
         formData.append('birthDay', this.formatDate(this.userDetailsForm.get('birthDay').value));

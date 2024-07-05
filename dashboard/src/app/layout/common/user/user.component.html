@@ -31,11 +31,11 @@
         </span>
     </button>
     <mat-divider class="my-2"></mat-divider>
-    <button mat-menu-item>
+    <button mat-menu-item  [routerLink]="['/users/update/',user.id]">
         <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
         <span>Profile</span>
     </button>
-    <button mat-menu-item>
+    <!-- <button mat-menu-item>
         <mat-icon [svgIcon]="'heroicons_outline:cog'"></mat-icon>
         <span>Settings</span>
     </button>
@@ -44,7 +44,7 @@
         [matMenuTriggerFor]="userStatus">
         <mat-icon [svgIcon]="'heroicons_outline:dots-circle-horizontal'"></mat-icon>
         <span>Status</span>
-    </button>
+    </button> -->
     <mat-divider class="my-2"></mat-divider>
     <button
         mat-menu-item
