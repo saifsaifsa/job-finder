@@ -183,7 +183,11 @@ export class UserDetailComponent implements OnInit {
                     // if(this.userService.getLoggedInUser()._id == userId){
                     //     this.userService.setLoggedInUser(res)
                     // }
-                    this.goToUsersList();
+                    if(this.authentifiedUser.role == "ROLE_ADMIN"){
+                        this.goToUsersList();
+                    }else{
+                        this.router.navigateByUrl('/home');
+                    }
                 },
                 (error) => {
                     if (error.status === 409) {
