@@ -5,7 +5,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
     templateUrl  : './example.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class ExampleComponent
+export class ExampleComponentUser
 {
     /**
      * Constructor
