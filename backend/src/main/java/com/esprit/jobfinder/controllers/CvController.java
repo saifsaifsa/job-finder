@@ -25,7 +25,7 @@ public class CvController {
         return cvService.createCv(cv);
     }
 
-    @GetMapping
+    @GetMapping 
     public List<Cv> getAllCvs() {
         return cvService.getAllCvs();
     }

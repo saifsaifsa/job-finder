@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>CV Details</h1>
+<div mat-dialog-content>
+  <p><strong>Name:</strong> {{ data.user.username }}</p>
+  <p><strong>Email:</strong> {{ data.user.email }}</p>
+  <p><strong>Content:</strong> {{ data.content }}</p>
+  <p><strong>Views:</strong> {{ data.views }}</p>
+  <p><strong>Downloads:</strong> {{ data.downloads }}</p>
+  <p><strong>Skills:</strong></p>
+  <ul>
+    <li *ngFor="let skill of data.skills">{{ skill.name }}</li>
+  </ul>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+</div>

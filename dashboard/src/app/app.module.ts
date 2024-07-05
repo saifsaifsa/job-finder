@@ -13,6 +13,7 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { CvPopupComponent } from './modules/admin/cv-popup/cv-popup.component';
 
 
 const routerConfig: ExtraOptions = {
@@ -22,7 +23,8 @@ const routerConfig: ExtraOptions = {
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        CvPopupComponent
     ],
     imports     : [
         BrowserModule,

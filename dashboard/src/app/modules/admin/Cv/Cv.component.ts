@@ -4,7 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { CvService } from '../Cv/CvService';
 import { saveAs } from 'file-saver';
-
+import { MatDialog } from '@angular/material/dialog';
+import { CvPopupComponent } from '../cv-popup/cv-popup.component';
 @Component({
   selector: 'app-cv',
   templateUrl: './cv.component.html',
@@ -13,12 +14,10 @@ import { saveAs } from 'file-saver';
 export class CvComponent implements OnInit {
   displayedColumns: string[] = ["Name", "Email", "Views", "Downloads", "Actions"];
   dataSource: MatTableDataSource<any>;
-
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private cvService: CvService) { }
-
+  constructor(private cvService: CvService, public dialog: MatDialog) {}
   ngOnInit() {
     this.loadCvs();
   }
@@ -52,10 +51,17 @@ export class CvComponent implements OnInit {
       saveAs(blob, `cv-${id}.pdf`);
     });
   }
+ 
   openCv(id: number): void {
-    this.cvService.incrementViews(id).subscribe(() => {
-      console.log(`CV with ID ${id} viewed and views incremented.`);
-      
+    this.cvService.getCv(id).subscribe(cv => {
+      const dialogRef = this.dialog.open(CvPopupComponent, {
+        width: '500px',
+        data: cv
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
     });
   }
   
