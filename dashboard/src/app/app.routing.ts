@@ -106,6 +106,7 @@ export const appRoutes: Route[] = [
     // },
 
     // Admin routes
+    // TODO check if has role ROLE_ADMIN
     {
         path: '',
         canActivate: [AuthGuard],
@@ -119,6 +120,34 @@ export const appRoutes: Route[] = [
             {path: 'users',loadChildren: () =>import('app/modules/admin/user/user.module').then((m) => m.UserModule),},
             {path: 'offre', loadChildren: () => import('app/modules/admin/offer/offerData.module').then(m => m.OfferModule)},
             {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
+        ],
+    },
+    // Publisher routes
+    // TODO check if has ROLE_PUBLISHER
+    {
+        path: 'publisher',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        resolve: {
+            initialData: InitialDataResolver,
+        },
+        children: [
+            {path: 'exemple1',loadChildren: () => import('app/modules/publisherFront/example/example.module').then((m) => m.ExampleModule),},
+        ],
+    },
+    // User student routes
+    // TODO check if has ROLE_PUBLISHER
+    {
+        path: 'user',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        resolve: {
+            initialData: InitialDataResolver,
+        },
+        children: [
+            {path: 'exemple2',loadChildren: () => import('app/modules/userFront/example/example.module').then((m) => m.ExampleModule),},
         ],
     },
 ];

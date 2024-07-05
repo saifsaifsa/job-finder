@@ -52,7 +52,7 @@ public class AuthService implements IAuthService{
     }
 
     @Override
-    public void signup(String userName,String email, String password) throws RuntimeException{
+    public void signup(String userName,String email, String password, ERole role) throws RuntimeException{
         Boolean userExists = userRepository.existsByEmail(email);
         if (userExists) throw new ConflictException ("User already exists with email "+email);
 
@@ -61,7 +61,7 @@ public class AuthService implements IAuthService{
 
         String hashedPassword = passwordEncoder.encode(password);
         User savedUser = new User(userName,email,hashedPassword);
-        savedUser.setRole(ERole.ROLE_USER);
+        savedUser.setRole(role);
         userRepository.save(savedUser);
 
         String token = UUID.randomUUID().toString();

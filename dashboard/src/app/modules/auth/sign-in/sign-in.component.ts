@@ -77,8 +77,16 @@ export class AuthSignInComponent implements OnInit {
 
         // Sign in
         this._authService.signIn(this.signInForm.value).subscribe(
-            (res: any) => {
+            (user: any) => {
+                if (user.role[0].authority !== "ROLE_ADMIN") {
                 this._router.navigateByUrl('/home');
+                }
+                if (user.role[0].authority !== "ROLE_USER") {
+                this._router.navigateByUrl('/user');
+                }
+                if (user.role[0].authority !== "ROLE_PUBLISHER") {
+                this._router.navigateByUrl('/publisher');
+                }
             },
             (response) => {
                 

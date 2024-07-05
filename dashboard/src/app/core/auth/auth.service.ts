@@ -79,9 +79,9 @@ export class AuthService {
                 switchMap((response: any) => {
 
                     const  user  = this.decodeJwt(response.accessToken);                    
-                    if (user.role[0].authority !== "ROLE_ADMIN") {
-                        return throwError('User role is not authorized.'); // Throw an error if the user's role is not 99
-                    }
+                    // if (user.role[0].authority !== "ROLE_ADMIN") {
+                    //     return throwError('User role is not authorized.'); // Throw an error if the user's role is not 99
+                    // }
                     user.role = user.role[0].authority
                     user.avatar =  this.fileUrl+user.profilePicture
                     localStorage.setItem("user",JSON.stringify(user))

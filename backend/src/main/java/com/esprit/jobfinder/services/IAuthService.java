@@ -1,7 +1,9 @@
 package com.esprit.jobfinder.services;
 
+import com.esprit.jobfinder.models.enums.ERole;
+
 public interface IAuthService {
-    public void signup(String userName,String email,String password);
+    public void signup(String userName, String email, String password, ERole role);
     public void verifyAccount(String token);
 
     public String login(String userName,String email,String password);

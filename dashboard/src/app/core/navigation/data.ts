@@ -59,7 +59,7 @@ export const userNavigation: FuseNavigationItem[] = [
         title: 'exemple user',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/exemple'
+        link : '/user/exemple2'
     }
 ];
 export const publisherNavigation: FuseNavigationItem[] = [
