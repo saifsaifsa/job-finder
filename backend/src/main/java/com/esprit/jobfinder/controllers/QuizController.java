@@ -1,11 +1,7 @@
 package com.esprit.jobfinder.controllers;
 
-import com.esprit.jobfinder.models.Answer;
-import com.esprit.jobfinder.models.Question;
-import com.esprit.jobfinder.models.Quiz;
-import com.esprit.jobfinder.services.AnswerService;
-import com.esprit.jobfinder.services.QuestionService;
-import com.esprit.jobfinder.services.QuizService;
+import com.esprit.jobfinder.models.*;
+import com.esprit.jobfinder.services.*;
 import com.esprit.jobfinder.utiles.PDFExporter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/quizzes")
@@ -29,6 +26,13 @@ public class QuizController {
 
     @Autowired
     private AnswerService answerService;
+
+    @Autowired
+    private CompetenceService competenceService;
+    @Autowired
+    private UserQuizService userQuizService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public List<Quiz> getAllQuizzes() {
@@ -45,8 +49,14 @@ public class QuizController {
     }
 
     @PostMapping
-    public Quiz createQuiz(@Valid @RequestBody Quiz quiz) {
-        return quizService.save(quiz);
+    public Quiz createQuiz(@Valid @RequestBody Quiz quiz, @RequestParam Long competenceId) {
+        Quiz createdQuiz = quizService.save(quiz);
+        Competence competence = competenceService.findById(competenceId);
+        if (competence != null) {
+            competence.getQuizzes().add(createdQuiz);
+            competenceService.save(competence);
+        }
+        return createdQuiz;
     }
 
     @PutMapping("/{id}")
@@ -133,6 +143,33 @@ public class QuizController {
                 .headers(headers)
                 .body(pdfContent);
     }
+    @PostMapping("/{quizId}/submit")
+    public ResponseEntity<Integer> submitQuiz(
+            @PathVariable Long quizId,
+            @RequestParam Long userId,
+            @RequestBody List<Answer> answers) {
+        Quiz quiz = quizService.findById(quizId);
+        Optional<User> user = userService.getUserById(userId);
+
+        if (quiz == null || !user.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        int totalScore = 0;
+        for (Answer answer : answers) {
+            Answer correctAnswer = answerService.findById(answer.getId());
+            if (correctAnswer != null && correctAnswer.isCorrect() && correctAnswer.getQuestion().getQuiz().getId().equals(quizId)) {
+                totalScore += correctAnswer.getScore();
+            }
+        }
+
+        UserQuiz userQuiz = new UserQuiz();
+        userQuiz.setUser(user.get());
+        userQuiz.setQuiz(quiz);
+        userQuiz.setTotalScore(totalScore);
+
+        userQuizService.save(userQuiz);
+
+        return ResponseEntity.ok(totalScore);
+    }
 }
-
-

@@ -26,7 +26,5 @@ public class Answer {
 
     @ManyToOne
     private Question question;
-
-    // Getters and Setters
 }
 

@@ -78,5 +78,10 @@ public class CompetenceController {
                 .headers(headers)
                 .body(pdfContent);
     }
+
+    @GetMapping("/{competenceId}")
+    public Competence getCompetenceWithQuizzes(@PathVariable Long competenceId) {
+        return competenceService.getCompetenceWithQuizzes(competenceId);
+    }
 }
 

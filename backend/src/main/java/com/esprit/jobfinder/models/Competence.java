@@ -1,11 +1,11 @@
 package com.esprit.jobfinder.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -19,7 +19,12 @@ public class Competence {
 
     @NotBlank(message = "La catégorie de la compétence est obligatoire")
     private String category;
-
-    // Getters and Setters
+    @ManyToMany
+    @JoinTable(
+            name = "competence_quiz",
+            joinColumns = @JoinColumn(name = "competence_id"),
+            inverseJoinColumns = @JoinColumn(name = "quiz_id")
+    )
+    private Set<Quiz> quizzes = new HashSet<>();
 }
 
