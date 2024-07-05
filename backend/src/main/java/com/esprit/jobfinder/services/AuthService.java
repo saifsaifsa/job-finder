@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Optional;
 import java.util.UUID;
@@ -51,7 +52,7 @@ public class AuthService implements IAuthService{
     }
 
     @Override
-    public void signup(String userName,String email, String password) throws RuntimeException{
+    public void signup(String userName,String email, String password, ERole role) throws RuntimeException{
         Boolean userExists = userRepository.existsByEmail(email);
         if (userExists) throw new ConflictException ("User already exists with email "+email);
 
@@ -60,7 +61,7 @@ public class AuthService implements IAuthService{
 
         String hashedPassword = passwordEncoder.encode(password);
         User savedUser = new User(userName,email,hashedPassword);
-        savedUser.setRole(ERole.ROLE_USER);
+        savedUser.setRole(role);
         userRepository.save(savedUser);
 
         String token = UUID.randomUUID().toString();
@@ -85,21 +86,21 @@ public class AuthService implements IAuthService{
     @Override
     public String login(String userName, String email, String password) {
         UserDetails userDetails;
-        if (userName != null) {
-            userDetails = userDetailsService.loadUserByUsername(userName);
-        } else {
+//        if (userName != null) {
+//            userDetails = userDetailsService.loadUserByUsername(userName);
+//        }
             Optional<User> user = userRepository.findByEmail(email);
             if (!user.isPresent ()) {
                 throw new UnauthorizedException ("Bad credentials");
             }
             userDetails = new UserDetailsImpl(user.get ());
-        }
-
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken (userDetails.getUsername(), password)
         );
+        User existsUser = user.get();
+        existsUser.setLastLogin(LocalDateTime.now());
+        userRepository.save(existsUser);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         return jwtUtil.generateJwtToken ( authentication );
     }
     @Override
@@ -126,6 +127,21 @@ public class AuthService implements IAuthService{
             tokenRepository.delete(verificationToken);
         } else {
             throw new RuntimeException("Invalid or expired token");
+        }
+    }
+
+    @Override
+    public void generateSuperAdmin() {
+        Optional<User> userOptional = userRepository.findByEmail("admin@jobfinder.tn");
+        if (!userOptional.isPresent()) {
+            String hashedPassword = passwordEncoder.encode("Admin1234");
+            User savedUser = new User("admin","admin@jobfinder.tn",hashedPassword);
+            savedUser.setRole(ERole.ROLE_ADMIN);
+            savedUser.setActive(true);
+            savedUser.setFirstName("admin");
+            savedUser.setLastName("jobFinder");
+            savedUser.setPhone("+21622001003");
+            userRepository.save(savedUser);
         }
     }
 }

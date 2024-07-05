@@ -6,4 +6,5 @@ export interface User
     avatar?: string;
     status?: string;
     profilePicture?:string
+    role?:string
 }

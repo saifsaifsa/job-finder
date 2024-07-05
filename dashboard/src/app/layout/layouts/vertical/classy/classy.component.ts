@@ -8,6 +8,7 @@ import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { User } from 'app/core/user/user.types';
 import { UserService } from 'app/core/user/user.service';
+import { StaticNavigationService } from 'app/core/navigation/staticNavigation.service';
 
 @Component({
     selector     : 'classy-layout',
@@ -31,7 +32,8 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
         private _navigationService: NavigationService,
         private _userService: UserService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        private _staticNavigation:StaticNavigationService
     )
     {
     }
@@ -58,11 +60,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Subscribe to navigation data
-        this._navigationService.navigation$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((navigation: Navigation) => {
-                this.navigation = navigation;
-            });
 
         // Subscribe to the user service
         // this._userService.user$
@@ -70,10 +67,21 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
         //     .subscribe((user: User) => {
         //         this.user = user;
         //     });
+        this.navigation = this._staticNavigation.registerHandlers()
         this._userService.getLoggedInUser().subscribe((user) => {
             user.avatar =  this.fileUrl+user.profilePicture
             this.user = user;
-            console.log("user getLoggedInUser:",user);
+            
+                if(this.user.role =="ROLE_USER"){   
+                    this.navigation.default = this.navigation.user;
+                }
+                if(this.user.role =="ROLE_PUBLISHER"){    
+                    this.navigation.default = this.navigation.publisher;
+                }
+                if(this.user.role =="ROLE_ADMIN"){    
+                    this.navigation.default = this.navigation.default;
+                }
+                console.log("this.navigation",this.navigation);
           });
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$

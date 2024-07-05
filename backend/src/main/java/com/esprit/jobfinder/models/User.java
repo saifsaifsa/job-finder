@@ -1,8 +1,7 @@
 package com.esprit.jobfinder.models;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashSet;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import com.esprit.jobfinder.models.enums.ERole;
@@ -23,22 +22,15 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank(message = "Username cannot be blank")
   private String username;
   private String firstName;
 
   private String lastName;
   @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
   private Boolean active = false;
-  @Email(message = "Invalid email format")
   private String email;
-  @NotBlank(message = "password cannot be blank")
-  @Size(max = 120)
-  @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", message = "Password must have at least one lowercase letter, one uppercase letter, and one digit, and its length should be at least 8 characters")
   private String password;
 
-  @NotBlank(message = "phone cannot be blank")
-  @Pattern(regexp = "^\\+216(20|21|22|23|24|25|26|27|28|29|50|52|53|54|55|56|58|90|91|92|93|94|95|96|97|98|99)\\d{6}$", message = "Phone number must be a valid Tunisian phone number")
   private String phone;
 
   @Enumerated(EnumType.ORDINAL)
@@ -58,9 +50,12 @@ public class User {
 
   @ManyToMany
   Set<Offer> offres;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  private LocalDateTime lastLogin;
   public User() {
   }
-  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
   private VerificationToken verificationToken;
   public User(String username, String email, String password) {
     this.username = username;
@@ -212,5 +207,13 @@ public class User {
 
   public void setOffres(Set<Offer> offres) {
     this.offres = offres;
+  }
+
+  public LocalDateTime getLastLogin() {
+    return lastLogin;
+  }
+
+  public void setLastLogin(LocalDateTime lastLogin) {
+    this.lastLogin = lastLogin;
   }
 }

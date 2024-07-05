@@ -79,9 +79,9 @@ export class AuthService {
                 switchMap((response: any) => {
 
                     const  user  = this.decodeJwt(response.accessToken);                    
-                    if (user.role[0].authority !== "ROLE_ADMIN") {
-                        return throwError('User role is not authorized.'); // Throw an error if the user's role is not 99
-                    }
+                    // if (user.role[0].authority !== "ROLE_ADMIN") {
+                    //     return throwError('User role is not authorized.'); // Throw an error if the user's role is not 99
+                    // }
                     user.role = user.role[0].authority
                     user.avatar =  this.fileUrl+user.profilePicture
                     localStorage.setItem("user",JSON.stringify(user))
@@ -152,12 +152,13 @@ export class AuthService {
      * @param user
      */
     signUp(user: {
-        name: string;
+        username: string;
         email: string;
         password: string;
         company: string;
+        role: string;
     }): Observable<any> {
-        return this._httpClient.post('api/auth/sign-up', user);
+        return this._httpClient.post(`${environment.baseUrl}api/auth/signup`, user);
     }
 
     /**
