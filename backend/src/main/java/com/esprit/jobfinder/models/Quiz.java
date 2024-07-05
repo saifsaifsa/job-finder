@@ -6,7 +6,9 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -27,13 +29,6 @@ public class Quiz {
     @OneToMany(mappedBy = "quiz")
     private List<Question> questions;
 
-    // Getters and Setters
-
-    public Collection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Collection<User> users) {
-        this.users = users;
-    }
+    @ManyToMany(mappedBy = "quizzes")
+    private Set<Competence> competences = new HashSet<>();
 }
