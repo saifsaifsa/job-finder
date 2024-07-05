@@ -28,3 +28,4 @@ public class QuizService {
         quizRepository.deleteById(id);
     }
 }
+
