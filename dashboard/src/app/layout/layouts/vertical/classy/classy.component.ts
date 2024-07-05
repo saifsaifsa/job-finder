@@ -8,7 +8,7 @@ import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { User } from 'app/core/user/user.types';
 import { UserService } from 'app/core/user/user.service';
-import { StaticNavigation } from 'app/core/navigation/staticNavigation.service';
+import { StaticNavigationService } from 'app/core/navigation/staticNavigation.service';
 
 @Component({
     selector     : 'classy-layout',
@@ -33,7 +33,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
         private _userService: UserService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseNavigationService: FuseNavigationService,
-        private _staticNavigation:StaticNavigation
+        private _staticNavigation:StaticNavigationService
     )
     {
     }

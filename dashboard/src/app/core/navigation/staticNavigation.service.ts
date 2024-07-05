@@ -13,7 +13,7 @@ import {
 @Injectable({
     providedIn: 'root',
 })
-export class StaticNavigation {
+export class StaticNavigationService {
     private readonly _compactNavigation: FuseNavigationItem[] =
         compactNavigation;
     private readonly _defaultNavigation: FuseNavigationItem[] =
