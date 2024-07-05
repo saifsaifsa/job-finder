@@ -2,7 +2,6 @@ package com.esprit.jobfinder.services;
 
 import com.esprit.jobfinder.models.Participation;
 import com.esprit.jobfinder.repository.ParticipationRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

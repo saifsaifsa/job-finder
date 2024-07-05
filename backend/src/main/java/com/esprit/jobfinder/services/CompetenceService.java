@@ -32,3 +32,4 @@ public class CompetenceService {
         return competenceRepository.findByCategory(category);
     }
 }
+
