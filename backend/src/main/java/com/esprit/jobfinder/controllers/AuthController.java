@@ -85,7 +85,6 @@ public class AuthController {
     public ResponseEntity<?> oauthLinkedin(@RequestParam("code") String code) throws Exception {
         String token = authService.oauthLinkedin(code);
         return ResponseEntity.ok(new JwtResponse(token));
-
     }
 
 }

@@ -189,8 +189,10 @@ public class AuthService implements IAuthService{
             Optional<User> existingUser = userRepository.findByEmail(userProfile.getEmail());
             if (existingUser.isPresent()) {
                 UserDetailsImpl userDetailsImpl =new UserDetailsImpl(existingUser.get());
-                Authentication authentication = new OAuthAuthenticationToken(userDetailsImpl.getUsername(), userDetailsImpl.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                existingUser.get().setPassword(new BCryptPasswordEncoder ().encode("default"));
+                Authentication authentication = authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken (userDetailsImpl.getUsername(), "default")
+                );SecurityContextHolder.getContext().setAuthentication(authentication);
                 return jwtUtil.generateJwtToken ( authentication );
             } else {
                 User savedUser = new User(userProfile.getName(),userProfile.getFamilyName(),userProfile.getName().charAt(0)+userProfile.getFamilyName(),userProfile.getEmail(),"");
@@ -198,10 +200,11 @@ public class AuthService implements IAuthService{
                 savedUser.setActive(true);
                 savedUser.setRole(ERole.ROLE_USER);
                 userRepository.save(savedUser);
+                savedUser.setPassword(new BCryptPasswordEncoder ().encode("default"));
                 UserDetailsImpl userDetailsImpl =new UserDetailsImpl(savedUser);
-
-                Authentication authentication = new OAuthAuthenticationToken(userDetailsImpl.getUsername(), userDetailsImpl.getAuthorities());
-
+                Authentication authentication = authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken (userDetailsImpl.getUsername(), "default")
+                );SecurityContextHolder.getContext().setAuthentication(authentication);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 return jwtUtil.generateJwtToken ( authentication );
             }
