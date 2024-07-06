@@ -30,7 +30,7 @@ public class PaymentService {
                                         .setPriceData(
                                                 SessionCreateParams.LineItem.PriceData.builder()
                                                         .setCurrency(payment.getCurrency())
-                                                        .setUnitAmount(payment.getAmount())
+                                                        .setUnitAmount(payment.getAmount() * 100)
                                                         .setProductData(
                                                                 SessionCreateParams.LineItem.PriceData.ProductData.builder()
                                                                         .setName(payment.getName())

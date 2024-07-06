@@ -60,6 +60,13 @@ export const userNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/user/exemple2'
+    },
+    {
+        id   : 'training user',
+        title: 'training user',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/user/training'
     }
 ];
 export const publisherNavigation: FuseNavigationItem[] = [

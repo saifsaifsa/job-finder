@@ -102,4 +102,11 @@ export class TrainingService {
         // let headers = new HttpHeaders({'Content-Type': 'application/json'});
         return this._httpClient.post(`${environment.apiUrl}training`,data)
     }
+    likeTraining(postId: Number): Observable<any> {
+        return this._httpClient.post<any>(`${environment.apiUrl}training/${postId}/like`, {});
+      }
+    
+      dislikeTraining(postId: Number): Observable<any> {
+        return this._httpClient.post<any>(`${environment.apiUrl}training/${postId}/dislike`, {});
+      }
 }
