@@ -67,7 +67,7 @@ export const appRoutes: Route[] = [
                 path: 'callback',
                 loadChildren: () =>
                     import('app/modules/auth/oauth-callback/oauth-callback.module').then(
-                        (m) => m.OauthCallBack
+                        (m) => m.OauthCallBackModule
                     ),
             },
         ],

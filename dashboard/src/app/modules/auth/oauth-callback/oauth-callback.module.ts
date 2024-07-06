@@ -12,6 +12,6 @@ import { oauthCallbackRoutes } from './oauth-callback.routing';
 
     ]
 })
-export class OauthCallBack
+export class OauthCallBackModule
 {
 }
