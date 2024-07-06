@@ -14,12 +14,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -97,5 +94,9 @@ public class UserController {
     public ResponseEntity<User> patchUser(@PathVariable Long id, @RequestBody PatchUserRequest userDetails) {
         User updatedUser = userService.patchUser(id,userDetails);
         return ResponseEntity.ok(updatedUser);
+    }
+    @GetMapping("/stats")
+    public ResponseEntity<Map<String, Object>> getUsersStats() {
+        return ResponseEntity.ok(userService.getUserStatistics());
     }
 }
