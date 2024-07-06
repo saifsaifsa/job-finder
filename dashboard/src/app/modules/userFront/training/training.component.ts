@@ -19,7 +19,7 @@ export class TrainingComponentUser {
     recentTransactionsTableColumns: string[] = ['title', 'trainingCategories', 'rating', 'price', 'dateDebut',  "actions"];
     trainingCategories = Object.values(TrainingCategories);
     sortOrder: 'asc' | 'desc' = 'asc';
-    pageSize: number = 9;
+    pageSize: number = 6;
     currentPage: number = 0;
     totalItems:number=0
     sortField: string = '';

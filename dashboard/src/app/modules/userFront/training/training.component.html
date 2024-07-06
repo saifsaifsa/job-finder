@@ -4,7 +4,7 @@
         <img [src]="training.image" alt="{{ training.title }}" class="w-full h-48 object-cover rounded-t-lg">
         <div class="p-6">
           <h3 class="text-xl font-semibold mb-2">{{ training.title }}</h3>
-          <p class="text-gray-700">{{ training.rating }}</p>
+          <p class="text-gray-700">Rating: {{ training.rating }}%</p>
           <div class="flex items-center justify-between mt-4">
             <span class="text-lg font-bold">{{ training.price | currency }}</span>
             <button mat-button color="primary" (click)="viewDetails(training.id)">Details</button>
