@@ -44,7 +44,10 @@ export class AuthService {
      * @param email
      */
     forgotPassword(email: string): Observable<any> {
-        return this._httpClient.post(`${environment.baseUrl}api/auth/forgot-password`, {email});
+        return this._httpClient.post(
+            `${environment.baseUrl}api/auth/forgot-password`,
+            { email }
+        );
     }
 
     /**
@@ -52,8 +55,11 @@ export class AuthService {
      *
      * @param password
      */
-    resetPassword(newPassword: string,token:string): Observable<any> {
-        return this._httpClient.post(`${environment.baseUrl}api/auth/reset-password`, {newPassword,token});
+    resetPassword(newPassword: string, token: string): Observable<any> {
+        return this._httpClient.post(
+            `${environment.baseUrl}api/auth/reset-password`,
+            { newPassword, token }
+        );
     }
 
     decodeJwt(token: string): any {
@@ -63,13 +69,26 @@ export class AuthService {
         const decodedToken = JSON.parse(decodedData);
         return decodedToken;
     }
-
+    returnUserAfterLogin(accessToken: string) {
+        const user = this.decodeJwt(accessToken);
+        // if (user.role[0].authority !== "ROLE_ADMIN") {
+        //     return throwError('User role is not authorized.'); // Throw an error if the user's role is not 99
+        // }
+        user.role = user.role[0].authority;
+        user.avatar = this.fileUrl + user.profilePicture;
+        localStorage.setItem('user', JSON.stringify(user));
+        this.accessToken = accessToken;
+        this._authenticated = true;
+        this._userService.setLoggedInUser(user);
+        this._userService.user = user;
+        return of(user);
+    }
     /**
      * Sign in
      *
      * @param credentials
      */
-    signIn(credentials: { email: string; password: string }): Observable<any> {    
+    signIn(credentials: { email: string; password: string }): Observable<any> {
         if (this._authenticated) {
             return throwError('User is already logged in.');
         }
@@ -77,19 +96,7 @@ export class AuthService {
             .post(`${environment.baseUrl}api/auth/signin`, credentials)
             .pipe(
                 switchMap((response: any) => {
-
-                    const  user  = this.decodeJwt(response.accessToken);                    
-                    // if (user.role[0].authority !== "ROLE_ADMIN") {
-                    //     return throwError('User role is not authorized.'); // Throw an error if the user's role is not 99
-                    // }
-                    user.role = user.role[0].authority
-                    user.avatar =  this.fileUrl+user.profilePicture
-                    localStorage.setItem("user",JSON.stringify(user))
-                    this.accessToken = response.accessToken;
-                    this._authenticated = true;
-                    this._userService.setLoggedInUser(user)
-                    this._userService.user = user;
-                    return of(user);
+                    return this.returnUserAfterLogin(response.accessToken);
                 }),
                 catchError((error) => {
                     // Handle the error
@@ -115,7 +122,6 @@ export class AuthService {
                     of(false)
                 ),
                 switchMap((response: any) => {
-
                     const { user } = this.decodeJwt(response.accessToken);
                     if (user.role !== 99) {
                         return throwError('User role is not authorized.');
@@ -123,7 +129,7 @@ export class AuthService {
                     this.accessToken = response.accessToken;
 
                     this._authenticated = true;
-                    this._userService.setLoggedInUser(user)
+                    this._userService.setLoggedInUser(user);
 
                     this._userService.user = response.user;
 
@@ -158,7 +164,10 @@ export class AuthService {
         company: string;
         role: string;
     }): Observable<any> {
-        return this._httpClient.post(`${environment.baseUrl}api/auth/signup`, user);
+        return this._httpClient.post(
+            `${environment.baseUrl}api/auth/signup`,
+            user
+        );
     }
 
     /**
@@ -196,9 +205,9 @@ export class AuthService {
         }
 
         // If the access token exists and it didn't expire, sign in using it
-        const user = JSON.parse(localStorage.getItem("user"))
+        const user = JSON.parse(localStorage.getItem('user'));
         this._authenticated = true;
-        this._userService.setLoggedInUser(user)
+        this._userService.setLoggedInUser(user);
         this._userService.user = user;
         return of(true);
     }
@@ -214,56 +223,72 @@ export class AuthService {
         );
     }
 
-    confirmation(token:string) {   
-        return this._httpClient.get(`${environment.baseUrl}api/auth/verify?token=${token}`);
+    confirmation(token: string) {
+        return this._httpClient.get(
+            `${environment.baseUrl}api/auth/verify?token=${token}`
+        );
     }
 
-
-    linkedInLogin() {
-        const clientId = '77lz7wunm0s5jn';
-        const redirectUri = encodeURIComponent(window.location.origin + '/callback');
-        const scope = 'openid profile email';
-        const responseType = 'code';
-        const state = 'random_string';
-
-        const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&state=${state}`;
-
-        const width = 600;
-        const height = 600;
-        const left = (window.screen.width / 2) - (width / 2);
-        const top = (window.screen.height / 2) - (height / 2);
-
-        const popup = window.open(url, 'LinkedIn Login', `width=${width},height=${height},top=${top},left=${left}`);
-
-        window.addEventListener('message', (event) => {
-            if (event.origin === window.location.origin) {
-                const code = event.data.code;
-                this.exchangeCodeForToken(code);
-            }
+    linkedInLogin(): Observable<any> {
+        return new Observable((observer) => {
+            const clientId = '77lz7wunm0s5jn';
+            const redirectUri = encodeURIComponent('http://127.0.0.1:4200/callback');
+            const scope = 'openid profile email';
+            const responseType = 'code';
+            const state = 'random_string';
+    
+            const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&state=${state}`;
+    
+            const width = 600;
+            const height = 600;
+            const left = (window.screen.width / 2) - (width / 2);
+            const top = (window.screen.height / 2) - (height / 2);
+    
+            window.open(url, 'LinkedIn Login', `width=${width},height=${height},top=${top},left=${left}`);
+    
+            const handleMessage = (event: MessageEvent) => {
+                if (event.origin === window.location.origin) {
+                    const code = event.data.code;
+                    window.removeEventListener('message', handleMessage);
+                    this.exchangeCodeForToken(code).subscribe({
+                        next: (response) => {
+                            this.returnUserAfterLogin(response.accessToken).subscribe({
+                                next: (user) => {
+                                    observer.next(user);
+                                    observer.complete();
+                                },
+                                error: (error) => {
+                                    observer.error(error);
+                                }
+                            });
+                        },
+                        error: (error) => {
+                            observer.error(error);
+                        }
+                    });
+                }
+            };
+    
+            window.addEventListener('message', handleMessage);
         });
     }
+    
 
-    exchangeCodeForToken(code: string) {
+    exchangeCodeForToken(code: string): Observable<any> {
         const params = new HttpParams({
             fromObject: {
                 client_id: '77lz7wunm0s5jn',
                 client_secret: '24uSXbMPN9VSXjPm',
-                redirect_uri: window.location.origin + '/callback',
+                redirect_uri: 'http://127.0.0.1:4200/callback',
                 grant_type: 'authorization_code',
                 code: code,
             }
         });
 
-        this._httpClient.post('http://localhost:8080/api/auth/linkedin', params.toString(), {
+        return this._httpClient.post('http://localhost:8080/api/auth/linkedin', params.toString(), {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
-        }).subscribe((response: any) => {
-            console.log("response: ",response);
-            alert(JSON.stringify(response))
-        },(error)=>{
-            console.log("error: ",error);
-            alert(JSON.stringify(error))
         });
     }
 }
