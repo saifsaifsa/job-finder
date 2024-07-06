@@ -7,6 +7,7 @@ import { TrainingCategories } from "app/core/training/training.enums";
 import { DatePipe } from '@angular/common';
 import { TrainingService } from "app/core/training/trainingService";
 import { Training } from "app/core/training/training.types";
+import { PaymentService } from "app/core/payment/paymentService";
 
 @Component({
     selector: 'app-training-detail',
@@ -19,6 +20,7 @@ export class TrainingDetailComponentUser implements OnInit {
     @ViewChild('TrainingDetailsNgForm') trainingDetailsNgForm: NgForm;
     private fileUrl = 'http://localhost:8080/api/files/';
     photo: string | ArrayBuffer | null = null;
+    paymentUrl: string = '';
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
@@ -33,7 +35,8 @@ export class TrainingDetailComponentUser implements OnInit {
         private trainingService: TrainingService,
         private router: Router,
         private route: ActivatedRoute,
-        private datePipe: DatePipe
+        private datePipe: DatePipe, 
+        private paymentService: PaymentService
     ) { }
     private formatDate(date: Date): string {
         console.log("date:",date);
@@ -74,4 +77,52 @@ export class TrainingDetailComponentUser implements OnInit {
     upload(event: Event) {
         console.log(event);
     }
+
+    subscribe(): void {
+        const paymentRequest = {
+            currency: 'usd',
+            amount: this.training.price,
+            name: this.training.title, 
+            successUrl: 'http://localhost:4200/success',
+            cancelUrl: 'http://localhost:4200/cancel'
+          };
+          this.paymentService.initiatePayment(paymentRequest).subscribe(response => {
+            this.paymentUrl = response.url;
+            window.location.href = this.paymentUrl;
+          }, error => {
+            console.error('Error initiating payment:', error);
+          });
+        }
+    like(): void {
+        const trainingId = this.training.id;
+        this.trainingService.likeTraining(trainingId).subscribe(() => {
+        });
+        }
+    dislike(): void {
+        const trainingId = this.training.id;
+        this.trainingService.dislikeTraining(trainingId).subscribe(() => {
+
+        });
+        }
+
+        reloadCurrent() {
+            this.reloadComponent(true);
+        }
+        reloadComponent(self: boolean, urlToNavigateTo?: string) {
+            //skipLocationChange:true means dont update the url to / when navigating
+            console.log("Current route I am on:", this.router.url);
+            const url = self ? this.router.url : urlToNavigateTo;
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+                this.router.navigate([`/${url}`]).then(() => {
+                    console.log(`After navigation I am on:${this.router.url}`)
+                })
+            })
+        }
+    
+        reloadPage() {
+            window.location.reload()
+        }
+        reload() {
+            this.reloadComponent(false, 'TrainingModuleUser');
+        }
 }

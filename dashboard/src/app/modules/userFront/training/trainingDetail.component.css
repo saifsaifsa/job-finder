@@ -1,4 +1,3 @@
-/* src/app/training-details/training-details.component.css */
 .card {
     background-color: white;
     border-radius: 8px;
@@ -14,5 +13,24 @@
   
   .card-body {
     padding: 16px;
+  }
+.btn-subscribe {
+    background-color: #5c6bc0;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* Ensure button only takes the necessary width */
+}
+  
+  .btn-subscribe:hover {
+    background-color: #3949ab;
+  }
+  
+  .mat-icon {
+    margin-right: 4px; /* Adjust spacing between icon and text */
   }
   
