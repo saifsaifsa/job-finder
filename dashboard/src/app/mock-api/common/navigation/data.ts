@@ -9,6 +9,20 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/users'
+    },
+    {
+        id   : 'offre',
+        title: 'Offres',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/offre'
+    },
+    {
+        id   : 'training',
+        title: 'Training',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/training'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
@@ -36,5 +50,25 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/example'
+    }
+];
+export const userNavigation: FuseNavigationItem[] = [
+    
+    {
+        id   : 'exemple user',
+        title: 'exemple user',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/exemple'
+    }
+];
+export const publisherNavigation: FuseNavigationItem[] = [
+    
+    {
+        id   : 'exemple publisher',
+        title: 'exemple publisher',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/exemple'
     }
 ];

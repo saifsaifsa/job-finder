@@ -1,0 +1,46 @@
+/*****************/
+/*  Timeline     */
+/*****************/
+.timeline {
+    @apply after:content-[''] after:absolute after:top-0 after:end-0 after:start-0 after:w-px after:h-full after:m-auto after:border-s-2 after:border-dashed after:border-gray-200 dark:after:border-gray-600;
+    .timeline-item {
+        .date-label-left,
+        .duration-right {
+            @apply after:content-[''] after:absolute after:rounded-full after:z-10 after:top-[9px] after:w-2.5 after:h-2.5 after:bg-orange-600 before:content-[''] before:absolute before:rounded-full before:z-10 before:border-2 before:border-dashed before:border-gray-200 dark:before:border-gray-600 before:top-0 before:w-7 before:h-7 before:bg-white dark:before:bg-black;
+        }
+        .date-label-left {
+            @apply ltr:float-right rtl:float-left me-6 after:-end-[34px] before:-end-[43px];
+        }
+        .duration-right {
+            @apply ltr:float-left rtl:float-right me-6 after:-start-[34px] before:-start-[43px];
+        }
+        .event{
+            &.event-description-right {
+                @apply ltr:text-left rtl:text-right ms-6;
+            }
+            &.event-description-left {
+                @apply ltr:text-right rtl:text-left me-6;
+            }
+        }
+    }
+}
+
+@media (max-width: 575px) {
+    .timeline {
+        @apply ms-3 after:m-0 after:-ms-[7px];
+        .timeline-item {
+            .event {
+                &.event-description-right,
+                &.event-description-left {
+                    @apply ltr:text-left rtl:text-right m-0 ms-6 #{!important};
+                }
+            }
+            .duration {
+                @apply ltr:float-left rtl:float-right ms-6 me-auto ltr:text-left rtl:text-right after:-start-9 before:-start-11 #{!important};
+                .event {
+                    @apply ltr:text-left rtl:text-right ms-[15px] #{!important};
+                }
+            }
+        }
+    }
+}

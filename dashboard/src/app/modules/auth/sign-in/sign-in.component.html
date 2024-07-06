@@ -2,19 +2,19 @@
     <div class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
         <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
             <!-- Logo -->
-            <div class="md:justify-center w-20">
-                <img src="assets/images/logo/logo.png">
+            <div class="md:justify-center w-150">
+                <img src="assets/images/logo/jobfinder-logo.png">
             </div>
 
             <!-- Title -->
             <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign in</div>
-            <!-- <div class="flex items-baseline mt-0.5 font-medium">
+            <div class="flex items-baseline mt-0.5 font-medium">
                 <div>Don't have an account?</div>
                 <a
                     class="ml-1 text-primary-500 hover:underline"
                     [routerLink]="['/sign-up']">Sign up
                 </a>
-            </div> -->
+            </div>
 
             <!-- Alert -->
             <fuse-alert
@@ -78,29 +78,28 @@
                       signInForm.get('password').touched
                   "
               >
-                  Password is required and should have a minimum of 8
-                  characters
+              Password must have at least one lowercase letter, one uppercase letter, and one digit, and its length should be at least 8 characters
               </mat-error>
                 </mat-form-field>
 
                 <!-- Actions -->
-                <!-- <div class="inline-flex items-end justify-between w-full mt-1.5">
-                    <mat-checkbox
+                <div class="inline-flex items-end justify-between w-full mt-1.5">
+                    <!-- <mat-checkbox
                         [color]="'primary'"
                         [formControlName]="'rememberMe'">
                         Remember me
-                    </mat-checkbox>
+                    </mat-checkbox> -->
                     <a
                         class="text-md font-medium text-primary-500 hover:underline"
                         [routerLink]="['/forgot-password']">Forgot password?
                     </a>
-                </div> -->
+                </div>
 
                 <!-- Submit button -->
                 <button
                     class="fuse-mat-button-large w-full mt-6"
                     mat-flat-button
-                    [class.greenBtn]="!signInForm.disabled && !signInForm.invalid"
+                    [class.bleuBtn]="!signInForm.disabled && !signInForm.invalid"
                     [disabled]="signInForm.disabled || signInForm.invalid"
                     (click)="signIn()">
                     <span *ngIf="!signInForm.disabled">
@@ -111,7 +110,7 @@
                         [diameter]="24"
                         [mode]="'indeterminate'"></mat-progress-spinner>
                 </button>
-
+               <div class="w-full mt-6"><linkedin-oauth></linkedin-oauth></div> 
                 <!-- Separator -->
                 <!-- <div class="flex items-center mt-8">
                     <div class="flex-auto mt-px border-t"></div>
@@ -149,7 +148,7 @@
             </form>
         </div>
     </div>
-    <div class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden dark:border-l" style="background-color:#69b550">
+    <div class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden dark:border-l" style="background-color:#2895ff">
         <!-- Background - @formatter:off -->
         <!-- Rings -->
         <svg class="absolute inset-0 pointer-events-none"
@@ -173,8 +172,7 @@
         <!-- Content -->
         <div class="z-10 relative w-full max-w-2xl">
             <div class="text-7xl font-bold leading-none text-gray-100">
-                <div>Welcome to</div>
-                <div>JobFinder Dashboard</div>
+                <div>Welcome to JobFinder</div>
             </div>
             <!-- <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
                 Fuse helps developers to build organized and well coded dashboards full of beautiful and rich modules.

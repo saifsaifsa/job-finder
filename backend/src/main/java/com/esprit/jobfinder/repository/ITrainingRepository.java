@@ -9,5 +9,4 @@ import java.util.Set;
 
 public interface ITrainingRepository extends JpaRepository<Training,Long> {
     Set<Training> findTrainingByTrainingCategories(TrainingCategories trainingCategories);
-
 }

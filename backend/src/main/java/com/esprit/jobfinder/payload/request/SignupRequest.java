@@ -18,7 +18,7 @@ public class SignupRequest {
   private ERole role;
 
   @NotBlank(message = "Password cannot be blank")
-  @Size(min = 6, max = 40, message = "Password must be between 6 and 40 characters")
+  @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", message = "Password must have at least one lowercase letter, one uppercase letter, and one digit, and its length should be at least 8 characters")
   private String password;
 
   public String getUsername() {

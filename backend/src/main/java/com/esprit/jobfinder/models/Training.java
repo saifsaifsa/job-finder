@@ -4,7 +4,6 @@ package com.esprit.jobfinder.models;
 import com.esprit.jobfinder.models.enums.TrainingCategories;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +16,6 @@ import java.util.Set;
 public class Training {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
     private long id;
     private String title;
     private String description;
@@ -31,6 +29,7 @@ public class Training {
     private LocalDate dateDebut;
     @Temporal(TemporalType.DATE)
     private LocalDate dateFin;
+    private String image;
     @JsonIgnore
     @ManyToMany(mappedBy = "trainings",fetch = FetchType.LAZY)
     Set<User> subscribers;

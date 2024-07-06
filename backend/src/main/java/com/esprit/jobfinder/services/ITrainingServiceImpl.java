@@ -4,9 +4,16 @@ import com.esprit.jobfinder.models.Training;
 import com.esprit.jobfinder.models.enums.TrainingCategories;
 import com.esprit.jobfinder.repository.ITrainingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -14,9 +21,20 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ITrainingServiceImpl implements ITrainingService{
     private final ITrainingRepository trainingRepository;
+    @Autowired
+    private IFileUploaderService fileUploaderService;
 
     @Override
-    public Training addTraining(Training training) {
+    public Training addTraining(Training training, MultipartFile image) {
+        if (image != null && !image.isEmpty()) {
+            String filePath;
+            try {
+                filePath = fileUploaderService.uploadFile(image);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            training.setImage(filePath);
+        }
         return trainingRepository.save(training);
     }
 
@@ -31,8 +49,19 @@ public class ITrainingServiceImpl implements ITrainingService{
     }
 
     @Override
-    public Training updateTraining(Training training) {
+public Training updateTraining(Training training, MultipartFile image) {
         Assert.notNull(training.getId(),"Training Id must not be null");
+
+        if (image != null && !image.isEmpty()) {
+            String filePath;
+            try {
+                filePath = fileUploaderService.uploadFile(image);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            training.setImage(filePath);
+        }
+
         return trainingRepository.save(training);
     }
 
@@ -45,4 +74,43 @@ public class ITrainingServiceImpl implements ITrainingService{
     public Set<Training> findTrainingByCategories(TrainingCategories trainingCategories) {
         return trainingRepository.findTrainingByTrainingCategories(trainingCategories);
     }
+    @Override
+    public List<Training> getAllOrderByPrice(String direction) {
+        if(direction.equals("asc"))
+            return trainingRepository.findAll(Sort.by(Sort.Direction.ASC,"price"));
+        else
+            return trainingRepository.findAll(Sort.by(Sort.Direction.DESC,"price"));
+    }
+    @Override
+    public List<Training> getAllOrderByLikes(String direction) {
+        if(direction.equals("asc"))
+            return trainingRepository.findAll(Sort.by(Sort.Direction.ASC,"likes"));
+        else
+            return trainingRepository.findAll(Sort.by(Sort.Direction.DESC,"likes"));
+    }
+
+    @Override
+    public Page<Training> getAllTrainings(int page, int size, String sortBy, String sortOrder) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortOrder), sortBy));
+        return trainingRepository.findAll(pageable);
+    }
+    @Override
+    public Training likeTraining(long id){
+        Training training = getTraining(id);
+        training.setLikes(training.getLikes() + 1 );
+        training.setRating(rating(training.getLikes(),training.getDislikes()));
+        return updateTraining(training,null);
+    }
+    @Override
+    public Training dislikeTraining(long id){
+        Training training = getTraining(id);
+        training.setDislikes(training.getDislikes() + 1 );
+        training.setRating(rating(training.getLikes(),training.getDislikes()));
+        return updateTraining(training,null);
+    }
+
+    private int rating(int like,int dislike){
+        return like * 100 / (like + dislike);
+    }
+
 }

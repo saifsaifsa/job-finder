@@ -1,0 +1,29 @@
+/*****************/
+/*  Testimonial  */
+/*****************/
+.tns-controls {
+    button[data-controls="prev"],
+    button[data-controls="next"] {
+        @apply absolute top-1/2 -translate-y-1/2 text-base w-8 h-8 rounded-full bg-white dark:bg-slate-900 text-dark dark:text-white border-none z-1 shadow-lg shadow-slate-200 dark:shadow-slate-700;
+        &:hover {
+            @apply bg-orange-600 text-white;
+        }
+    }
+    button[data-controls="prev"] {
+        @apply start-0 md:-start-2;
+    }
+    button[data-controls="next"] {
+        @apply end-0 md:-end-2;
+    }
+}
+
+html[dir="rtl"]{
+    .tns-inner, .tns-nav, .slider, .slider2 {
+        direction: ltr !important;
+    }
+
+    .tns-visually-hidden {
+        left: 0 !important;
+        visibility: hidden;
+    }
+}

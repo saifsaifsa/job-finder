@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { emailRegexValidator, passwordRegexValidator } from 'app/layout/common/validators/validators';
 
 @Component({
     selector     : 'auth-sign-up',
@@ -44,10 +45,11 @@ export class AuthSignUpComponent implements OnInit
     {
         // Create the form
         this.signUpForm = this._formBuilder.group({
-                name      : ['', Validators.required],
-                email     : ['', [Validators.required, Validators.email]],
-                password  : ['', Validators.required],
+                username      : ['', Validators.required],
+                email: ['', [Validators.required, emailRegexValidator()]],
+                password: ['', [Validators.required, passwordRegexValidator()]],
                 company   : [''],
+                role: ['', Validators.required],
                 agreements: ['', Validators.requiredTrue]
             }
         );
@@ -80,20 +82,19 @@ export class AuthSignUpComponent implements OnInit
                 (response) => {
 
                     // Navigate to the confirmation required page
-                    this._router.navigateByUrl('/confirmation-required');
+                    //redirect to reqesred verification page
+                    this._router.navigateByUrl('/');
                 },
                 (response) => {
-
+                    
+                    // TODO Handle error 409
                     // Re-enable the form
                     this.signUpForm.enable();
-
-                    // Reset the form
-                    this.signUpNgForm.resetForm();
 
                     // Set the alert
                     this.alert = {
                         type   : 'error',
-                        message: 'Something went wrong, please try again.'
+                        message: response.error.description
                     };
 
                     // Show the alert

@@ -96,12 +96,9 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                     auth.requestMatchers("/api/auth/**").permitAll()
                             .requestMatchers("/api/test/**").permitAll()
                             .requestMatchers("/api/**").permitAll()
-                            .anyRequest().authenticated()
+                            .requestMatchers("/actuator/**").permitAll()
             )
-            .oauth2Login(oauth2 ->
-                    oauth2.userInfoEndpoint()
-                            .userService(customOAuth2UserService)
-            ).cors();
+            .cors();
 
     http.authenticationProvider(authenticationProvider());
 

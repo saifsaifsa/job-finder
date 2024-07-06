@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -42,7 +43,7 @@ export class UserComponent implements OnInit {
     sortField: string = '';
     sortOrder: 'asc' | 'desc' = 'asc';
     pageSize: number = 10;
-    currentPage: number = 1;
+    currentPage: number = 0;
     totalItems:number=0
     authentifiedUser:any
     ngOnInit(): void {
@@ -74,8 +75,8 @@ export class UserComponent implements OnInit {
             )
             .subscribe(
                 (data: any) => {
-                    this.usersDataSource.data = data;
-                    this.totalItems = data.total
+                    this.usersDataSource.data = data.content;
+                    this.totalItems = data.totalElements
                 },
                 (err) => {
                     console.log('errors: ', err);
@@ -83,7 +84,7 @@ export class UserComponent implements OnInit {
             );
     }
     applyFilters() {
-        this.currentPage = 1;
+        this.currentPage = 0;
         this.getUsers();
     }
     applySort(sort: { active: string; direction: 'asc' | 'desc' }) {
@@ -93,7 +94,7 @@ export class UserComponent implements OnInit {
     }
 
     onPageChange(event: any) {
-        this.currentPage = event.pageIndex + 1;
+        this.currentPage = event.pageIndex;
         this.pageSize = event.pageSize;
         this.getUsers();
     }
@@ -110,7 +111,7 @@ export class UserComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             if (result === true) {
                 this.showAlert = false;
-                if (this.authentifiedUser._id == userId) {
+                if (this.authentifiedUser.id == userId) {
                     this.alert = {
                         type: 'error',
                         message: "You can't delete your owen account",
@@ -121,7 +122,7 @@ export class UserComponent implements OnInit {
                 this.userService.deleteUser(userId).subscribe((res) => {
                     this.usersDataSource.data =
                         this.usersDataSource.data.filter((u) => {
-                            return u._id != userId;
+                            return u.id != userId;
                         });
                 });
             }
@@ -129,7 +130,7 @@ export class UserComponent implements OnInit {
     }
     toggleConfirmation(userId: string, value: any) {
         this.showAlert = false;
-        if (this.authentifiedUser._id == userId) {
+        if (this.authentifiedUser.id == userId) {
             value.source.checked = true;
             this.alert = {
                 type: 'error',

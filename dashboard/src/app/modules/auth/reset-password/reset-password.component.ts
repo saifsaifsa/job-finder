@@ -5,6 +5,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseValidators } from '@fuse/validators';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector     : 'auth-reset-password',
@@ -22,13 +23,15 @@ export class AuthResetPasswordComponent implements OnInit
     };
     resetPasswordForm: FormGroup;
     showAlert: boolean = false;
+    token:string
 
     /**
      * Constructor
      */
     constructor(
         private _authService: AuthService,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private readonly _activatedRoute: ActivatedRoute
     )
     {
     }
@@ -42,6 +45,7 @@ export class AuthResetPasswordComponent implements OnInit
      */
     ngOnInit(): void
     {
+        this.token = this._activatedRoute.snapshot.queryParamMap.get('token');
         // Create the form
         this.resetPasswordForm = this._formBuilder.group({
                 password       : ['', Validators.required],
@@ -75,7 +79,7 @@ export class AuthResetPasswordComponent implements OnInit
         this.showAlert = false;
 
         // Send the request to the server
-        this._authService.resetPassword(this.resetPasswordForm.get('password').value)
+        this._authService.resetPassword(this.resetPasswordForm.get('password').value,this.token)
             .pipe(
                 finalize(() => {
 

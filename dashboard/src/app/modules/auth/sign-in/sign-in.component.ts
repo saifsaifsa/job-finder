@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { emailRegex } from 'app/layout/common/constants/regex';
+import { emailRegexValidator, passwordRegexValidator } from 'app/layout/common/validators/validators';
 
 @Component({
     selector: 'auth-sign-in',
@@ -42,28 +44,15 @@ export class AuthSignInComponent implements OnInit {
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
 
-    emailRegexValidator(): ValidatorFn {
-        const emailRegex: RegExp =
-            /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
-        return (control: AbstractControl): { [key: string]: any } | null => {
-            const email: string = control.value;
-
-            if (email && !emailRegex.test(email)) {
-                return { invalidEmailFormat: true };
-            }
-
-            return null;
-        };
-    }
+    
     /**
      * On init
      */
     ngOnInit(): void {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            email: ['', [Validators.required, this.emailRegexValidator()]],
-            password: ['', [Validators.required, Validators.minLength(8)]],
+            email: ['', [Validators.required, emailRegexValidator()]],
+            password: ['', [Validators.required, passwordRegexValidator()]],
         });
     }
 
@@ -88,8 +77,16 @@ export class AuthSignInComponent implements OnInit {
 
         // Sign in
         this._authService.signIn(this.signInForm.value).subscribe(
-            (res: any) => {
+            (user: any) => {
+                if (user.role[0].authority !== "ROLE_ADMIN") {
                 this._router.navigateByUrl('/home');
+                }
+                if (user.role[0].authority !== "ROLE_USER") {
+                this._router.navigateByUrl('/user');
+                }
+                if (user.role[0].authority !== "ROLE_PUBLISHER") {
+                this._router.navigateByUrl('/publisher');
+                }
             },
             (response) => {
                 
@@ -106,7 +103,7 @@ export class AuthSignInComponent implements OnInit {
                         message:
                             "You don't have permission to access",
                     };
-                }else if (response.error.description == 'Account not confirmed') {
+                }else if (response.error.message == 'Le compte utilisateur est désactivé') {
                     this.alert = {
                         type: 'error',
                         message: 'You Account is not active',

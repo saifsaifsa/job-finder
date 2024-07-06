@@ -29,7 +29,7 @@ export const appRoutes: Route[] = [
         },
         children: [
             {
-                path: 'confirmation-required',
+                path: 'confirmation',
                 loadChildren: () =>
                     import(
                         'app/modules/auth/confirmation-required/confirmation-required.module'
@@ -61,6 +61,13 @@ export const appRoutes: Route[] = [
                 loadChildren: () =>
                     import('app/modules/auth/sign-up/sign-up.module').then(
                         (m) => m.AuthSignUpModule
+                    ),
+            },
+            {
+                path: 'callback',
+                loadChildren: () =>
+                    import('app/modules/auth/oauth-callback/oauth-callback.module').then(
+                        (m) => m.OauthCallBackModule
                     ),
             },
         ],
@@ -106,6 +113,7 @@ export const appRoutes: Route[] = [
     // },
 
     // Admin routes
+    // TODO check if has role ROLE_ADMIN
     {
         path: '',
         canActivate: [AuthGuard],
@@ -115,21 +123,39 @@ export const appRoutes: Route[] = [
             initialData: InitialDataResolver,
         },
         children: [
-            {
-                path: 'home',
-                loadChildren: () =>
-                    import('app/modules/admin/example/example.module').then(
-                        (m) => m.ExampleModule
-                    ),
-            },
-            {
-                path: 'users',
-                loadChildren: () =>
-                    import('app/modules/admin/user/user.module').then(
-                        (m) => m.UserModule
-                    ),
-            },
-            
+            {path: 'home',loadChildren: () => import('app/modules/admin/example/example.module').then((m) => m.ExampleModuleAdmin),},
+            {path: 'users',loadChildren: () =>import('app/modules/admin/user/user.module').then((m) => m.UserModule),},
+            {path: 'offre', loadChildren: () => import('app/modules/admin/offer/offerData.module').then(m => m.OfferModule)},
+            {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
+        ],
+    },
+    // Publisher routes
+    // TODO check if has ROLE_PUBLISHER
+    {
+        path: 'publisher',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        resolve: {
+            initialData: InitialDataResolver,
+        },
+        children: [
+            {path: 'exemple1',loadChildren: () => import('app/modules/publisherFront/example/example.module').then((m) => m.ExampleModule),},
+        ],
+    },
+    // User student routes
+    // TODO check if has ROLE_PUBLISHER
+    {
+        path: 'user',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        resolve: {
+            initialData: InitialDataResolver,
+        },
+        children: [
+            {path: 'exemple2',loadChildren: () => import('app/modules/userFront/example/example.module').then((m) => m.ExampleModuleUser),},
+            {path: 'training',loadChildren: () => import('app/modules/userFront/training/training.module').then((m) => m.TrainingModuleUser),},
         ],
     },
 ];
