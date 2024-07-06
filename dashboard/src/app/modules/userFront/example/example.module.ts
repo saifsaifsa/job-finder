@@ -17,6 +17,6 @@ const exampleRoutes: Route[] = [
         RouterModule.forChild(exampleRoutes)
     ]
 })
-export class ExampleModule
+export class ExampleModuleUser
 {
 }

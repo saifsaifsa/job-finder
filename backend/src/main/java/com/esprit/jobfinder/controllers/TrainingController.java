@@ -78,7 +78,7 @@ public class TrainingController {
     @GetMapping()
     public ResponseEntity<Page<Training>> getAllTrainings(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "9") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortOrder) {
 
