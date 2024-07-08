@@ -118,7 +118,7 @@
 
         <div class="sm:col-span-4 mt-4 mx-4">
             <div class="relative w-24 h-24">
-                <img class="w-full h-full rounded-full" [src]="photo ? photo : 'assets/avatars/avatar.png'" alt="training photo"
+                <img class="w-full h-full rounded-full" [src]="photo ? photo : 'assets/avatars/images.png'" alt="training photo"
                     (click)="avatarInput.click()" />
                 <input formControlName="image" id="image" type="file" accept=".jpg,.jpeg,.png"
                     (change)="onAvatarChange($event)" #avatarInput style="display: none" />

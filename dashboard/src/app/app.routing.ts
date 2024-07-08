@@ -141,6 +141,7 @@ export const appRoutes: Route[] = [
         },
         children: [
             {path: 'exemple1',loadChildren: () => import('app/modules/publisherFront/example/example.module').then((m) => m.ExampleModule),},
+            {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
         ],
     },
     // User student routes
