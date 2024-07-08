@@ -83,8 +83,8 @@ export class TrainingDetailComponentUser implements OnInit {
             currency: 'usd',
             amount: this.training.price,
             name: this.training.title, 
-            successUrl: 'http://localhost:4200/success',
-            cancelUrl: 'http://localhost:4200/cancel'
+            successUrl: 'http://localhost:4200/user/success',
+            cancelUrl: 'http://localhost:4200/user/cancel'
           };
           this.paymentService.initiatePayment(paymentRequest).subscribe(response => {
             this.paymentUrl = response.url;
@@ -123,6 +123,6 @@ export class TrainingDetailComponentUser implements OnInit {
             window.location.reload()
         }
         reload() {
-            this.reloadComponent(false, 'TrainingModuleUser');
+            this.reloadComponent(false, 'TrainingDetailComponentUser');
         }
 }
