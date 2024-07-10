@@ -1,0 +1,18 @@
+
+<h1 mat-dialog-title>{{ data ? 'Update Skill' : 'Add New Skill' }}</h1>
+<div mat-dialog-content>
+    <form [formGroup]="skillForm">
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Category</mat-label>
+            <input matInput formControlName="category">
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button color="primary" (click)="onSave()">Save</button>
+</div>

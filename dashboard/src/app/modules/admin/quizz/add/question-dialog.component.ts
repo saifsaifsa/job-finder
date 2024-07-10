@@ -4,13 +4,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-question-dialog',
-    templateUrl: './answer-dialog.component.html',
+    templateUrl: './question-dialog.component.html',
 })
-export class AnswerDialogComponent {
+export class QuestionDialogComponent {
     questionForm: FormGroup;
 
     constructor(
-        public dialogRef: MatDialogRef<AnswerDialogComponent>,
+        public dialogRef: MatDialogRef<QuestionDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private fb: FormBuilder
     ) {
