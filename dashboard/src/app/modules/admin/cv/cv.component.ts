@@ -53,6 +53,7 @@ export class CvComponent implements OnInit {
   downloadCv(id: number): void {
     this.cvService.exportCvToPDF(id).subscribe((blob) => {
       saveAs(blob, `cv-${id}.pdf`);
+      this.incrementDownloads(id); // Optionally update the downloads count in the UI
     });
   }
 
@@ -64,5 +65,13 @@ export class CvComponent implements OnInit {
 
   closeCv(): void {
     this.selectedCv = null;
+  }
+
+  private incrementDownloads(id: number): void {
+    const cvToUpdate = this.dataSource.data.find(cv => cv.id === id);
+    if (cvToUpdate) {
+      cvToUpdate.downloads++;
+      this.dataSource._updateChangeSubscription();
+    }
   }
 }

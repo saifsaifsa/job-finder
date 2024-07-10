@@ -17,6 +17,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { CvComponent } from './modules/admin/cv/cv.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { StatsModule } from './modules/admin/cv/cvStats/statsModule';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -26,7 +27,6 @@ const routerConfig: ExtraOptions = {
 @NgModule({
     declarations: [
         AppComponent
-    
     ],
     imports     : [
         BrowserModule,
