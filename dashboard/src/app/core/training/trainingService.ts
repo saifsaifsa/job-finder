@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, ReplaySubject } from 'rxjs';
 import { Training } from './training.types';
 import { environment } from "environments/environment";
-import { map } from 'rxjs/internal/operators/map';
+import { map } from 'rxjs/internal/operators';
 
 @Injectable({
     providedIn: 'root'

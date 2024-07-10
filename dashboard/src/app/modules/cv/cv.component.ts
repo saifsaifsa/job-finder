@@ -53,17 +53,6 @@ export class CvComponent implements OnInit {
     });
   }
  
-  /*openCv(id: number): void {
-    this.cvService.getCv(id).subscribe(cv => {
-      const dialogRef = this.dialog.open(CvPopupComponent, {
-        width: '500px',
-        data: cv
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-      });
-    });
-  }*/
+
 
 }
