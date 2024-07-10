@@ -128,7 +128,10 @@ export const appRoutes: Route[] = [
             {path: 'offre', loadChildren: () => import('app/modules/admin/offer/offerData.module').then(m => m.OfferModule)},
             {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
             {path: 'skills', loadChildren: () => import('app/modules/admin/skills/skills.module').then((m) => m.SkillsModule)},
-            {path: 'quizz', loadChildren: () => import('app/modules/admin/quizz/quizz.module').then((m) => m.QuizzModule)},
+            {path: 'quizz', loadChildren: () => import('app/modules/admin/quizz/quizz.module').then((m) => m.QuizzModule)},           
+            {path: 'cv', loadChildren: () => import('app/modules/admin/cv/cv.module').then((m) => m.CvModule)},       
+            {path: 'cvStats', loadChildren: () => import('app/modules/admin/cv/cvStats/statsModule').then((m) => m.StatsModule)}         
+       
         ],
     },
     // Publisher routes
@@ -143,7 +146,8 @@ export const appRoutes: Route[] = [
         },
         children: [
             {path: 'exemple1',loadChildren: () => import('app/modules/publisherFront/example/example.module').then((m) => m.ExampleModule),},
-            {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
+            {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)}
+   
         ],
     },
     // User student routes
