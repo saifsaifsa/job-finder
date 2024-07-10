@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -55,10 +57,7 @@ public class CvServiceImp implements CvService {
         });
     }
 
-    @Override
-    public void incrementDownloads(Long id) {
-        // Implement this method if needed
-    }
+
 
     @Override
     public byte[] exportCvToPDF(Long id) {
@@ -138,6 +137,19 @@ public class CvServiceImp implements CvService {
     @Override
     public Cv removeSkillFromCv(Long cvId, Long skillId) {
         return null;
+    }
+    public Map<String, Long> getCvStatistics() {
+        Map<String, Long> stats = new HashMap<>();
+        stats.put("totalCvs", cvRepository.count());
+        stats.put("totalViews", cvRepository.sumViews());
+        stats.put("totalDownloads", cvRepository.sumDownloads());
+        return stats;
+    }@Override
+    public void incrementDownloads(Long id) {
+        cvRepository.findById(id).ifPresent(cv -> {
+            cv.setDownloads(cv.getDownloads() + 1);
+            cvRepository.save(cv);
+        });
     }
 
 

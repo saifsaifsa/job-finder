@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -78,6 +79,14 @@ public class CvController {
         headers.setContentDispositionFormData("attachment", "cv.pdf");
         return new ResponseEntity<>(pdfData, headers, HttpStatus.OK);
     }
-
+    @GetMapping("/stats")
+    public Map<String, Long> getCvStatistics() {
+        return cvService.getCvStatistics();
+    }
+    @GetMapping("/{id}/increment-downloads")
+    public ResponseEntity<Void> incrementDownloads(@PathVariable Long id) {
+        cvService.incrementDownloads(id);
+        return ResponseEntity.ok().build();
+    }
 
 }
