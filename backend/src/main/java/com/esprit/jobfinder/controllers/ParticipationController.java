@@ -2,14 +2,20 @@ package com.esprit.jobfinder.controllers;
 
 import com.esprit.jobfinder.models.Participation;
 import com.esprit.jobfinder.services.ParticipationService;
+import com.esprit.jobfinder.utiles.PDFExporter;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/participations")
+@Validated
 public class ParticipationController {
     @Autowired
     private ParticipationService participationService;
@@ -29,12 +35,12 @@ public class ParticipationController {
     }
 
     @PostMapping
-    public Participation createParticipation(@RequestBody Participation participation) {
+    public Participation createParticipation(@Valid @RequestBody Participation participation) {
         return participationService.save(participation);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Participation> updateParticipation(@PathVariable Long id, @RequestBody Participation participationDetails) {
+    public ResponseEntity<Participation> updateParticipation(@PathVariable Long id, @Valid @RequestBody Participation participationDetails) {
         Participation participation = participationService.findById(id);
         if (participation == null) {
             return ResponseEntity.notFound().build();
@@ -58,18 +64,26 @@ public class ParticipationController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<Participation> getParticipationsByUserId(@PathVariable Long userId) {
+    public List<Participation> getParticipationsByUser(@PathVariable Long userId) {
         return participationService.findByUserId(userId);
     }
 
     @GetMapping("/quiz/{quizId}")
-    public List<Participation> getParticipationsByQuizId(@PathVariable Long quizId) {
+    public List<Participation> getParticipationsByQuiz(@PathVariable Long quizId) {
         return participationService.findByQuizId(quizId);
     }
 
-    @GetMapping("/{id}/score")
-    public ResponseEntity<Double> getScore(@PathVariable Long id) {
-        double score = participationService.calculateScore(id);
-        return ResponseEntity.ok(score);
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportResultsToPDF() {
+        List<Participation> participations = participationService.findAll();
+        byte[] pdfContent = PDFExporter.exportResultsToPDF(participations);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "results.pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(pdfContent);
     }
 }

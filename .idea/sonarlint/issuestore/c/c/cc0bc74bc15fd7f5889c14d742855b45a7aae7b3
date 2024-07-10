@@ -1,11 +1,7 @@
 
 r
-java:S1068"*Remove this unused "userId" private field.(Â—‹¼úÿÿÿÿ8ùòÏæƒ2J$b0075fd9-e925-4544-8506-0db62d56563d
+java:S1068"*Remove this unused "userId" private field.(Â—‹¼úÿÿÿÿ8ùòÏæƒ2J$b0075fd9-e925-4544-8506-0db62d56563d
 r
-java:S1068"*Remove this unused "quizId" private field.(çéà„øÿÿÿÿ8úòÏæƒ2J$0eb60c02-2c9d-43e0-a513-5d7fd865582d
-u
-java:S1068"-Remove this unused "startTime" private field.(Ã«ùÿÿÿÿ8úòÏæƒ2J$fd51a03a-1487-4e02-b945-0f7eab603dfe
-n
-java:S1068"+Remove this unused "endTime" private field.(±ı’Ø8ûòÏæƒ2J$5283f042-9df2-4909-aea9-5e60c695c892
+java:S1068"*Remove this unused "quizId" private field.(çéà„øÿÿÿÿ8úòÏæƒ2J$0eb60c02-2c9d-43e0-a513-5d7fd865582d
 q
-java:S1068")Remove this unused "score" private field.(·”šüşÿÿÿÿ8ûòÏæƒ2J$22721680-5a1f-478c-a18e-9a6402f7bc43
+java:S1068")Remove this unused "score" private field.(·”šüşÿÿÿÿ8ûòÏæƒ2J$22721680-5a1f-478c-a18e-9a6402f7bc43
