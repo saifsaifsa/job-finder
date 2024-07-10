@@ -15,7 +15,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FuseCardModule } from '@fuse/components/card';
 import { CvComponent } from './cv.component';
-
 import { SharedModule } from 'app/shared/shared.module';
 
 const cvRoutes: Routes = [
@@ -31,8 +30,6 @@ const cvRoutes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatButtonModule,
-    MatCheckboxModule,
     MatDividerModule,
     MatFormFieldModule,
     MatIconModule,

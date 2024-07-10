@@ -14,7 +14,12 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatNativeDateModule } from '@angular/material/core';
-import { CvComponent } from './cv/cv.component';
+import { CvComponent } from './modules/admin/cv/cv.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
+
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -23,14 +28,17 @@ const routerConfig: ExtraOptions = {
 
 @NgModule({
     declarations: [
-        AppComponent,
-        CvComponent
+        AppComponent
+    
     ],
     imports     : [
         BrowserModule,
         BrowserAnimationsModule,
         MatNativeDateModule, // Include MatNativeDateModule or MatMomentDateModule based on your preference
-        MatMomentDateModule ,
+        MatMomentDateModule , 
+         MatSortModule,
+        MatTableModule,  
+        MatPaginatorModule,
         RouterModule.forRoot(appRoutes, routerConfig),
 
         // Fuse, FuseConfig & FuseMockAPI

@@ -1,8 +1,8 @@
-import { Component, ViewEncapsulation, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { CvService } from '../cv/cvService';
+import { CvService } from './cvService';
 import { saveAs } from 'file-saver';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -12,13 +12,15 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./cv.component.scss']
 })
 export class CvComponent implements OnInit {
-
-  displayedColumns: string[] = ["Name", "Email", "Views", "Downloads", "Actions"];
+  displayedColumns: string[] = ["Name", "Email", "UserName", "Views", "Downloads", "Actions"];
   dataSource: MatTableDataSource<any>;
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+
   constructor(private cvService: CvService, public dialog: MatDialog) {}
+
   ngOnInit() {
     this.loadCvs();
   }
@@ -30,7 +32,7 @@ export class CvComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
     });
   }
-  
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.dataSource.filter = filterValue;
@@ -47,12 +49,16 @@ export class CvComponent implements OnInit {
   editCv(cvId: number) {
     // Implement edit logic here
   }
+
   downloadCv(id: number): void {
     this.cvService.exportCvToPDF(id).subscribe((blob) => {
       saveAs(blob, `cv-${id}.pdf`);
     });
   }
- 
 
+  openCv(id: number): void {
+    // Implement open logic here
+  }
 
+  
 }
