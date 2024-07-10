@@ -127,6 +127,8 @@ export const appRoutes: Route[] = [
             {path: 'users',loadChildren: () =>import('app/modules/admin/user/user.module').then((m) => m.UserModule),},
             {path: 'offre', loadChildren: () => import('app/modules/admin/offer/offerData.module').then(m => m.OfferModule)},
             {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
+            {path: 'skills', loadChildren: () => import('app/modules/admin/skills/skills.module').then((m) => m.SkillsModule)},
+            {path: 'quizz', loadChildren: () => import('app/modules/admin/quizz/quizz.module').then((m) => m.QuizzModule)},
         ],
     },
     // Publisher routes

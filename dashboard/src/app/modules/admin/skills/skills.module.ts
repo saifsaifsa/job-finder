@@ -36,7 +36,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { SkillsComponent } from './skills.component';
-
+import {SkillDialogComponent} from "./modals/skill-dialog.component";
 
 const offerRoutes: Route[] = [
     {
@@ -47,7 +47,8 @@ const offerRoutes: Route[] = [
 
 @NgModule({
     declarations: [
-        SkillsComponent
+        SkillsComponent,
+        SkillDialogComponent
     ],
     imports     : [
         RouterModule.forChild(offerRoutes),
@@ -55,13 +56,10 @@ const offerRoutes: Route[] = [
         MatTableModule,
         MatCheckboxModule,
         MatButtonModule,
-        MatRadioModule, 
+        MatRadioModule,
         MatGridListModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        
-
-      
         CommonModule,
         MatButtonModule,
         MatButtonModule,
@@ -85,11 +83,8 @@ const offerRoutes: Route[] = [
         ReactiveFormsModule,
         MatAutocompleteModule,
         MatButtonModule,
-        
-        MatCheckboxModule,
         MatDatepickerModule,
         MatDialogModule,
-       
         MatGridListModule,
         MatIconModule,
         MatInputModule,
