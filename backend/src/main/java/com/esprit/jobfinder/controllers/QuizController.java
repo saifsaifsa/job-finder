@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/quizzes")
@@ -171,5 +172,14 @@ public class QuizController {
         userQuizService.save(userQuiz);
 
         return ResponseEntity.ok(totalScore);
+    }
+
+    @GetMapping("/skills/{id}")
+    public ResponseEntity<Set<Quiz>> getQuizBySkillsId(@PathVariable Long id) {
+        Competence competence = competenceService.findById(id);
+        if (competence == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(competence.getQuizzes());
     }
 }
