@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { CvService } from '../cv/cvService';
+import { CvService } from './cvService';
 import { saveAs } from 'file-saver';
 import { MatDialog } from '@angular/material/dialog';
 

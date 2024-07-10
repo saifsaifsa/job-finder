@@ -14,7 +14,7 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatNativeDateModule } from '@angular/material/core';
-import { CvComponent } from './cv/cv.component';
+import { CvComponent } from './modules/admin/cv/cv.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
@@ -25,8 +25,7 @@ const routerConfig: ExtraOptions = {
 
 @NgModule({
     declarations: [
-        AppComponent,
-        CvComponent
+        AppComponent
     ],
     imports     : [
         BrowserModule,
