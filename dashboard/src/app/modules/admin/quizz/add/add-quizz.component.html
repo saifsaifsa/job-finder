@@ -1,0 +1,55 @@
+<div class="w-full w-10/12">
+    <div>
+        <fuse-alert class="mx-8 mt-8 mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+                    [type]="alert.type" [@shake]="alert.type === 'error'">
+            {{ alert.message }}
+        </fuse-alert>
+    </div>
+    <form [formGroup]="quizForm" (ngSubmit)="onSubmit()">
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>Title</mat-label>
+                <input matInput placeholder="Title" formControlName="title" />
+                <mat-error *ngIf="quizForm.get('title').invalid && quizForm.get('title').touched">
+                    Title is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>Success Score</mat-label>
+                <input matInput type="number" placeholder="Success Score" formControlName="successScore" />
+                <mat-error *ngIf="quizForm.get('successScore').invalid && quizForm.get('successScore').touched">
+                    Success score must be a positive number
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div formArrayName="questions">
+            <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i">
+                <div class="sm:col-span-4">
+                    <mat-form-field class="w-3/4 mt-4 mx-4">
+                        <mat-label>Question Content</mat-label>
+                        <input matInput placeholder="Question Content" formControlName="content" />
+                        <mat-error *ngIf="question.get('content').invalid && question.get('content').touched">
+                            Question content is required
+                        </mat-error>
+                    </mat-form-field>
+                    <button mat-button type="button" (click)="addAnswer(i)">Add Answer</button>
+                    <button mat-button type="button" (click)="editQuestion(i)">Edit Question</button>
+                    <button mat-button type="button" (click)="removeQuestion(i)">Remove Question</button>
+                </div>
+            </div>
+            <button mat-button type="button" (click)="addQuestion()">Add Question</button>
+        </div>
+
+        <div class="flex items-center justify-end mb-10 mx-4">
+            <button mat-stroked-button type="button">
+                Cancel
+            </button>
+            <button class="ml-4" [class.greenBtn]="!quizForm.invalid" mat-flat-button type="submit" [disabled]="quizForm.invalid">
+                Save
+            </button>
+        </div>
+    </form>
+</div>

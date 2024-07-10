@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { CvService } from './cvService';
 import { saveAs } from 'file-saver';
-import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cv',
@@ -14,12 +14,12 @@ import { MatDialog } from '@angular/material/dialog';
 export class CvComponent implements OnInit {
   displayedColumns: string[] = ["Name", "Email", "UserName", "Views", "Downloads", "Actions"];
   dataSource: MatTableDataSource<any>;
+  selectedCv: any = null;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-
-  constructor(private cvService: CvService, public dialog: MatDialog) {}
+  constructor(private cvService: CvService, private router: Router) {}
 
   ngOnInit() {
     this.loadCvs();
@@ -47,7 +47,7 @@ export class CvComponent implements OnInit {
   }
 
   editCv(cvId: number) {
-    // Implement edit logic here
+    this.router.navigate(['/cv/edit', cvId]);
   }
 
   downloadCv(id: number): void {
@@ -57,8 +57,12 @@ export class CvComponent implements OnInit {
   }
 
   openCv(id: number): void {
-    // Implement open logic here
+    this.cvService.getCv(id).subscribe((cv) => {
+      this.selectedCv = cv;
+    });
   }
 
-  
+  closeCv(): void {
+    this.selectedCv = null;
+  }
 }

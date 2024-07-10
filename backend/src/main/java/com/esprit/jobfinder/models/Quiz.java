@@ -6,30 +6,29 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-@Entity
 @Data
+@Entity
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Title is mandatory")
+    @NotBlank(message = "Le titre du quiz est obligatoire")
     private String title;
 
-    @Positive(message = "Duration must be positive")
-    private int duration;
+    @Positive(message = "Le score total doit être une valeur positive")
+    private double totalScore;
 
-    private int attempts;
-    private double passThreshold;
-    @ManyToMany(mappedBy = "quizs")
-    private Collection<User> users;
+    @Positive(message = "Le seuil de réussite doit être une valeur positive")
+    private double successScore;
 
-    public Collection<User> getUsers() {
-        return users;
-    }
+    @OneToMany(mappedBy = "quiz")
+    private List<Question> questions;
 
-    public void setUsers(Collection<User> users) {
-        this.users = users;
-    }
+    @ManyToMany(mappedBy = "quizzes")
+    private Set<Competence> competences = new HashSet<>();
 }
