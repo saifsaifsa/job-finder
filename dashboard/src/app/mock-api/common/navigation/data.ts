@@ -16,13 +16,6 @@ export const defaultNavigation: FuseNavigationItem[] = [
         icon : 'heroicons_outline:chart-pie',
         link : '/cv'
     },
-    ,{
-        id   : 'stats',
-        title: 'Stats',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/stats'
-    },
     {
         id   : 'offre',
         title: 'Offres',
