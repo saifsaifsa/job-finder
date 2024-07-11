@@ -19,7 +19,7 @@ export class UserDetailComponent implements OnInit {
     private fileUrl = 'http://localhost:8080/api/files/';
     roles = {
         "ROLE_USER": "ROLE_USER",
-        "ROLE_MODERATOR": "ROLE_MODERATOR",
+        "ROLE_PUBLISHER": "ROLE_PUBLISHER",
         "ROLE_ADMIN": "ROLE_ADMIN",
     };
 

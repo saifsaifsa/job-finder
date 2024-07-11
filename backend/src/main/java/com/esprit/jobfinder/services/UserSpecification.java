@@ -29,7 +29,7 @@ public class UserSpecification {
 
     public static Specification<User> hasRole(String role) {
         return (root, query, criteriaBuilder) ->
-                role == null ? null : criteriaBuilder.equal(root.get("role"), role);
+                role == null ? null : criteriaBuilder.equal(root.get("role"), ERole.valueOf(role).ordinal());
     }
 
     public static Specification<User> hasPhone(String phone) {

@@ -67,22 +67,8 @@ public class UserController {
     @PutMapping(path="/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<User> updateUser(@PathVariable Long id,@Valid @ModelAttribute UpdateUserReq updateReq) {
         try {
-            Optional<User> userDetails = userService.getUserById(id);
-            if(userDetails.isPresent()){
-                User newUserDetails = userDetails.get();
-                newUserDetails.setId(id);
-                newUserDetails.setRole(ERole.valueOf(updateReq.getRole()));
-                newUserDetails.setEmail(updateReq.getEmail());
-                newUserDetails.setFirstName(updateReq.getFirstName());
-                newUserDetails.setLastName(updateReq.getLastName());
-                newUserDetails.setPhone(updateReq.getPhone());
-                newUserDetails.setUsername(updateReq.getUsername());
-                newUserDetails.setBirthDay(DateUtils.parseDate(updateReq.getBirthDay()));
-                newUserDetails.setActive(userDetails.get().getActive());
-            }else{
-                throw new NotFoundException("user with id "+userDetails.get().getId()+" not found");
-            }
-            User updatedUser = userService.updateUser(userDetails.get(),updateReq.getPhoto());
+
+            User updatedUser = userService.updateUser(updateReq,updateReq.getPhoto());
             return ResponseEntity.ok(updatedUser);
         } catch (IOException e) {
             throw new BadRequestException(e.getMessage());

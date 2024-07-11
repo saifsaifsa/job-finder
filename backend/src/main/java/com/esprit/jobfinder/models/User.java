@@ -14,6 +14,7 @@ import java.util.Set;
 @Table(name = "users", 
     uniqueConstraints = { 
       @UniqueConstraint(columnNames = "username"),
+      @UniqueConstraint(columnNames = "phone"),
       @UniqueConstraint(columnNames = "email") 
     })
 public class User {
@@ -53,10 +54,11 @@ public class User {
 
   @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime lastLogin;
+
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private VerificationToken verificationToken;
   public User() {
   }
-  @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-  private VerificationToken verificationToken;
   public User(String username, String email, String password) {
     this.username = username;
     this.email = email;
