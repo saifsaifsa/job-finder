@@ -19,12 +19,7 @@ public class Competence {
 
     @NotBlank(message = "La catégorie de la compétence est obligatoire")
     private String category;
-    @ManyToMany
-    @JoinTable(
-            name = "competence_quiz",
-            joinColumns = @JoinColumn(name = "competence_id"),
-            inverseJoinColumns = @JoinColumn(name = "quiz_id")
-    )
+
+    @OneToMany(mappedBy = "competence", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Quiz> quizzes = new HashSet<>();
 }
-

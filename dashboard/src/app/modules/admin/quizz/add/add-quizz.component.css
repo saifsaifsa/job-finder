@@ -1,0 +1,32 @@
+.question-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.question-content {
+    margin-right: 16px;
+}
+
+.flex-grow {
+    flex: 1;
+}
+
+.flex-shrink-0 {
+    flex-shrink: 0;
+}
+
+.answers-container {
+    margin-left: 16px;
+    margin-top: 8px;
+}
+
+.answer-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+button[mat-button] {
+    margin-left: 8px;
+}

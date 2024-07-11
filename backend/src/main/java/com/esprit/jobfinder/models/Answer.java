@@ -1,10 +1,6 @@
 package com.esprit.jobfinder.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
@@ -23,8 +19,8 @@ public class Answer {
 
     @PositiveOrZero(message = "Le score doit être une valeur positive ou zéro")
     private double score;
-
     @ManyToOne
+    @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 }
 

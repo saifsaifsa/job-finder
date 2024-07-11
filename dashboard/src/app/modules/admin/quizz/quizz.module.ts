@@ -25,7 +25,7 @@ const exampleRoutes: Route[] = [
         path     : 'skills/:id',
         component: QuizzComponent
     },{
-        path     : '',
+        path     : 'skills/:id/add',
         component: AddQuizComponent
     }
 ];

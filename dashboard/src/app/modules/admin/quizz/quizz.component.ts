@@ -16,6 +16,7 @@ export class QuizzComponent
 {
     displayedColumns: string[] = ['Name', 'Category', 'Actions'];
     dataSource: any;
+    skillId:number;
     constructor(private quizzesService: QuizzesService, public dialog: MatDialog,
                 private route: ActivatedRoute, ) {
     }
@@ -43,8 +44,8 @@ export class QuizzComponent
     }
     private refreshData(): void {
         this.route.params.subscribe((params) => {
-            const skillId = params['id'];
-            this.quizzesService.getQuizzes(skillId).subscribe((data: any) => {
+             this.skillId = params['id'];
+            this.quizzesService.getQuizzes(this.skillId).subscribe((data: any) => {
                 this.dataSource = new MatTableDataSource(data);
                 this.dataSource.sort = this.sort;
                 this.dataSource.paginator = this.paginator;

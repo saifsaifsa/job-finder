@@ -1,5 +1,6 @@
 package com.esprit.jobfinder.controllers;
 
+import com.esprit.jobfinder.dto.QuizDTO;
 import com.esprit.jobfinder.models.*;
 import com.esprit.jobfinder.services.*;
 import com.esprit.jobfinder.utiles.PDFExporter;
@@ -49,27 +50,23 @@ public class QuizController {
         return ResponseEntity.ok(quiz);
     }
 
-    @PostMapping
-    public Quiz createQuiz(@Valid @RequestBody Quiz quiz, @RequestParam Long competenceId) {
-        Quiz createdQuiz = quizService.save(quiz);
-        Competence competence = competenceService.findById(competenceId);
-        if (competence != null) {
-            competence.getQuizzes().add(createdQuiz);
-            competenceService.save(competence);
-        }
-        return createdQuiz;
+    @PostMapping("/skills/{competenceId}")
+    public Quiz createQuiz(@Valid @RequestBody QuizDTO quiz, @PathVariable Long competenceId) {
+        quiz.setCompetenceId(competenceId);
+        return quizService.save(quiz);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Quiz> updateQuiz(@PathVariable Long id, @Valid @RequestBody Quiz quizDetails) {
+    public ResponseEntity<Quiz> updateQuiz(@PathVariable Long id, @Valid @RequestBody QuizDTO quizDetails) {
         Quiz quiz = quizService.findById(id);
-        if (quiz == null) {
-            return ResponseEntity.notFound().build();
-        }
-        quiz.setTitle(quizDetails.getTitle());
-        quiz.setTotalScore(quizDetails.getTotalScore());
-        quiz.setSuccessScore(quizDetails.getSuccessScore());
-        return ResponseEntity.ok(quizService.save(quiz));
+        return ResponseEntity.ok(quiz);
+//        if (quiz == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        quiz.setTitle(quizDetails.getTitle());
+//        quiz.setTotalScore(quizDetails.getTotalScore());
+//        quiz.setSuccessScore(quizDetails.getSuccessScore());
+//        return ResponseEntity.ok(quizService.save(quiz));
     }
 
     @DeleteMapping("/{id}")

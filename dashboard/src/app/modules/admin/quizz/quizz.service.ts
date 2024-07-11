@@ -22,7 +22,7 @@ export class QuizzesService {
         return this.http.delete(`${this.apiUrl}/${id}`);
     }
 
-    addQuizzes(quizzDetails: any): Observable<any> {
-        return this.http.post(this.apiUrl, quizzDetails);
+    addQuizzes(quizzDetails: any,competenceId:number): Observable<any> {
+        return this.http.post(this.apiUrl+`/skills/${competenceId}`, quizzDetails);
     }
 }

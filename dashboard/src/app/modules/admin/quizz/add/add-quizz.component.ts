@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import {QuizzesService} from "../quizz.service";
-import {MatDialog} from "@angular/material/dialog";
-import {QuestionDialogComponent} from "./question-dialog.component";
-import {AnswerDialogComponent} from "../answers/answer-dialog.component";
+import { QuizzesService } from "../quizz.service";
+import { MatDialog } from "@angular/material/dialog";
+import { QuestionDialogComponent } from "./question-dialog.component";
+import { AnswerDialogComponent } from "../answers/answer-dialog.component";
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-add-quiz',
@@ -13,16 +14,40 @@ export class AddQuizComponent implements OnInit {
     quizForm: FormGroup;
     alert: { type: string, message: string } = { type: '', message: '' };
     showAlert = false;
-
-    constructor(private fb: FormBuilder, private quizService: QuizzesService, private dialog: MatDialog) {
+    competanceId:number;
+    constructor(private fb: FormBuilder, private quizService: QuizzesService, private dialog: MatDialog,private readonly route:ActivatedRoute) {
         this.quizForm = this.fb.group({
             title: ['', Validators.required],
             successScore: [0, [Validators.required, Validators.min(1)]],
-            questions: this.fb.array([])
+            questions: this.fb.array([])  // Keep questions as form array to manage answers
         });
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.route.params.subscribe((params) => {
+            this.competanceId = params["id"]
+        })
+    }
+
+    get questions(): FormArray {
+        return this.quizForm.get('questions') as FormArray;
+    }
+
+    addQuestion(): void {
+        const dialogRef = this.dialog.open(QuestionDialogComponent, {
+            width: '400px',
+            data: { title: 'Add Question' }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.questions.push(this.fb.group({
+                    content: result.content,
+                    answers: this.fb.array([])  // Initialize empty answers array
+                }));
+            }
+        });
+    }
 
     removeQuestion(index: number) {
         this.questions.removeAt(index);
@@ -33,26 +58,14 @@ export class AddQuizComponent implements OnInit {
     }
 
     addAnswer(questionIndex: number) {
-        const answerForm = this.fb.group({
-            content: ['', Validators.required],
-            isCorrect: [false],
-            score: [0, Validators.required]
-        });
-
         const dialogRef = this.dialog.open(AnswerDialogComponent, {
             width: '400px',
             data: { title: 'Add Answer' }
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log("questionIndex",questionIndex)
-            console.log("this.getAnswers(questionIndex):",this.getAnswers(questionIndex))
-
-            console.log("result:",result);
             if (result) {
-               // this.questions.push(this.fb.group(result));
                 this.getAnswers(questionIndex).push(this.fb.group(result));
-                console.log("this.getAnswers(questionIndex):",this.getAnswers(questionIndex))
             }
         });
     }
@@ -68,7 +81,8 @@ export class AddQuizComponent implements OnInit {
             this.alert.message = 'Please fill out the form correctly.';
             return;
         }
-        this.quizService.addQuizzes(this.quizForm.value).subscribe({
+    
+        this.quizService.addQuizzes(this.quizForm.value,this.competanceId).subscribe({
             next: () => {
                 this.showAlert = true;
                 this.alert.type = 'success';
@@ -83,34 +97,4 @@ export class AddQuizComponent implements OnInit {
             }
         });
     }
-    get questions(): FormArray {
-        return this.quizForm.get('questions') as FormArray;
-    }
-
-    addQuestion(): void {
-        const dialogRef = this.dialog.open(QuestionDialogComponent, {
-            width: '400px',
-            data: { title: 'Add Question' }
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.questions.push(this.fb.group(result));
-            }
-        });
-    }
-
-    editQuestion(index: number): void {
-        const dialogRef = this.dialog.open(QuestionDialogComponent, {
-            width: '400px',
-            data: { title: 'Edit Question', ...this.questions.at(index).value }
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.questions.at(index).patchValue(result);
-            }
-        });
-    }
-
 }
