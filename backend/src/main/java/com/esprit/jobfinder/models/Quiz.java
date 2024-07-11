@@ -24,7 +24,6 @@ public class Quiz {
     @Positive(message = "Le seuil de réussite doit être une valeur positive")
     private double successScore;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions;
 

@@ -42,6 +42,12 @@ export class UserDetailComponent implements OnInit {
     private formatDate(date: Date): string {
          return this.datePipe.transform(date, 'yyyy/MM/dd') || '';
       }
+      getProfilePicture(profilePicture){
+        if(profilePicture){
+            return /^http/.test(profilePicture) ? profilePicture:this.fileUrl+profilePicture
+        }
+        return"assets/avatars/avatar.png"
+    }
     ngOnInit(): void {
         this.userService.getLoggedInUser().subscribe((user)=>{
             this.authentifiedUser = user
@@ -91,7 +97,7 @@ export class UserDetailComponent implements OnInit {
                 });
                 this.userService.getUser(userId).subscribe((user: any) => {
                     
-                    this.avatar = this.fileUrl+user.profilePicture
+                    this.avatar = this.getProfilePicture(user.profilePicture)
                     this.userDetailsForm.patchValue({
                         lastName: user.lastName,
                         firstName: user.firstName,

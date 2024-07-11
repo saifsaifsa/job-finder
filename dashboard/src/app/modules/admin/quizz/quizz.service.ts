@@ -14,7 +14,7 @@ export class QuizzesService {
         return this.http.get(this.apiUrl+'/skills/'+skilssId);
     }
 
-    updateQuizzes(id: number, quizzDetails: any): Observable<any> {
+    updateQuiz(id: number, quizzDetails: any): Observable<any> {
         return this.http.put(`${this.apiUrl}/${id}`, quizzDetails);
     }
 
@@ -24,5 +24,8 @@ export class QuizzesService {
 
     addQuizzes(quizzDetails: any,competenceId:number): Observable<any> {
         return this.http.post(this.apiUrl+`/skills/${competenceId}`, quizzDetails);
+    }
+    getQuizById(id: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/${id}`);
     }
 }

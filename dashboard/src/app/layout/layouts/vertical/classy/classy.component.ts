@@ -69,7 +69,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
         //     });
         this.navigation = this._staticNavigation.registerHandlers()
         this._userService.getLoggedInUser().subscribe((user) => {
-            user.avatar =  user.profilePicture ? this.fileUrl+user.profilePicture : "assets/avatars/avatar.png"
+            user.avatar =  this.getProfilePicture(user.profilePicture)  
             this.user = user;
             
                 if(this.user.role =="ROLE_USER"){   
@@ -103,6 +103,12 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
     }
 
+    getProfilePicture(profilePicture){
+        if(profilePicture){
+            return /^http/.test(profilePicture) ? profilePicture:this.fileUrl+profilePicture
+        }
+        return"assets/avatars/avatar.png"
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
