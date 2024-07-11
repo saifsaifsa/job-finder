@@ -70,5 +70,8 @@ public class QuizService {
     public void deleteById(Long id) {
         quizRepository.deleteById(id);
     }
+    public List<Quiz> getQuizzesByCompetenceId(Long competenceId){
+        return this.quizRepository.findQuizzesByCompetenceId(competenceId);
+    }
 }
 

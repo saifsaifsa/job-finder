@@ -172,11 +172,12 @@ public class QuizController {
     }
 
     @GetMapping("/skills/{id}")
-    public ResponseEntity<Set<Quiz>> getQuizBySkillsId(@PathVariable Long id) {
+    public ResponseEntity<List<Quiz>> getQuizBySkillsId(@PathVariable Long id) {
         Competence competence = competenceService.findById(id);
         if (competence == null) {
             return ResponseEntity.notFound().build();
         }
+        List<Quiz> quizzes = this.quizService.getQuizzesByCompetenceId(id);
         return ResponseEntity.ok(competence.getQuizzes());
     }
 }

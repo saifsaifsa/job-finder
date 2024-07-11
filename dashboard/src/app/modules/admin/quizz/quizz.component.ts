@@ -14,7 +14,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class QuizzComponent
 {
-    displayedColumns: string[] = ['Name', 'Category', 'Actions'];
+    displayedColumns: string[] = ['Title', 'Actions'];
     dataSource: any;
     skillId:number;
     constructor(private quizzesService: QuizzesService, public dialog: MatDialog,

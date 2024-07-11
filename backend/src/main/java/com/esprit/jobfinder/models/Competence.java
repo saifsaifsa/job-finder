@@ -1,10 +1,12 @@
 package com.esprit.jobfinder.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -19,7 +21,7 @@ public class Competence {
 
     @NotBlank(message = "La catégorie de la compétence est obligatoire")
     private String category;
-
-    @OneToMany(mappedBy = "competence", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Quiz> quizzes = new HashSet<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "competence", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Quiz> quizzes;
 }
