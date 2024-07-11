@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { UserService } from 'app/core/user/user.service';
+import { emailRegexValidator } from 'app/layout/common/validators/validators';
 
 @Component({
     selector: 'app-user-detail',
@@ -57,8 +58,7 @@ export class UserDetailComponent implements OnInit {
             firstName: new FormControl('', Validators.required),
             username: new FormControl('', Validators.required),
             email: new FormControl('', [
-                Validators.required,
-                Validators.minLength(8),
+                emailRegexValidator()
             ]),
             password: new FormControl('', [
                 Validators.required,
@@ -84,8 +84,7 @@ export class UserDetailComponent implements OnInit {
                     firstName: new FormControl('', Validators.required),
                     username: new FormControl('', Validators.required),
                     email: new FormControl('', [
-                        Validators.required,
-                        Validators.minLength(8),
+                    emailRegexValidator()
                     ]),
                     phone: new FormControl('', [
                         Validators.required,
