@@ -83,8 +83,8 @@ export class TrainingDetailComponentUser implements OnInit {
             currency: 'usd',
             amount: this.training.price,
             name: this.training.title, 
-            successUrl: 'http://localhost:4200/success',
-            cancelUrl: 'http://localhost:4200/cancel'
+            successUrl: 'http://localhost:4200/user/success',
+            cancelUrl: 'http://localhost:4200/user/cancel'
           };
           this.paymentService.initiatePayment(paymentRequest).subscribe(response => {
             this.paymentUrl = response.url;
@@ -97,12 +97,17 @@ export class TrainingDetailComponentUser implements OnInit {
         const trainingId = this.training.id;
         this.trainingService.likeTraining(trainingId).subscribe(() => {
         });
+        this.training.likes++;
+        this.training.rating = (this.training.likes * 100 / (this.training.likes + this.training.dislikes))
+        this.training.rating = Math.round(this.training.rating);
         }
     dislike(): void {
         const trainingId = this.training.id;
         this.trainingService.dislikeTraining(trainingId).subscribe(() => {
-
         });
+        this.training.dislikes++;
+        this.training.rating = (this.training.likes * 100 / (this.training.likes + this.training.dislikes))
+        this.training.rating = Math.round(this.training.rating);
         }
 
         reloadCurrent() {
@@ -123,6 +128,6 @@ export class TrainingDetailComponentUser implements OnInit {
             window.location.reload()
         }
         reload() {
-            this.reloadComponent(false, 'TrainingModuleUser');
+            this.reloadComponent(false, 'TrainingDetailComponentUser');
         }
 }

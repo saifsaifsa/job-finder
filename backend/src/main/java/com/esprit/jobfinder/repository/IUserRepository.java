@@ -29,4 +29,12 @@ public interface IUserRepository extends JpaRepository<User, Long> , JpaSpecific
   @Modifying
   @Transactional
   void deleteAllByIdIn(List<Long> ids);
+  @Query("SELECT COUNT(u) FROM User u")
+  long countAllUsers();
+
+  @Query("SELECT COUNT(u) FROM User u WHERE u.active = true")
+  long countActiveUsers();
+
+  @Query("SELECT u.role, COUNT(u) FROM User u GROUP BY u.role")
+  List<Object[]> countUsersByRole();
 }

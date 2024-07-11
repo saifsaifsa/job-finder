@@ -143,6 +143,7 @@ export const appRoutes: Route[] = [
         },
         children: [
             {path: 'exemple1',loadChildren: () => import('app/modules/publisherFront/example/example.module').then((m) => m.ExampleModule),},
+            {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
         ],
     },
     // User student routes
@@ -158,6 +159,8 @@ export const appRoutes: Route[] = [
         children: [
             {path: 'exemple2',loadChildren: () => import('app/modules/userFront/example/example.module').then((m) => m.ExampleModuleUser),},
             {path: 'training',loadChildren: () => import('app/modules/userFront/training/training.module').then((m) => m.TrainingModuleUser),},
+            { path: 'success',loadChildren: () => import('app/modules/userFront/success-page/success-page.module').then((m) => m.SuccessModule), },
+            { path: 'cancel',loadChildren: () => import('app/modules/userFront/cancel-page/cancel-page.module').then((m) => m.CancelModule), },
         ],
     },
 ];

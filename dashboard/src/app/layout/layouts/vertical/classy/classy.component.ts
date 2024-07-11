@@ -69,7 +69,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
         //     });
         this.navigation = this._staticNavigation.registerHandlers()
         this._userService.getLoggedInUser().subscribe((user) => {
-            user.avatar =  this.fileUrl+user.profilePicture
+            user.avatar =  user.profilePicture ? this.fileUrl+user.profilePicture : "assets/avatars/avatar.png"
             this.user = user;
             
                 if(this.user.role =="ROLE_USER"){   

@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface IUserService {
@@ -20,4 +21,5 @@ public interface IUserService {
     User patchUser(Long id,PatchUserRequest user);
     public Page<User> getAllUsers(String name, String email, String role, String phone, int page, int size, String sortBy,String sortOrder);
     void deleteInactiveUsers();
+    Map<String, Object> getUserStatistics();
 }

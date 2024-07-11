@@ -9,6 +9,7 @@
     <form [formGroup]="trainingDetailsForm" (ngSubmit)="onSubmit()" #trainingDetailNgForm="ngForm">
         <div class="sm:col-span-4">
             <mat-form-field class="w-1/2 mt-4 mx-4">
+                <mat-label>Title</mat-label>
                 <input matInput placeholder="title" formControlName="title" />
                 <mat-error *ngIf="
                               trainingDetailsForm.get('title').invalid &&
@@ -20,6 +21,7 @@
 
         <div class="sm:col-span-4">
             <mat-form-field class="w-1/2 mt-4 mx-4">
+                <mat-label>Description</mat-label>
                 <input matInput placeholder="description" formControlName="description" />
                 <mat-error *ngIf="
                               trainingDetailsForm.get('description').invalid &&
@@ -31,6 +33,7 @@
 
         <div class="sm:col-span-4">
             <mat-form-field class="w-1/2 mt-4 mx-4">
+                <mat-label>Training category</mat-label>
                 <mat-select formControlName="trainingCategories" >
                   <mat-option *ngFor="let trainingCategory of trainingCategories" [value]="trainingCategory">
                     {{ trainingCategory }}
@@ -46,6 +49,7 @@
 
         <div class="sm:col-span-4">
             <mat-form-field class="w-1/2 mt-4 mx-4">
+                <mat-label>Price</mat-label>
                 <input matInput type="number" placeholder="price" formControlName="price" />
                 <mat-error *ngIf="
                               trainingDetailsForm.get('price').invalid &&
@@ -57,6 +61,7 @@
 
         <div class="sm:col-span-4">
             <mat-form-field class="w-1/2 mt-4 mx-4">
+                <mat-label>Rating</mat-label>
                 <input matInput type="number" placeholder="rating" formControlName="rating" />
                 <mat-error *ngIf="
                               trainingDetailsForm.get('rating').invalid &&
@@ -68,6 +73,7 @@
 
         <div class="sm:col-span-4">
             <mat-form-field class="w-1/2 mt-4 mx-4">
+                <mat-label>Likes</mat-label>
                 <input matInput type="number" placeholder="likes" formControlName="likes" />
                 <mat-error *ngIf="
                               trainingDetailsForm.get('likes').invalid &&
@@ -79,6 +85,7 @@
 
         <div class="sm:col-span-4">
             <mat-form-field class="w-1/2 mt-4 mx-4">
+                <mat-label>Dislikes</mat-label>
                 <input matInput type="number" placeholder="dislikes" formControlName="dislikes" />
                 <mat-error *ngIf="
                               trainingDetailsForm.get('dislikes').invalid &&
@@ -90,6 +97,7 @@
 
         <div class="sm:col-span-4">
             <mat-form-field class="w-1/2 mt-4 mx-4">
+                <mat-label>Start date</mat-label>
                 <input matInput type="date" placeholder="dateDebut" formControlName="dateDebut" />
                 <mat-error *ngIf="
                               trainingDetailsForm.get('dateDebut').invalid &&
@@ -101,6 +109,7 @@
 
         <div class="sm:col-span-4">
             <mat-form-field class="w-1/2 mt-4 mx-4">
+                <mat-label>End date</mat-label>
                 <input matInput type="date" placeholder="dateFin" formControlName="dateFin" />
                 <mat-error *ngIf="
                               trainingDetailsForm.get('dateFin').invalid &&
@@ -118,7 +127,8 @@
 
         <div class="sm:col-span-4 mt-4 mx-4">
             <div class="relative w-24 h-24">
-                <img class="w-full h-full rounded-full" [src]="photo ? photo : 'assets/images/avatars/avatar.png'" alt="training photo"
+                <mat-label>Upload image</mat-label>
+                <img class="w-full h-full rounded-full" [src]="photo ? photo : 'assets/avatars/images.png'" alt="training photo"
                     (click)="avatarInput.click()" />
                 <input formControlName="image" id="image" type="file" accept=".jpg,.jpeg,.png"
                     (change)="onAvatarChange($event)" #avatarInput style="display: none" />

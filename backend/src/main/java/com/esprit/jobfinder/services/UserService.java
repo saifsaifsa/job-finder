@@ -4,6 +4,7 @@ import com.esprit.jobfinder.exceptions.ConflictException;
 import com.esprit.jobfinder.exceptions.NotFoundException;
 import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.VerificationToken;
+import com.esprit.jobfinder.models.enums.ERole;
 import com.esprit.jobfinder.payload.request.PatchUserRequest;
 import com.esprit.jobfinder.repository.IUserRepository;
 import com.esprit.jobfinder.repository.IVerificationTokenRepository;
@@ -21,9 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService implements IUserService{
@@ -172,5 +171,24 @@ public class UserService implements IUserService{
         List<User> inactiveUsers = userRepository.findInactiveUsers(oneMonthAgo);
         List<Long> ids = inactiveUsers.stream().map(User::getId).toList();
         userRepository.deleteAllByIdIn(ids);
+    }
+    public Map<String, Object> getUserStatistics() {
+        long totalUsers = userRepository.countAllUsers();
+        long activeUsers = userRepository.countActiveUsers();
+        List<Object[]> usersByRole = userRepository.countUsersByRole();
+
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("totalUsers", totalUsers);
+        stats.put("activeUsers", activeUsers);
+
+        Map<String, Long> roleStats = new HashMap<>();
+        for (Object[] result : usersByRole) {
+            ERole role = (ERole) result[0];
+            long count = (long) result[1];
+            roleStats.put(role.name(), count);
+        }
+        stats.put("usersByRole", roleStats);
+
+        return stats;
     }
 }
