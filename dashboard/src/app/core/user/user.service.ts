@@ -126,4 +126,7 @@ export class UserService
     toggleConfirmation(id:string,active:boolean){
         return this._httpClient.patch(`${environment.baseUrl}api/users/${id}`,{active})
     }
+    getStats(){
+      return this._httpClient.get(`${environment.baseUrl}api/users/stats`)
+  }
 }

@@ -3,7 +3,13 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 // For Admin
 export const defaultNavigation: FuseNavigationItem[] = [
-
+    {
+        id   : 'dashboard',
+        title: 'Dashboard',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/dashboard'
+    },
     {
         id   : 'users',
         title: 'Users',
