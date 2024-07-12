@@ -167,7 +167,7 @@ export const appRoutes: Route[] = [
             {path: 'training',loadChildren: () => import('app/modules/userFront/training/training.module').then((m) => m.TrainingModuleUser),},
             { path: 'success',loadChildren: () => import('app/modules/userFront/success-page/success-page.module').then((m) => m.SuccessModule), },
             { path: 'cancel',loadChildren: () => import('app/modules/userFront/cancel-page/cancel-page.module').then((m) => m.CancelModule), },
-            { path: 'cv', loadChildren: () => import('app/modules/userFront/cvUser/cv.module').then((m) => m.CvModule) }
+            { path: 'cv', loadChildren: () => import('app/modules/userFront/cvUser/cv.module').then((m) => m.CvModuleUser) }
 
        
         ],

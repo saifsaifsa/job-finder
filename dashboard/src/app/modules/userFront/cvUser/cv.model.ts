@@ -6,5 +6,6 @@ export interface Cv {
   content: string;
   views: number;
   downloads: number;
+  linkedInData?: string; 
   skills: Skill[];
 }

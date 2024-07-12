@@ -8,7 +8,7 @@ import { CvService } from '../cvUser/cv.service';
   styleUrls: ['./cv-list.component.css']
 })
 export class CvListComponent implements OnInit {
-  cvs: Cv[];
+  cvs = [];
   selectedCv: Cv;
 
   constructor(private cvService: CvService) {}
@@ -32,6 +32,7 @@ export class CvListComponent implements OnInit {
     this.cvService.generateCv().subscribe(
       (cv) => {
         this.cvs.push(cv);
+        this.loadCvs()
       },
       (error) => {
         console.error('Error generating CV:', error);

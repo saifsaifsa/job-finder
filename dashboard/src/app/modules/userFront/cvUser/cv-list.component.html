@@ -3,15 +3,24 @@
       <button (click)="generateCv()">Create CV</button>
       <button routerLink="/upload">Upload CV</button>
     </div>
-  
-    <div class="cv-display" *ngIf="cvs && cvs.length">
+    <div class="grid grid-cols-3 gap-24">
+      <div routerLink="/cv/{{ cv.id }}" style="cursor: pointer;" *ngFor="let cv of cvs" class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">{{ cv.user?.firstName }}</h3>
+          <p class="text-gray-700"> {{ cv.user?.email }}</p>
+          <p class="text-gray-700"> {{ cv.content }}</p>
+
+        </div>
+      </div>
+    </div>
+    <!-- <div class="cv-display" *ngFor="let cv of cvs">
       <h2>My CVs</h2>
       <ul>
-        <li *ngFor="let cv of cvs">
+        <li >
           <a routerLink="/cv/{{ cv.id }}">{{ cv.content }}</a>
         </li>
       </ul>
-    </div>
+    </div> -->
   
     <div class="cv-display" *ngIf="!cvs || !cvs.length">
       <p>No CVs available. Click "Create CV" to generate a new one.</p>

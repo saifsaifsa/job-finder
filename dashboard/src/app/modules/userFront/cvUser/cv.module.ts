@@ -27,4 +27,4 @@ import { CvGenerateComponent } from './cv-generate.component';
     ])
   ]
 })
-export class CvModule { }
+export class CvModuleUser { }

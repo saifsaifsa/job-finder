@@ -19,9 +19,18 @@ export class CvService {
     return this.http.get<Cv>(`${this.apiUrl}/${id}`);
   }
 
+  
   generateCv(): Observable<Cv> {
-    return this.http.post<Cv>(`${this.apiUrl}/generate`, {});
+    const newCv: Partial<Cv> = {  // Use Partial<Cv> to allow missing properties
+      content: '',
+      views: 0,
+      downloads: 0,
+      linkedInData: '',  // Optional
+      skills: []
+    };
+    return this.http.post<Cv>(this.apiUrl, newCv);
   }
+  
 
   updateCv(cv: Cv): Observable<Cv> {
     return this.http.put<Cv>(`${this.apiUrl}/${cv.id}`, cv);
