@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @CrossOrigin(origins = "*")
@@ -94,5 +95,9 @@ public class TrainingController {
     public ResponseEntity<Training> dislikePost(@PathVariable Long postId) {
         Training training = trainingService.dislikeTraining(postId);
         return ResponseEntity.ok(training);
+    }
+    @GetMapping("/statistics")
+    public ResponseEntity<Map<String, Object>> getUsersStats() {
+        return ResponseEntity.ok(trainingService.getTrainingStatistics());
     }
 }

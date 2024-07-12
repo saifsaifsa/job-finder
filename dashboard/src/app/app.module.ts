@@ -18,6 +18,7 @@ import { CvComponent } from './modules/admin/cv/cv.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { StatsModule } from './modules/admin/cv/cvStats/statsModule';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -47,7 +48,7 @@ const routerConfig: ExtraOptions = {
 
         // Layout module of your application
         LayoutModule,
-
+        NgxChartsModule,
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({})
     ],
