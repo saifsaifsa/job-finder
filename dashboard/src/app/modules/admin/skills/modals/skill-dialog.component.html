@@ -8,7 +8,12 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Category</mat-label>
-            <input matInput formControlName="category">
+            <!-- <input matInput formControlName="category"> -->
+            <mat-select [value]="" formControlName="category">
+                <ng-container *ngFor="let category of categories">
+                    <mat-option [value]="category">{{category}}</mat-option>
+                </ng-container>
+            </mat-select>
         </mat-form-field>
     </form>
 </div>

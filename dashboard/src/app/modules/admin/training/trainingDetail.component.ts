@@ -46,9 +46,9 @@ export class TrainingDetailComponent implements OnInit {
             description: new FormControl('', Validators.required),
             trainingCategories: new FormControl('', Validators.required), 
             price: new FormControl('', [Validators.required,Validators.min(1)]),
-            rating: new FormControl('', [Validators.required,Validators.min(1)]),
-            likes: new FormControl('', Validators.required),
-            dislikes: new FormControl('', Validators.required),
+            // rating: new FormControl('', [Validators.required,Validators.min(1)]),
+            // likes: new FormControl('', Validators.required),
+            // dislikes: new FormControl('', Validators.required),
             dateDebut: new FormControl(this.formatDate(new Date()), Validators.required),
             dateFin: new FormControl(this.formatDate(new Date()), Validators.required),
             image: new FormControl(null),
@@ -64,9 +64,9 @@ export class TrainingDetailComponent implements OnInit {
                     description: new FormControl('', Validators.required),
                     trainingCategories: new FormControl('', Validators.required), 
                     price: new FormControl('', [Validators.required,Validators.min(1)]),
-                    rating: new FormControl('', [Validators.required,Validators.min(1)]),
-                    likes: new FormControl('', Validators.required),
-                    dislikes: new FormControl('', Validators.required),
+                    // rating: new FormControl('', [Validators.required,Validators.min(1)]),
+                    // likes: new FormControl('', Validators.required),
+                    // dislikes: new FormControl('', Validators.required),
                     dateDebut: new FormControl(this.formatDate(new Date()), Validators.required),
                     dateFin: new FormControl(this.formatDate(new Date()), Validators.required),
                     image: new FormControl(null),
@@ -78,9 +78,9 @@ export class TrainingDetailComponent implements OnInit {
                         description: training.description,
                         trainingCategories: training.trainingCategories,
                         price: training.price,
-                        rating: training.rating,
-                        likes: training.likes,
-                        dislikes: training.likes,
+                        // rating: training.rating,
+                        // likes: training.likes,
+                        // dislikes: training.likes,
                         dateDebut: training.dateDebut,
                         dateFin: training.dateDebut,
                         // image: training.image
@@ -118,10 +118,10 @@ export class TrainingDetailComponent implements OnInit {
         formData.append('title', this.trainingDetailsForm.get('title').value);
         formData.append('description', this.trainingDetailsForm.get('description').value);
         formData.append('trainingCategories', this.trainingDetailsForm.get('trainingCategories').value);
-        formData.append('rating', this.trainingDetailsForm.get('rating').value);
+        // formData.append('rating', this.trainingDetailsForm.get('rating').value);
         formData.append('price', this.trainingDetailsForm.get('price').value);
-        formData.append('likes', this.trainingDetailsForm.get('likes').value);
-        formData.append('dislikes', this.trainingDetailsForm.get('dislikes').value);
+        // formData.append('likes', this.trainingDetailsForm.get('likes').value);
+        // formData.append('dislikes', this.trainingDetailsForm.get('dislikes').value);
         formData.append('dateDebut', this.formatDate(this.trainingDetailsForm.get('dateDebut').value));
         formData.append('dateFin', this.formatDate(this.trainingDetailsForm.get('dateFin').value));
         // formData.append('image', this.trainingDetailsForm.get('image').value);

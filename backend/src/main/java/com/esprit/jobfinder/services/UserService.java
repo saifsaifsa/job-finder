@@ -1,7 +1,9 @@
 package com.esprit.jobfinder.services;
 
+import com.esprit.jobfinder.dto.UserMapper;
 import com.esprit.jobfinder.exceptions.ConflictException;
 import com.esprit.jobfinder.exceptions.NotFoundException;
+import com.esprit.jobfinder.models.Competence;
 import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.VerificationToken;
 import com.esprit.jobfinder.models.enums.ERole;
@@ -51,8 +53,12 @@ public class UserService implements IUserService{
 
     @Autowired
     private IFileUploaderService fileUploaderService;
+
+    @Autowired
+    private ICompetenceService competenceService;
     @Override
     public User saveUser(User user, MultipartFile profilePicture) {
+
         Boolean userExists = userRepository.existsByEmail(user.getEmail());
         if (userExists) throw new ConflictException("User already exists with email "+user.getEmail());
 
@@ -77,7 +83,7 @@ public class UserService implements IUserService{
         VerificationToken verificationToken = new VerificationToken(token, user);
         tokenRepository.save(verificationToken);
 
-        String verificationUrl = "http://localhost:4200/confirmation?token=" + token;
+        String verificationUrl = "http://127.0.0.1:4200/confirmation?token=" + token;
         emailService.sendSimpleMessage(user.getEmail(), "Email Verification", "To verify your email, click the following link: " + verificationUrl);
         return savedUser;
     }
@@ -110,6 +116,8 @@ public class UserService implements IUserService{
             String filePath = fileUploaderService.uploadFile(profilePicture);
             existingUser.setProfilePicture(filePath);
         }
+        List<Competence> competenceList = this.competenceService.findByids(user.getSkills());
+        existingUser.setSkills(competenceList);
         existingUser.setUsername(user.getUsername());
         existingUser.setFirstName(user.getFirstName());
         existingUser.setLastName(user.getLastName());
@@ -121,7 +129,7 @@ public class UserService implements IUserService{
         }
         existingUser.setPhone(user.getPhone());
         existingUser.setRole(ERole.valueOf(user.getRole()));
-        System.out.println("existingUser: "+existingUser);
+//        existingUser.setSkills(user.getSkills());
         return userRepository.save(existingUser);
     }
 

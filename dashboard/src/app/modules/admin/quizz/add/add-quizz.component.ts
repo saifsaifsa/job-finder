@@ -34,24 +34,26 @@ export class AddQuizComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.subscribe((params) => {
             this.competanceId = params["id"];
-            this.quizId = params["quizId"] || null; // Check for quiz ID in route params
+            this.quizId = params["quizId"] || null;
 
             if (this.quizId) {
-                this.loadQuizDetails();
+                this.loadQuizDetails(this.quizId);
             }
         });
     }
 
     // Method to load quiz details for update
-    loadQuizDetails(): void {
-        this.quizService.getQuizById(this.quizId!).subscribe((quiz) => {
+    loadQuizDetails(quizId): void {
+        this.quizService.getQuizById(quizId).subscribe((quiz) => {
             this.quizForm.patchValue({
                 title: quiz.title,
-                successScore: quiz.successScore
+                successScore: quiz.successScore,
+                
             });
             quiz.questions.forEach((question) => {
                 const questionGroup = this.fb.group({
                     content: question.content,
+                    id:question.id,
                     answers: this.fb.array(
                         question.answers.map((answer) => this.fb.group(answer))
                     )
@@ -85,7 +87,7 @@ export class AddQuizComponent implements OnInit {
         this.questions.removeAt(index);
     }
 
-    getAnswers(questionIndex: number): FormArray {
+    getAnswers(questionIndex: number): FormArray {        
         return this.questions.at(questionIndex).get('answers') as FormArray;
     }
 

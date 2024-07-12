@@ -1,13 +1,17 @@
 package com.esprit.jobfinder.controllers;
 
+import com.esprit.jobfinder.dto.UserMapper;
 import com.esprit.jobfinder.exceptions.BadRequestException;
 import com.esprit.jobfinder.exceptions.NotFoundException;
+import com.esprit.jobfinder.models.Competence;
 import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.enums.ERole;
 import com.esprit.jobfinder.payload.request.CreateUserReq;
 import com.esprit.jobfinder.payload.request.PatchUserRequest;
 import com.esprit.jobfinder.payload.request.UpdateUserReq;
+import com.esprit.jobfinder.services.ICompetenceService;
 import com.esprit.jobfinder.services.IUserService;
+import com.esprit.jobfinder.services.SkillService;
 import com.esprit.jobfinder.utiles.DateUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +21,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/users")
@@ -27,17 +33,14 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private ICompetenceService competenceService;
+
     @PostMapping( consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<User> createUser(@Valid @ModelAttribute CreateUserReq user) {
-        User newUser = new User();
-        newUser.setBirthDay(DateUtils.parseDate(user.getBirthDay()));
-        newUser.setUsername(user.getUsername());
-        newUser.setRole(ERole.valueOf(user.getRole()));
-        newUser.setPassword(user.getPassword());
-        newUser.setPhone(user.getPhone());
-        newUser.setLastName(user.getLastName());
-        newUser.setFirstName(user.getFirstName());
-        newUser.setEmail(user.getEmail());
+        User newUser = UserMapper.createUserReqToUser(user);
+        List<Competence> competenceList = this.competenceService.findByids(user.getSkills());
+        newUser.setSkills(competenceList);
         User savedUser = userService.saveUser(newUser,user.getPhoto());
         user.setPassword(null);
         return ResponseEntity.ok(savedUser);
@@ -67,7 +70,6 @@ public class UserController {
     @PutMapping(path="/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<User> updateUser(@PathVariable Long id,@Valid @ModelAttribute UpdateUserReq updateReq) {
         try {
-
             User updatedUser = userService.updateUser(updateReq,updateReq.getPhoto());
             return ResponseEntity.ok(updatedUser);
         } catch (IOException e) {

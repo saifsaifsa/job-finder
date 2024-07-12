@@ -41,7 +41,7 @@ public class CompanyServiceImpl implements ICompanyService {
             company.setImage(filePath);
         }
 
-        emailService.sendSimpleMessage("mouhib.trabelsi@esprit.tn", "Email confirmation", "Company created successfully, you can create many offers now.");
+        emailService.sendSimpleMessage("trabelsi.mouhib3@gmail.com", "Email confirmation", "your company"+ " "+company.getName()+" "+"created successfully, you can create many offers now.");
         return companyRepository.save(company);
     }
 

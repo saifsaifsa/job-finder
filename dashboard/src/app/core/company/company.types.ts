@@ -5,6 +5,7 @@ export interface Company{
     description:  String;
     location: String;
     name: String;
-    rating: Number;
+    rating: number;
     image?: String;
+    offers?: any;
 }

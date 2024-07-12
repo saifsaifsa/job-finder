@@ -1,44 +1,40 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+import { Route, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatTableModule } from '@angular/material/table';
-import { Route, RouterModule } from '@angular/router';
 import { FuseAlertModule } from '@fuse/components/alert';
-import { UserComponent } from './user.component';
-import { UserDetailComponent } from './userDetail.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-
-const userRoutes: Route[] = [
-    {
+import { CompanyComponentUser } from './company.component';
+import { CompanyDetailComponentUser } from './companyDetail.component';
+import { MatGridList, MatGridListModule } from '@angular/material/grid-list';
+const CompanyRoutes: Route[] = [
+    {   
         path     : '',
-        component: UserComponent
+        component: CompanyComponentUser
     },
     {
-        path     : 'add',
-        component: UserDetailComponent
-    },
-    {
-        path     : 'update/:id',
-        component: UserDetailComponent
+        path     : ':id',
+        component: CompanyDetailComponentUser
     }
+    
 ];
 
 @NgModule({
     declarations: [
-        UserComponent,
-        UserDetailComponent
-        ],
+        CompanyComponentUser,
+        CompanyDetailComponentUser
+    ],
     imports     : [
-        RouterModule.forChild(userRoutes),
+        RouterModule.forChild(CompanyRoutes),
         MatTableModule,
         MatButtonModule,
         MatDialogModule,
@@ -55,9 +51,9 @@ const userRoutes: Route[] = [
         MatSlideToggleModule,
         MatPaginatorModule,
         MatSortModule,
-        MatDatepickerModule
+        MatGridListModule
     ]
 })
-export class UserModule
+export class CompanyModuleUser
 {
 }

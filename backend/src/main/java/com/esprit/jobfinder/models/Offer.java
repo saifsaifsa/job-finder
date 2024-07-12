@@ -34,7 +34,7 @@ public class Offer {
     private Collection<User> users;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "company_id")
     Company company;
 

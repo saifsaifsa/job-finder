@@ -9,6 +9,7 @@ import net.minidev.json.annotate.JsonIgnore;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,7 +27,6 @@ public class User {
 
   private String username;
   private String firstName;
-
   private String lastName;
   @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
   private Boolean active = false;
@@ -46,8 +46,13 @@ public class User {
 
   private String profilePicture;
 
-  @ManyToMany
-  Set<Skill> skills;
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+          name = "user_skills",
+          joinColumns = @JoinColumn(name = "user_id"),
+          inverseJoinColumns = @JoinColumn(name = "competence_id")
+  )
+  private List<Competence> skills;
 
   @JsonIgnore
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -79,90 +84,7 @@ public class User {
     this.firstName = firstName;
   }
 
-
   public String getFullName(){
     return firstName+" "+lastName;
-  }
-
-  public String getPhone() {
-    return phone;
-  }
-
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
-
-  public LocalDate getBirthDay() {
-    return birthDay;
-  }
-
-  public void setBirthDay(LocalDate birthDay) {
-    this.birthDay = birthDay;
-  }
-
-  @Override
-  public String toString() {
-    return "User{" +
-            "id=" + id +
-            ", username='" + username + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", active=" + active +
-            ", email='" + email + '\'' +
-            ", password='" + password + '\'' +
-            ", phone='" + phone + '\'' +
-            ", role=" + role +
-            ", birthDay=" + birthDay +
-            '}';
-  }
-
-  public String getProfilePicture() {
-    return profilePicture;
-  }
-
-  public void setProfilePicture(String profilePicture) {
-    this.profilePicture = profilePicture;
-  }
-
-  public Set<Training> getTrainings() {
-    return trainings;
-  }
-
-  public void setTrainings(Set<Training> trainings) {
-    this.trainings = trainings;
-  }
-
-  public Set<Skill> getSkills() {
-    return skills;
-  }
-
-  public void setSkills(Set<Skill> skills) {
-    this.skills = skills;
-  }
-
-
-
-  public Set<Offer> getOffres() {
-    return offres;
-  }
-
-  public void setOffres(Set<Offer> offres) {
-    this.offres = offres;
-  }
-
-  public Set<Company> getCompanies() {
-    return companies;
-  }
-
-  public void setCompanies(Set<Company> companies) {
-    this.companies = companies;
-  }
-
-  public LocalDateTime getLastLogin() {
-    return lastLogin;
-  }
-
-  public void setLastLogin(LocalDateTime lastLogin) {
-    this.lastLogin = lastLogin;
   }
 }

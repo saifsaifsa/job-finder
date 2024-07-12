@@ -109,4 +109,7 @@ export class TrainingService {
       dislikeTraining(postId: Number): Observable<any> {
         return this._httpClient.post<any>(`${environment.apiUrl}training/${postId}/dislike`, {});
       }
+      getStats(){
+        return this._httpClient.get(`${environment.apiUrl}training/statistics`)
+    }
 }
