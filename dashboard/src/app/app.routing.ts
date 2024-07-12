@@ -124,10 +124,15 @@ export const appRoutes: Route[] = [
         },
         children: [
             {path: 'home',loadChildren: () => import('app/modules/admin/example/example.module').then((m) => m.ExampleModuleAdmin),},
+            {path: 'dashboard',loadChildren: () => import('app/modules/admin/stats/stats.module').then((m) => m.StatsModule),},
             {path: 'users',loadChildren: () =>import('app/modules/admin/user/user.module').then((m) => m.UserModule),},
             {path: 'offre', loadChildren: () => import('app/modules/admin/offer/offerData.module').then(m => m.OfferModule)},
             {path: 'company', loadChildren: () => import('app/modules/admin/company/company.module').then(m => m.CompanyModule)},
             {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
+            {path: 'skills', loadChildren: () => import('app/modules/admin/skills/skills.module').then((m) => m.SkillsModule)},
+            {path: 'quizz', loadChildren: () => import('app/modules/admin/quizz/quizz.module').then((m) => m.QuizzModule)},           
+            {path: 'cv', loadChildren: () => import('app/modules/admin/cv/cv.module').then((m) => m.CvModule)},       
+       
         ],
     },
     // Publisher routes

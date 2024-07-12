@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { emailRegexValidator } from 'app/layout/common/validators/validators';
 
 @Component({
     selector     : 'auth-forgot-password',
@@ -43,7 +44,7 @@ export class AuthForgotPasswordComponent implements OnInit
     {
         // Create the form
         this.forgotPasswordForm = this._formBuilder.group({
-            email: ['', [Validators.required, Validators.email]]
+            email: ['', [emailRegexValidator()]]
         });
     }
 

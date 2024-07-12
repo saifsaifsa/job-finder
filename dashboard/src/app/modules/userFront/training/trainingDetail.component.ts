@@ -97,12 +97,17 @@ export class TrainingDetailComponentUser implements OnInit {
         const trainingId = this.training.id;
         this.trainingService.likeTraining(trainingId).subscribe(() => {
         });
+        this.training.likes++;
+        this.training.rating = (this.training.likes * 100 / (this.training.likes + this.training.dislikes))
+        this.training.rating = Math.round(this.training.rating);
         }
     dislike(): void {
         const trainingId = this.training.id;
         this.trainingService.dislikeTraining(trainingId).subscribe(() => {
-
         });
+        this.training.dislikes++;
+        this.training.rating = (this.training.likes * 100 / (this.training.likes + this.training.dislikes))
+        this.training.rating = Math.round(this.training.rating);
         }
 
         reloadCurrent() {

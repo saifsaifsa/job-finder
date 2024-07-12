@@ -9,6 +9,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/users'
+    },{
+        id   : 'cv',
+        title: 'Cv',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/cv'
     },
     {
         id   : 'offre',

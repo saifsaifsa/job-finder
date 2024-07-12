@@ -1,20 +1,20 @@
 package com.esprit.jobfinder.models;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Set;
-
 import com.esprit.jobfinder.models.enums.ERole;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import lombok.Data;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Data
 @Table(name = "users", 
     uniqueConstraints = { 
       @UniqueConstraint(columnNames = "username"),
+      @UniqueConstraint(columnNames = "phone"),
       @UniqueConstraint(columnNames = "email") 
     })
 public class User {
@@ -45,8 +45,9 @@ public class User {
 
   @ManyToMany
   Set<Skill> skills;
-  @ManyToMany
-  Set<Quiz> quizs;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<UserQuiz> userQuizzes = new HashSet<>();
 
   @ManyToMany
   Set<Offer> offres;
@@ -56,10 +57,11 @@ public class User {
 
   @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime lastLogin;
+
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private VerificationToken verificationToken;
   public User() {
   }
-  @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-  private VerificationToken verificationToken;
   public User(String username, String email, String password) {
     this.username = username;
     this.email = email;
@@ -73,69 +75,7 @@ public class User {
     this.firstName = firstName;
   }
 
-  public Long getId() {
-    return id;
-  }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public Boolean getActive() {
-    return active;
-  }
-
-  public void setActive(Boolean active) {
-    this.active = active;
-  }
-
-  public ERole getRole() {
-    return role;
-  }
-
-  public void setRole(ERole role) {
-    this.role = role;
-  }
   public String getFullName(){
     return firstName+" "+lastName;
   }
@@ -196,13 +136,7 @@ public class User {
     this.skills = skills;
   }
 
-  public Set<Quiz> getQuizs() {
-    return quizs;
-  }
 
-  public void setQuizs(Set<Quiz> quizs) {
-    this.quizs = quizs;
-  }
 
   public Set<Offer> getOffres() {
     return offres;

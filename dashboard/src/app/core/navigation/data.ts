@@ -1,14 +1,27 @@
 /* tslint:disable:max-line-length */
 import { FuseNavigationItem } from '@fuse/components/navigation';
 
+// For Admin
 export const defaultNavigation: FuseNavigationItem[] = [
-    
+    {
+        id   : 'dashboard',
+        title: 'Dashboard',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/dashboard'
+    },
     {
         id   : 'users',
         title: 'Users',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/users'
+    },{
+        id   : 'cv',
+        title: 'Cv',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/cv'
     },
     {
         id   : 'offre',
@@ -30,6 +43,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/company'
+    },
+    {
+        id   : 'skills',
+        title: 'Skills',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/skills'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
@@ -60,7 +80,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
     }
 ];
 export const userNavigation: FuseNavigationItem[] = [
-    
+
     {
         id   : 'exemple user',
         title: 'exemple user',
@@ -84,12 +104,18 @@ export const userNavigation: FuseNavigationItem[] = [
     }
 ];
 export const publisherNavigation: FuseNavigationItem[] = [
-    
+
     {
         id   : 'exemple publisher',
         title: 'exemple publisher',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/exemple'
+    },{
+        id   : 'cv',
+        title: 'Cv',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/cv'
     }
 ];

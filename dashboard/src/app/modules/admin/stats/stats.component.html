@@ -1,0 +1,60 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+
+        <!-- CONTENT GOES HERE -->
+        <div class="h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
+            <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
+                <!-- Summary -->
+                <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden" 
+                >
+                    <div class="flex items-start justify-between">
+                        <div class="text-lg font-medium tracking-tight leading-6 truncate">Total users</div>
+                    </div>
+                    <div class="flex flex-col items-center mt-2">
+                        <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">{{totalUsers}}</div>
+                        <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Due Tasks</div>
+                        <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
+                            <div class="text-md font-medium truncate">Completed:</div>
+                            <div class="ml-1.5 text-lg font-semibold">13</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden" 
+                >
+                    <div class="flex items-start justify-between">
+                        <div class="text-lg font-medium tracking-tight leading-6 truncate">Active users</div>
+                    </div>
+                    <div class="flex flex-col items-center mt-2">
+                        <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">{{activeUsers}}</div>
+                        <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Due Tasks</div>
+                        <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
+                            <div class="text-md font-medium truncate">Completed:</div>
+                            <div class="ml-1.5 text-lg font-semibold">13</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
+                <!-- Summary -->
+                <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden" 
+                *ngFor="let usersRole of usersRoles | keyvalue ">
+                    <div class="flex items-start justify-between">
+                        <div class="text-lg font-medium tracking-tight leading-6 truncate">{{usersRole.key}}</div>
+                    </div>
+                    <div class="flex flex-col items-center mt-2">
+                        <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">{{usersRole.value}}</div>
+                        <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Due Tasks</div>
+                        <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
+                            <div class="text-md font-medium truncate">Completed:</div>
+                            <div class="ml-1.5 text-lg font-semibold">13</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -101,6 +101,8 @@ export class FuseNavigationService
     {
         for ( const item of navigation )
         {
+            console.log("item: ",item);
+            
             if ( item.type === 'basic' )
             {
                 flatNavigation.push(item);

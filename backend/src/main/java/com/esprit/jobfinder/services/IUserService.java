@@ -3,6 +3,7 @@ package com.esprit.jobfinder.services;
 import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.enums.ERole;
 import com.esprit.jobfinder.payload.request.PatchUserRequest;
+import com.esprit.jobfinder.payload.request.UpdateUserReq;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,7 +15,7 @@ import java.util.Optional;
 public interface IUserService {
     User saveUser(User user, MultipartFile profilePicture);
     Optional<User> getUserById(Long id);
-    User updateUser(User user, MultipartFile profilePicture) throws IOException;
+    User updateUser(UpdateUserReq user, MultipartFile profilePicture) throws IOException;
 
     void deleteUserById(Long id);
 

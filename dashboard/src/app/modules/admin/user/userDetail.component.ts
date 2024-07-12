@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { UserService } from 'app/core/user/user.service';
+import { emailRegexValidator } from 'app/layout/common/validators/validators';
 
 @Component({
     selector: 'app-user-detail',
@@ -19,7 +20,7 @@ export class UserDetailComponent implements OnInit {
     private fileUrl = 'http://localhost:8080/api/files/';
     roles = {
         "ROLE_USER": "ROLE_USER",
-        "ROLE_MODERATOR": "ROLE_MODERATOR",
+        "ROLE_PUBLISHER": "ROLE_PUBLISHER",
         "ROLE_ADMIN": "ROLE_ADMIN",
     };
 
@@ -42,6 +43,12 @@ export class UserDetailComponent implements OnInit {
     private formatDate(date: Date): string {
          return this.datePipe.transform(date, 'yyyy/MM/dd') || '';
       }
+      getProfilePicture(profilePicture){
+        if(profilePicture){
+            return /^http/.test(profilePicture) ? profilePicture:this.fileUrl+profilePicture
+        }
+        return"assets/avatars/avatar.png"
+    }
     ngOnInit(): void {
         this.userService.getLoggedInUser().subscribe((user)=>{
             this.authentifiedUser = user
@@ -51,8 +58,7 @@ export class UserDetailComponent implements OnInit {
             firstName: new FormControl('', Validators.required),
             username: new FormControl('', Validators.required),
             email: new FormControl('', [
-                Validators.required,
-                Validators.minLength(8),
+                emailRegexValidator()
             ]),
             password: new FormControl('', [
                 Validators.required,
@@ -78,8 +84,7 @@ export class UserDetailComponent implements OnInit {
                     firstName: new FormControl('', Validators.required),
                     username: new FormControl('', Validators.required),
                     email: new FormControl('', [
-                        Validators.required,
-                        Validators.minLength(8),
+                    emailRegexValidator()
                     ]),
                     phone: new FormControl('', [
                         Validators.required,
@@ -91,7 +96,7 @@ export class UserDetailComponent implements OnInit {
                 });
                 this.userService.getUser(userId).subscribe((user: any) => {
                     
-                    this.avatar = this.fileUrl+user.profilePicture
+                    this.avatar = this.getProfilePicture(user.profilePicture)
                     this.userDetailsForm.patchValue({
                         lastName: user.lastName,
                         firstName: user.firstName,
