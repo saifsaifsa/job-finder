@@ -1,5 +1,6 @@
 package com.esprit.jobfinder.payload.request;
 
+import com.esprit.jobfinder.models.Skill;
 import com.esprit.jobfinder.models.Training;
 import com.esprit.jobfinder.models.enums.ERole;
 import jakarta.persistence.*;
@@ -11,6 +12,7 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -48,4 +50,5 @@ public class CreateUserReq {
     public String getFullName(){
         return firstName+" "+lastName;
     }
+    private Set<Long> skills;
 }

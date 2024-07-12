@@ -24,6 +24,7 @@ public class Skill {
     private String description;
     private String category;
 
+
    
 
     @JsonIgnore
@@ -37,4 +38,5 @@ public class Skill {
     public void setUsers(Collection<User> users) {
         this.users = users;
     }
+
 }
