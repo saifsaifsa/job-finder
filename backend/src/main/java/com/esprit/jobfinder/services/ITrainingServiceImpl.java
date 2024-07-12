@@ -7,16 +7,16 @@ import com.esprit.jobfinder.models.enums.TrainingCategories;
 import com.esprit.jobfinder.repository.ITrainingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.data.domain.Page;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -147,4 +147,34 @@ public Training updateTraining(Training training, MultipartFile image) {
         return like * 100 / (like + dislike);
     }
 
+    public Map<String, Object> getTrainingStatistics() {
+        long totalTrainings = trainingRepository.count();
+        List<Training> mostDislikedTrainings = trainingRepository.findMostDislikedTrainings(PageRequest.of(0, 5)); // Get top 5 most disliked trainings
+        List<Training> mostLikedTrainings = trainingRepository.findMostLikedTrainings(PageRequest.of(0, 5)); // Get top 5 most disliked trainings
+        List<Object[]> mostPopularCategories = trainingRepository.findMostPopularCategories();
+        List<Object[]> averagePricePerCategory = trainingRepository.findAveragePricePerCategory();
+        List<Training> upcomingTrainings = trainingRepository.findUpcomingTrainings( PageRequest.of(0, 5)); // Get top 5 upcoming trainings
+        List<Training> recentlyFinishedTrainings = trainingRepository.findRecentlyFinishedTrainings( PageRequest.of(0, 5)); // Get top 5 recently finished trainings
+        List<Object[]> durationOfTrainings = trainingRepository.findDurationOfTrainings();
+        List<Object[]> numberOfTrainingsPerCategory = trainingRepository.findNumberOfTrainingsPerCategory();
+        List<Object[]> averageDurationPerCategory = trainingRepository.findAverageDurationPerCategory();
+        List<Object[]> monthlyEngagementTrends = trainingRepository.findMonthlyEngagementTrends();
+        List<Object[]> ratingTrendsOverTime = trainingRepository.findRatingTrendsOverTime();
+
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("totalTrainings", totalTrainings);
+        stats.put("mostLikedTrainings", mostLikedTrainings);
+        stats.put("mostDislikedTrainings", mostDislikedTrainings);
+        stats.put("mostPopularCategories", mostPopularCategories);
+        stats.put("averagePricePerCategory", averagePricePerCategory);
+        stats.put("upcomingTrainings", upcomingTrainings);
+        stats.put("recentlyFinishedTrainings", recentlyFinishedTrainings);
+        stats.put("durationOfTrainings", durationOfTrainings);
+        stats.put("numberOfTrainingsPerCategory", numberOfTrainingsPerCategory);
+        stats.put("averageDurationPerCategory", averageDurationPerCategory);
+        stats.put("monthlyEngagementTrends", monthlyEngagementTrends);
+        stats.put("ratingTrendsOverTime", ratingTrendsOverTime);
+
+        return stats;
+    }
 }
