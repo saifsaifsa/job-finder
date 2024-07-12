@@ -3,6 +3,7 @@ package com.esprit.jobfinder.models;
 import com.esprit.jobfinder.models.enums.ERole;
 import jakarta.persistence.*;
 import lombok.Data;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -48,7 +49,7 @@ public class User {
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<UserQuiz> userQuizzes = new HashSet<>();
-
+  @JsonIgnore
   @ManyToMany
   Set<Offer> offres;
 
@@ -57,7 +58,7 @@ public class User {
 
   @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime lastLogin;
-
+  @JsonIgnore
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private VerificationToken verificationToken;
   public User() {

@@ -26,11 +26,14 @@ export class CvComponent implements OnInit {
   }
 
   loadCvs() {
-    this.cvService.getAllCvs().subscribe((data: any) => {
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    });
+    this.cvService.getAllCvs().subscribe(
+      (data: any) => {
+        console.log('Received CV data:', data);
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      }
+    );
   }
 
   applyFilter(event: Event) {
@@ -42,6 +45,11 @@ export class CvComponent implements OnInit {
     if (confirm('Are you sure you want to delete this CV?')) {
       this.cvService.deleteCv(cvId).subscribe(() => {
         this.loadCvs();
+        alert('CV deleted successfully.');
+      },
+      (error) => {
+        console.error('Error deleting CV:', error);
+        alert('There was an error deleting the CV. Please try again later.');
       });
     }
   }
@@ -51,10 +59,13 @@ export class CvComponent implements OnInit {
   }
 
   downloadCv(id: number): void {
-    this.cvService.exportCvToPDF(id).subscribe((blob) => {
-      saveAs(blob, `cv-${id}.pdf`);
-      this.incrementDownloads(id); // Optionally update the downloads count in the UI
-    });
+    this.cvService.exportCvToPDF(id).subscribe(
+      (blob) => {
+        saveAs(blob, `cv-${id}.pdf`);
+        this.incrementDownloads(id);
+        alert('CV downloaded successfully.');
+      }
+    );
   }
 
   openCv(id: number): void {

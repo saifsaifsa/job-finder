@@ -1,0 +1,8 @@
+<div *ngIf="cv">
+    <h2>Edit CV</h2>
+    <label>Content:</label>
+    <textarea [(ngModel)]="cv.content"></textarea>
+    <br>
+    <button (click)="saveCv()">Save CV</button>
+  </div>
+  
