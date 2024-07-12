@@ -4,6 +4,7 @@ import com.esprit.jobfinder.models.enums.ERole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
