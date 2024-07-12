@@ -28,7 +28,7 @@ public class Quiz {
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions;
 
-    @ManyToOne()
+    @ManyToOne
     private Competence competence;
 
     @NotBlank(message = "Le chemin de l'image est obligatoire")
