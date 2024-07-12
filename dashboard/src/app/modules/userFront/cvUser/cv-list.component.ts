@@ -8,8 +8,9 @@ import { CvService } from '../cvUser/cv.service';
   styleUrls: ['./cv-list.component.css']
 })
 export class CvListComponent implements OnInit {
-  cvs = [];
+  cvs: Cv[] = [];
   selectedCv: Cv;
+  editMode: boolean = false;
 
   constructor(private cvService: CvService) {}
 
@@ -32,7 +33,7 @@ export class CvListComponent implements OnInit {
     this.cvService.generateCv().subscribe(
       (cv) => {
         this.cvs.push(cv);
-        this.loadCvs()
+        this.loadCvs();
       },
       (error) => {
         console.error('Error generating CV:', error);
@@ -40,18 +41,37 @@ export class CvListComponent implements OnInit {
     );
   }
 
-  downloadCv(id: number): void {
-    this.cvService.downloadCvPdf(id).subscribe(
-      (response) => {
-        const url = window.URL.createObjectURL(response);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `cv_${id}.pdf`;
-        a.click();
+  deleteCv(id: number): void {
+    this.cvService.deleteCv(id).subscribe(
+      () => {
+        this.cvs = this.cvs.filter(cv => cv.id !== id);
+        console.log('CV deleted successfully');
       },
       (error) => {
-        console.error('Error downloading CV:', error);
+        console.error('Error deleting CV:', error);
       }
     );
+  }
+
+  editCv(cv: Cv): void {
+    this.selectedCv = { ...cv };
+    this.editMode = true;
+  }
+
+  saveCv(): void {
+    this.cvService.updateCv(this.selectedCv).subscribe(
+      (updatedCv) => {
+        this.cvs = this.cvs.map(cv => cv.id === updatedCv.id ? updatedCv : cv);
+        this.editMode = false;
+        console.log('CV updated successfully:', updatedCv);
+      },
+      (error) => {
+        console.error('Error updating CV:', error);
+      }
+    );
+  }
+
+  closeModal(): void {
+    this.editMode = false;
   }
 }

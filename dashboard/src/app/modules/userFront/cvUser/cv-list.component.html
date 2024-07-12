@@ -1,33 +1,37 @@
 <div class="cv-container">
-    <div class="cv-actions">
-      <button (click)="generateCv()">Create CV</button>
-      <button routerLink="/upload">Upload CV</button>
-    </div>
-    <div class="grid grid-cols-3 gap-24">
-      <div routerLink="/cv/{{ cv.id }}" style="cursor: pointer;" *ngFor="let cv of cvs" class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-        <div class="p-6">
-          <h3 class="text-xl font-semibold mb-2">{{ cv.user?.firstName }}</h3>
-          <p class="text-gray-700"> {{ cv.user?.email }}</p>
-          <p class="text-gray-700"> {{ cv.content }}</p>
-
-        </div>
+  <div class="cv-actions">
+    <button (click)="generateCv()">Create CV</button>
+    <button routerLink="/upload">Upload CV</button>
+  </div>
+  <div class="grid grid-cols-6 gap-6 ml-4">
+    <div
+      routerLink="/cv/{{ cv.id }}"
+      style="cursor: pointer;"
+      *ngFor="let cv of cvs"
+      class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+    >
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">{{ cv.user?.firstName }}</h3>
+        <p class="text-gray-700"> {{ cv.user?.email }}</p>
+        <p class="text-gray-700"> {{ cv.content }}</p>
+        <button (click)="editCv(cv)">Edit</button>
+        <button (click)="deleteCv(cv.id)">Delete</button>
       </div>
     </div>
-    <!-- <div class="cv-display" *ngFor="let cv of cvs">
-      <h2>My CVs</h2>
-      <ul>
-        <li >
-          <a routerLink="/cv/{{ cv.id }}">{{ cv.content }}</a>
-        </li>
-      </ul>
-    </div> -->
-  
-    <div class="cv-display" *ngIf="!cvs || !cvs.length">
-      <p>No CVs available. Click "Create CV" to generate a new one.</p>
-    </div>
-  
-    <div class="cv-download" *ngIf="selectedCv">
-      <button (click)="downloadCv(selectedCv.id)">Download CV</button>
-    </div>
   </div>
-  
+  <div class="cv-display" *ngIf="!cvs || !cvs.length">
+    <p>No CVs available. Click "Create CV" to generate a new one.</p>
+  </div>
+</div>
+
+<!-- Edit CV Modal -->
+<div class="modal" *ngIf="editMode">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Edit CV</h2>
+    <label>Content:</label>
+    <textarea [(ngModel)]="selectedCv.content"></textarea>
+    <br>
+    <button (click)="saveCv()">Save CV</button>
+  </div>
+</div>
