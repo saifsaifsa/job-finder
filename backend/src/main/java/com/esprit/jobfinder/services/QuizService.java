@@ -130,14 +130,14 @@ public class QuizService {
             }
         }
 
-        // Remove deleted questions
         existingQuestions.removeIf(question -> newQuestions.stream().noneMatch(dto -> dto.getId().equals(question.getId())));
 
         return quizRepository.save(existingQuiz);
     }
 
+
     public void deleteById(Long id) {
-        quizRepository.deleteById(id);
+        this.quizRepository.deleteById(id);
     }
     public List<Quiz> getQuizzesByCompetenceId(Long competenceId){
         return this.quizRepository.findQuizzesByCompetenceId(competenceId);

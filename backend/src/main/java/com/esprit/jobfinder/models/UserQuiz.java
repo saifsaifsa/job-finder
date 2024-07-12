@@ -16,7 +16,7 @@ public class UserQuiz {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne( cascade = CascadeType.REMOVE)
     @JoinColumn(name = "quiz_id", nullable = false)
     private Quiz quiz;
 

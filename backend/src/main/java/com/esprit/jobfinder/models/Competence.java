@@ -23,7 +23,7 @@ public class Competence {
     @NotBlank(message = "La catégorie de la compétence est obligatoire")
     private String category;
 
-    @OneToMany(mappedBy = "competence", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "competence", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Quiz> quizzes;
 
     @JsonIgnore

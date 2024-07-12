@@ -2,6 +2,7 @@ package com.esprit.jobfinder.controllers;
 
 import com.esprit.jobfinder.dto.QuizDTO;
 import com.esprit.jobfinder.models.*;
+import com.esprit.jobfinder.repository.QuizRepository;
 import com.esprit.jobfinder.services.*;
 import com.esprit.jobfinder.utiles.PDFExporter;
 import jakarta.validation.Valid;
@@ -35,6 +36,8 @@ public class QuizController {
     private UserQuizService userQuizService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private QuizRepository quizRepository;
 
     @GetMapping
     public List<Quiz> getAllQuizzes() {
@@ -69,7 +72,7 @@ public class QuizController {
         if (quiz == null) {
             return ResponseEntity.notFound().build();
         }
-        quizService.deleteById(id);
+        quizRepository.delete(quiz);
         return ResponseEntity.noContent().build();
     }
 
