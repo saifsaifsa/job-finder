@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
-public class CompetenceService {
+public class CompetenceService implements  ICompetenceService{
     @Autowired
     private CompetenceRepository competenceRepository;
     @Autowired
@@ -52,5 +53,10 @@ public class CompetenceService {
 
     public Competence getCompetenceWithQuizzes(Long competenceId) {
         return competenceRepository.findById(competenceId).orElse(null);
+    }
+
+    @Override
+    public List<Competence> findByids(Set<Long> ids) {
+        return this.competenceRepository.findByIds(ids);
     }
 }

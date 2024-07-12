@@ -22,7 +22,6 @@ public class UserMapper {
         user.setPassword( createUserReq.getPassword() );
         user.setBirthDay(DateUtils.parseDate(createUserReq.getBirthDay()));
         user.setRole( ERole.valueOf(createUserReq.getRole()) );
-
         return user;
     }
     public static CreateUserReq userToCreateUserReq(User user) {
