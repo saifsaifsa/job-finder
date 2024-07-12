@@ -1,5 +1,7 @@
 package com.esprit.jobfinder.services;
 
+import com.esprit.jobfinder.dto.TrainingDTO;
+import com.esprit.jobfinder.dto.TrainingMapper;
 import com.esprit.jobfinder.models.Training;
 import com.esprit.jobfinder.models.enums.TrainingCategories;
 import com.esprit.jobfinder.repository.ITrainingRepository;
@@ -26,6 +28,38 @@ public class ITrainingServiceImpl implements ITrainingService{
 
     @Override
     public Training addTraining(Training training, MultipartFile image) {
+        if (image != null && !image.isEmpty()) {
+            String filePath;
+            try {
+                filePath = fileUploaderService.uploadFile(image);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            training.setImage(filePath);
+        }
+        return trainingRepository.save(training);
+    }
+
+    @Override
+    public Training addTrain(TrainingDTO train, MultipartFile image){
+
+        Training training = TrainingMapper.toEntity(train);
+        if (image != null && !image.isEmpty()) {
+            String filePath;
+            try {
+                filePath = fileUploaderService.uploadFile(image);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            training.setImage(filePath);
+        }
+        return trainingRepository.save(training);
+    }
+    @Override
+    public Training updateTrain(TrainingDTO train, MultipartFile image){
+        Training training = TrainingMapper.toEntity(train);
+        Assert.notNull(train.getId(),"Training Id must not be null");
+        training.setId(train.getId());
         if (image != null && !image.isEmpty()) {
             String filePath;
             try {

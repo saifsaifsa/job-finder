@@ -22,9 +22,9 @@ public class CreateTrainingReq {
 
     @NotBlank(message = "lastName cannot be blank")
     private String price;
-    private String rating;
-    private String likes;
-    private String dislikes;
+//    private String rating;
+//    private String likes;
+//    private String dislikes;
     private String  dateDebut;
     private String dateFin;
 }
