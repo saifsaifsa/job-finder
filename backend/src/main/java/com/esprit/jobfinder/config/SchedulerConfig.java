@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling
 public class SchedulerConfig {
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 60000)
     public void scheduleTask() {
-        System.out.println("Scheduled task running every 5 seconds");
+        System.out.println("Scheduled task running every 60 seconds");
     }
 }
