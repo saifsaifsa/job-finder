@@ -32,7 +32,6 @@ public class QuizMapper {
         quiz.setSuccessScore(dto.getSuccessScore());
         quiz.setQuestions(dto.getQuestions());
         quiz.setCompetence(competence);
-
         return quiz;
     }
 }

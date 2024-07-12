@@ -35,6 +35,7 @@ public class QuizService {
 
     @Transactional
     public Quiz save(QuizDTO quizDTO) {
+        System.out.println("quizDTO.getCompetenceId()"+quizDTO.getCompetenceId());
         Optional<Competence> competenceOpt = competenceRepository.findById(quizDTO.getCompetenceId());
         if (competenceOpt.isEmpty()) {
             throw new NotFoundException("Competence not found");

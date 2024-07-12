@@ -17,7 +17,6 @@ public class Quiz {
     @NotBlank(message = "Le titre du quiz est obligatoire")
     private String title;
 
-    @Positive(message = "Le score total doit être une valeur positive")
     private double totalScore;
 
     @Positive(message = "Le seuil de réussite doit être une valeur positive")
@@ -29,6 +28,6 @@ public class Quiz {
     @ManyToOne
     private Competence competence;
 
-    @NotBlank(message = "Le chemin de l'image est obligatoire")
-    private String imagePath;
+//    @NotBlank(message = "Le chemin de l'image est obligatoire")
+//    private String imagePath;
 }

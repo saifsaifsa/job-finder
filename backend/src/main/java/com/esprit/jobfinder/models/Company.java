@@ -47,11 +47,5 @@ public class Company {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.ALL)
     Set<Offer> offers;
-
-
-
-
-
-
 }
 
