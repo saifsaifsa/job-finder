@@ -26,14 +26,11 @@ public class Company {
     @NotNull
     private String name;
 
-
     @NotNull
     private String description;
 
-
     @NotNull
     private String industry;
-
 
     @NotNull
     private String location;
@@ -43,17 +40,11 @@ public class Company {
     private String image;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "companies",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "companies", fetch = FetchType.LAZY)
     Set<User> subscribers;
-
-
-    @OneToMany(mappedBy = "company",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Offer> offers;
-
-
-
-
-
+    
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.ALL)
+    private Set<Offer> offers;
 
 }
-

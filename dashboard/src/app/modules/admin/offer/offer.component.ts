@@ -7,6 +7,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatSort } from '@angular/material/sort';
 import { OfferService } from './offerService';
 import { AddCustomerComponent } from './add-offer/add-offer.component';
+import { GetProfilesComponent } from './get-profiles/get-profiles.component';
 
 
 
@@ -17,7 +18,7 @@ import { AddCustomerComponent } from './add-offer/add-offer.component';
   encapsulation: ViewEncapsulation.None
 })
 export class OfferComponent implements OnInit {
-  displayedColumns: string[] = ["Title", "Description", "Type", "Experience Level", "Actions"];
+  displayedColumns: string[] = ["NameCompany","LogoCompany", "Title", "Description", "Type", "Experience Level", "Actions"];
   dataSource: any;
   constructor(private offerService: OfferService, public dialog: MatDialog) {
   }
@@ -64,7 +65,16 @@ export class OfferComponent implements OnInit {
     });
   }
 
+  getTopProfiles(): void {
+    const dialogRef = this.dialog.open(GetProfilesComponent, {
+      width: '1280px',
+      disableClose: true,
+      data:  null
+    });
 
+
+
+}
 }
 
 

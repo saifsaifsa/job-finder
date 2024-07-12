@@ -23,6 +23,7 @@ export class OfferService {
     }
 
     addOffer(offerDetails: any): Observable<any> {
+        offerDetails.competences = offerDetails.competences[0];
         return this.http.post(this.apiUrl, offerDetails);
     }
 }
