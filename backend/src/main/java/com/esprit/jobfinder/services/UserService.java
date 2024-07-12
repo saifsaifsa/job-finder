@@ -1,5 +1,6 @@
 package com.esprit.jobfinder.services;
 
+import com.esprit.jobfinder.dto.UserMapper;
 import com.esprit.jobfinder.exceptions.ConflictException;
 import com.esprit.jobfinder.exceptions.NotFoundException;
 import com.esprit.jobfinder.models.User;
@@ -53,6 +54,7 @@ public class UserService implements IUserService{
     private IFileUploaderService fileUploaderService;
     @Override
     public User saveUser(User user, MultipartFile profilePicture) {
+
         Boolean userExists = userRepository.existsByEmail(user.getEmail());
         if (userExists) throw new ConflictException("User already exists with email "+user.getEmail());
 
@@ -77,7 +79,7 @@ public class UserService implements IUserService{
         VerificationToken verificationToken = new VerificationToken(token, user);
         tokenRepository.save(verificationToken);
 
-        String verificationUrl = "http://localhost:4200/confirmation?token=" + token;
+        String verificationUrl = "http://127.0.0.1:4200/confirmation?token=" + token;
         emailService.sendSimpleMessage(user.getEmail(), "Email Verification", "To verify your email, click the following link: " + verificationUrl);
         return savedUser;
     }
@@ -121,7 +123,6 @@ public class UserService implements IUserService{
         }
         existingUser.setPhone(user.getPhone());
         existingUser.setRole(ERole.valueOf(user.getRole()));
-        System.out.println("existingUser: "+existingUser);
         return userRepository.save(existingUser);
     }
 

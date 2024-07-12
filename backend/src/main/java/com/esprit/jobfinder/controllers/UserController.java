@@ -1,5 +1,6 @@
 package com.esprit.jobfinder.controllers;
 
+import com.esprit.jobfinder.dto.UserMapper;
 import com.esprit.jobfinder.exceptions.BadRequestException;
 import com.esprit.jobfinder.exceptions.NotFoundException;
 import com.esprit.jobfinder.models.User;
@@ -29,15 +30,16 @@ public class UserController {
 
     @PostMapping( consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<User> createUser(@Valid @ModelAttribute CreateUserReq user) {
-        User newUser = new User();
-        newUser.setBirthDay(DateUtils.parseDate(user.getBirthDay()));
-        newUser.setUsername(user.getUsername());
-        newUser.setRole(ERole.valueOf(user.getRole()));
-        newUser.setPassword(user.getPassword());
-        newUser.setPhone(user.getPhone());
-        newUser.setLastName(user.getLastName());
-        newUser.setFirstName(user.getFirstName());
-        newUser.setEmail(user.getEmail());
+        User newUser = UserMapper.createUserReqToUser(user);
+//        User newUser = new User();
+//        newUser.setBirthDay(DateUtils.parseDate(user.getBirthDay()));
+//        newUser.setUsername(user.getUsername());
+//        newUser.setRole(ERole.valueOf(user.getRole()));
+//        newUser.setPassword(user.getPassword());
+//        newUser.setPhone(user.getPhone());
+//        newUser.setLastName(user.getLastName());
+//        newUser.setFirstName(user.getFirstName());
+//        newUser.setEmail(user.getEmail());
         User savedUser = userService.saveUser(newUser,user.getPhoto());
         user.setPassword(null);
         return ResponseEntity.ok(savedUser);
