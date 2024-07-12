@@ -7,7 +7,7 @@ import { Cv } from './cv.model';
   providedIn: 'root'
 })
 export class CvService {
-  private apiUrl = 'http://localhost:8080/api/cvs';
+  private apiUrl = 'http://localhost:8080/api/cv';
 
   constructor(private http: HttpClient) {}
 

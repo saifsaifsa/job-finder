@@ -1,4 +1,4 @@
-package com.esprit.jobfinder.repositories;
+package com.esprit.jobfinder.repository;
 
 import com.esprit.jobfinder.models.LoyaltyPoints;
 import com.esprit.jobfinder.models.User;
