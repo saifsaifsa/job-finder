@@ -31,6 +31,10 @@ public class Offer {
     @ManyToMany(mappedBy = "offres")
     private Collection<User> users;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id")
+    Company company;
+
     public Collection<User> getUsers() {
         return users;
     }

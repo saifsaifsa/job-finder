@@ -126,6 +126,7 @@ export const appRoutes: Route[] = [
             {path: 'home',loadChildren: () => import('app/modules/admin/example/example.module').then((m) => m.ExampleModuleAdmin),},
             {path: 'users',loadChildren: () =>import('app/modules/admin/user/user.module').then((m) => m.UserModule),},
             {path: 'offre', loadChildren: () => import('app/modules/admin/offer/offerData.module').then(m => m.OfferModule)},
+            {path: 'company', loadChildren: () => import('app/modules/admin/company/company.module').then(m => m.CompanyModule)},
             {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
         ],
     },
@@ -142,6 +143,8 @@ export const appRoutes: Route[] = [
         children: [
             {path: 'exemple1',loadChildren: () => import('app/modules/publisherFront/example/example.module').then((m) => m.ExampleModule),},
             {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
+            {path: 'company', loadChildren: () => import('app/modules/admin/company/company.module').then((m) => m.CompanyModule)},
+
         ],
     },
     // User student routes

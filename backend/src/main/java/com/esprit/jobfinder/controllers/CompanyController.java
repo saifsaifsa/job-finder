@@ -1,17 +1,20 @@
 package com.esprit.jobfinder.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
+import com.esprit.jobfinder.exceptions.BadRequestException;
+import com.esprit.jobfinder.models.User;
+import com.esprit.jobfinder.models.enums.ERole;
+import com.esprit.jobfinder.payload.request.CreateUserReq;
+import com.esprit.jobfinder.payload.request.UpdateUserReq;
+import com.esprit.jobfinder.utiles.DateUtils;
+import jakarta.validation.Valid;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import com.esprit.jobfinder.payload.request.CreateCompanyReq;
+
 
 import com.esprit.jobfinder.exceptions.ResourceNotFoundException;
 import com.esprit.jobfinder.models.Company;
@@ -20,7 +23,7 @@ import com.esprit.jobfinder.services.ICompanyService;
 // add cross origin *
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/companies")
+@RequestMapping("/api/company")
 public class CompanyController {
 
 
@@ -30,17 +33,30 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
-    @PostMapping
-    public ResponseEntity<Company> createCompany(@RequestBody Company company) {
-        Company createdCompany = companyService.createCompany(company);
+    @PostMapping( consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<Company> createCompany(@Valid @ModelAttribute CreateCompanyReq createReq) {
+        Company companyDetails = new Company();
+        companyDetails.setName(createReq.getName());
+        companyDetails.setLocation(createReq.getLocation());
+        companyDetails.setDescription(createReq.getDescription());
+        companyDetails.setIndustry(createReq.getIndustry());
+        companyDetails.setRating(createReq.getRating());
+        Company createdCompany = companyService.createCompany(companyDetails,createReq.getImage());
         return ResponseEntity.ok(createdCompany);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Company> updateCompany(@PathVariable int id, @RequestBody Company companyDetails) {
-        return companyService.updateCompany(id, companyDetails)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new ResourceNotFoundException("company not found with id " + id));
+    @PutMapping(path="/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<Company> updateCompany(@PathVariable int id, @Valid @ModelAttribute CreateCompanyReq updateReq) {
+        Company companyDetails = new Company();
+        companyDetails.setId(id);
+        companyDetails.setName(updateReq.getName());
+        companyDetails.setLocation(updateReq.getLocation());
+        companyDetails.setDescription(updateReq.getDescription());
+        companyDetails.setIndustry(updateReq.getIndustry());
+        companyDetails.setRating(updateReq.getRating());
+        Company updatedCompany = null;
+        updatedCompany = companyService.updateCompany(id,companyDetails,updateReq.getImage());
+        return ResponseEntity.ok(updatedCompany);
     }
 
     @DeleteMapping("/{id}")

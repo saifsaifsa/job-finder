@@ -51,6 +51,9 @@ public class User {
   @ManyToMany
   Set<Offer> offres;
 
+  @ManyToMany
+  Set<Company> companies;
+
   @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime lastLogin;
   public User() {
@@ -207,6 +210,14 @@ public class User {
 
   public void setOffres(Set<Offer> offres) {
     this.offres = offres;
+  }
+
+  public Set<Company> getCompanies() {
+    return companies;
+  }
+
+  public void setCompanies(Set<Company> companies) {
+    this.companies = companies;
   }
 
   public LocalDateTime getLastLogin() {

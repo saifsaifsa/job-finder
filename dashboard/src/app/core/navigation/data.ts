@@ -23,6 +23,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/training'
+    },
+    {
+        id   : 'company',
+        title: 'Company',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/company'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
@@ -67,6 +74,13 @@ export const userNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/user/training'
+    },
+    {
+        id   : 'company user',
+        title: 'Company user',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/user/company'
     }
 ];
 export const publisherNavigation: FuseNavigationItem[] = [

@@ -1,0 +1,125 @@
+<div class="w-full w-10/12">
+    <div>
+        <fuse-alert class="mx-8 mt-8 mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+            [type]="alert.type" [@shake]="alert.type === 'error'">
+            {{ alert.message }}
+        </fuse-alert>
+    </div>
+    <form [formGroup]="companyDetailsForm" (ngSubmit)="onSubmit()" #companyDetailNgForm="ngForm">
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>name</mat-label>
+                <input matInput placeholder="name" formControlName="name" />
+                <mat-error *ngIf="
+                        companyDetailsForm.get('name').invalid &&
+                        companyDetailsForm.get('name').touched
+                    ">
+                    name is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>location</mat-label>
+                <input matInput placeholder="location" formControlName="location" />
+                <mat-error *ngIf="
+                        companyDetailsForm.get('location').invalid &&
+                        companyDetailsForm.get('location').touched
+                    ">
+                    location is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>description</mat-label>
+                <input matInput placeholder="description" formControlName="description" />
+                <mat-error *ngIf="
+                        companyDetailsForm.get('description').invalid &&
+                        companyDetailsForm.get('description').touched
+                    ">
+                    description is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>rating</mat-label>
+                <input matInput type="number" placeholder="rating" formControlName="rating" />
+                <mat-error *ngIf="
+                        companyDetailsForm.get('rating').invalid &&
+                        companyDetailsForm.get('rating').touched
+                    ">
+                    rating is required 
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="sm:col-span-4">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>industry</mat-label>
+                <input matInput placeholder="industry" formControlName="industry" />
+                <mat-error *ngIf="
+                        companyDetailsForm.get('industry').invalid &&
+                        companyDetailsForm.get('industry').touched
+                    ">
+                    industry is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <!-- <div class="sm:col-span-4">
+            <label for="image">Avatar</label>
+            <img
+                    class="w-full h-full rounded-full"
+                    *ngIf="company.image"
+                    [src]="company.image"
+                    alt="company avatar">
+            <input formControlName="photo" id="image" type="file" accept=".jpg,.jpeg,.png"
+                (change)="onAvatarChange($event)" />
+        </div> -->
+        <!-- <div class="sm:col-span-4  mt-4 mx-4" >
+            <div class="relative w-24 h-24">
+                <img class="w-full h-full rounded-full" [src]="avatar ? avatar : 'assets/avatars/avatar.png'" alt="company avatar"
+                    (click)="avatarInput.click()" />
+                <input formControlName="photo" id="image" type="file" accept=".jpg,.jpeg,.png"
+                    (change)="onAvatarChange($event)" #avatarInput style="display: none" />
+            </div>
+        </div> -->
+
+        <!-- <div class="sm:col-span-4 mt-4 mx-4">
+            <mat-form-field class="w-3/4">
+                <mat-label>Birthday</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="birthDay">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+        </div> -->
+
+        <div class="sm:col-span-4 mt-4 mx-4">
+            <div class="relative w-24 h-24">
+                <img class="w-full h-full rounded-full" [src]="photo ? photo : 'assets/avatars/avatar.png'" alt="company avatar"
+                    (click)="avatarInput.click()" />
+                <input formControlName="image" id="image" type="file" accept=".jpg,.jpeg,.png"
+                    (change)="onAvatarChange($event)" #avatarInput style="display: none" />
+            </div>
+        </div>
+        <!-- Divider -->
+        <div class="mt-4 mb-10 border-t"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end mb-10 mx-4">
+            <button mat-stroked-button type="button" (click)="goToCompaniesList()">
+                Cancel
+            </button>
+            <button class="ml-4" [class.greenBtn]="!companyDetailsForm.invalid" mat-flat-button type="submit"
+                [disabled]="companyDetailsForm.invalid">Save
+            </button>
+        </div>
+        <!-- <button mat-raised-button color="primary" type="submit" [disabled]="companyDetailsForm.invalid">
+            Enregistrer
+        </button> -->
+    </form>
+</div>
