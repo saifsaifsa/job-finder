@@ -1,10 +1,9 @@
 package com.esprit.jobfinder.controllers;
 
 import com.esprit.jobfinder.models.Training;
-import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.enums.TrainingCategories;
 import com.esprit.jobfinder.payload.request.CreateTrainingReq;
-import com.esprit.jobfinder.payload.request.CreateUserReq;
+import com.esprit.jobfinder.payload.request.UpdateTrainingReq;
 import com.esprit.jobfinder.services.ITrainingService;
 import com.esprit.jobfinder.utiles.DateUtils;
 import jakarta.validation.Valid;
@@ -57,9 +56,20 @@ public class TrainingController {
     public void deleteTraining(@PathVariable long id){
         trainingService.DeleteTraining(id);
     }
-    @PutMapping()
-    public Training updateTraining(@RequestBody Training training){
-        return trainingService.updateTraining(training);
+    @PutMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public Training updateTraining(@Valid @ModelAttribute UpdateTrainingReq training){
+        Training train = new Training();
+        train.setId(Long.parseLong(training.getId()));
+        train.setTitle(training.getTitle());
+        train.setDescription(training.getDescription());
+        train.setPrice(Double.parseDouble(training.getPrice()));
+        train.setRating(Double.parseDouble(training.getRating()));
+        train.setLikes(Integer.parseInt(training.getLikes()));
+        train.setDislikes(Integer.parseInt(training.getDislikes()));
+        train.setTrainingCategories(training.getTrainingCategories());
+        train.setDateDebut(DateUtils.parseDate(training.getDateDebut()));
+        train.setDateFin(DateUtils.parseDate(training.getDateFin()));
+        return trainingService.updateTraining(train,training.getImage());
     }
     @GetMapping("/findTrainingByCategories/{trainingCategories}")
     public Set<Training> findTrainingByCategories(@PathVariable TrainingCategories trainingCategories) {
@@ -68,7 +78,7 @@ public class TrainingController {
     @GetMapping()
     public ResponseEntity<Page<Training>> getAllTrainings(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "9") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortOrder) {
 

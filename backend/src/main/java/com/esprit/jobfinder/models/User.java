@@ -1,21 +1,21 @@
 package com.esprit.jobfinder.models;
 
+import com.esprit.jobfinder.models.enums.ERole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDate;
-import java.util.Collection;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.esprit.jobfinder.models.enums.ERole;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-
 @Entity
+@Data
 @Table(name = "users", 
     uniqueConstraints = { 
       @UniqueConstraint(columnNames = "username"),
+      @UniqueConstraint(columnNames = "phone"),
       @UniqueConstraint(columnNames = "email") 
     })
 public class User {
@@ -23,26 +23,20 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank(message = "Username cannot be blank")
   private String username;
   private String firstName;
 
   private String lastName;
   @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
   private Boolean active = false;
-  @Email(message = "Invalid email format")
   private String email;
-  @NotBlank(message = "password cannot be blank")
-  @Size(max = 120)
-  @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", message = "Password must have at least one lowercase letter, one uppercase letter, and one digit, and its length should be at least 8 characters")
   private String password;
 
-  @NotBlank(message = "phone cannot be blank")
-  @Pattern(regexp = "^\\+216(20|21|22|23|24|25|26|27|28|29|50|52|53|54|55|56|58|90|91|92|93|94|95|96|97|98|99)\\d{6}$", message = "Phone number must be a valid Tunisian phone number")
   private String phone;
 
   @Enumerated(EnumType.ORDINAL)
   private ERole role;
+
   @ManyToMany
   Set<Training> trainings;
 
@@ -51,10 +45,27 @@ public class User {
 
   private String profilePicture;
 
+  @ManyToMany
+  Set<Skill> skills;
+
+  @JsonIgnore
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<UserQuiz> userQuizzes = new HashSet<>();
+
+  @ManyToMany
+  Set<Offer> offres;
+
+  @ManyToMany
+  Set<Company> companies;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  private LocalDateTime lastLogin;
+
+  @JsonIgnore
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private VerificationToken verificationToken;
   public User() {
   }
-  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-  private VerificationToken verificationToken;
   public User(String username, String email, String password) {
     this.username = username;
     this.email = email;
@@ -68,69 +79,7 @@ public class User {
     this.firstName = firstName;
   }
 
-  public Long getId() {
-    return id;
-  }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public Boolean getActive() {
-    return active;
-  }
-
-  public void setActive(Boolean active) {
-    this.active = active;
-  }
-
-  public ERole getRole() {
-    return role;
-  }
-
-  public void setRole(ERole role) {
-    this.role = role;
-  }
   public String getFullName(){
     return firstName+" "+lastName;
   }
@@ -173,5 +122,47 @@ public class User {
 
   public void setProfilePicture(String profilePicture) {
     this.profilePicture = profilePicture;
+  }
+
+  public Set<Training> getTrainings() {
+    return trainings;
+  }
+
+  public void setTrainings(Set<Training> trainings) {
+    this.trainings = trainings;
+  }
+
+  public Set<Skill> getSkills() {
+    return skills;
+  }
+
+  public void setSkills(Set<Skill> skills) {
+    this.skills = skills;
+  }
+
+
+
+  public Set<Offer> getOffres() {
+    return offres;
+  }
+
+  public void setOffres(Set<Offer> offres) {
+    this.offres = offres;
+  }
+
+  public Set<Company> getCompanies() {
+    return companies;
+  }
+
+  public void setCompanies(Set<Company> companies) {
+    this.companies = companies;
+  }
+
+  public LocalDateTime getLastLogin() {
+    return lastLogin;
+  }
+
+  public void setLastLogin(LocalDateTime lastLogin) {
+    this.lastLogin = lastLogin;
   }
 }

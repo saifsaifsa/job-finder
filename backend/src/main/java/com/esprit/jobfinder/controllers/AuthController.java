@@ -1,20 +1,23 @@
 package com.esprit.jobfinder.controllers;
 
+import com.esprit.jobfinder.payload.request.*;
 import com.esprit.jobfinder.payload.request.ForgotPasswordRequest;
 import com.esprit.jobfinder.payload.request.ResetPasswordRequest;
+import com.esprit.jobfinder.payload.response.AccessTokenResponse;
 import com.esprit.jobfinder.services.IAuthService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import com.esprit.jobfinder.payload.request.LoginRequest;
-import com.esprit.jobfinder.payload.request.SignupRequest;
 import com.esprit.jobfinder.payload.response.JwtResponse;
 import com.esprit.jobfinder.payload.response.MessageResponse;
+import org.springframework.web.client.RestTemplate;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -28,7 +31,11 @@ public class AuthController {
 
   @Autowired
   PasswordEncoder encoder;
+  private final RestTemplate restTemplate;
 
+    public AuthController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     String token = authService.login (loginRequest.getUsername (),loginRequest.getEmail (),loginRequest.getPassword ());
@@ -37,7 +44,7 @@ public class AuthController {
 
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-      this.authService.signup(signUpRequest.getUsername(),signUpRequest.getEmail(),signUpRequest.getPassword());
+      this.authService.signup(signUpRequest.getUsername(),signUpRequest.getEmail(),signUpRequest.getPassword(),signUpRequest.getRole());
       return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }
 
@@ -64,4 +71,21 @@ public class AuthController {
     authService.resetPassword(request.getToken(), request.getNewPassword());
     return ResponseEntity.ok(new MessageResponse("Password reset successfully!"));
   }
+  @PostMapping("/generate-admin")
+    public ResponseEntity<?> generateSuperAdmin(@RequestBody AdminRequest request) {
+        if (request.getCode().equals("12345678")) {
+            authService.generateSuperAdmin();
+            return ResponseEntity.ok(new MessageResponse("admin generated!"));
+        }
+        return ResponseEntity
+                .badRequest()
+                .body(new MessageResponse("code invalid"));
+    }
+    @PostMapping(  value = "/linkedin",consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+    public ResponseEntity<?> oauthLinkedin(@RequestParam("code") String code) throws Exception {
+        String token = authService.oauthLinkedin(code);
+        return ResponseEntity.ok(new JwtResponse(token));
+    }
+
 }
+

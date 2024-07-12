@@ -1,6 +1,7 @@
 package com.esprit.jobfinder.controllers;
 
 import com.esprit.jobfinder.exceptions.BadRequestException;
+import com.esprit.jobfinder.exceptions.NotFoundException;
 import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.enums.ERole;
 import com.esprit.jobfinder.payload.request.CreateUserReq;
@@ -14,12 +15,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -68,23 +66,13 @@ public class UserController {
 
     @PutMapping(path="/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<User> updateUser(@PathVariable Long id,@Valid @ModelAttribute UpdateUserReq updateReq) {
-
-        User userDetails = new User();
-        userDetails.setId(id);
-        userDetails.setRole(ERole.valueOf(updateReq.getRole()));
-        userDetails.setEmail(updateReq.getEmail());
-        userDetails.setFirstName(updateReq.getFirstName());
-        userDetails.setLastName(updateReq.getLastName());
-        userDetails.setPhone(updateReq.getPhone());
-        userDetails.setUsername(updateReq.getUsername());
-        userDetails.setBirthDay(DateUtils.parseDate(updateReq.getBirthDay()));
-        User updatedUser = null;
         try {
-            updatedUser = userService.updateUser(userDetails,updateReq.getPhoto());
+
+            User updatedUser = userService.updateUser(updateReq,updateReq.getPhoto());
+            return ResponseEntity.ok(updatedUser);
         } catch (IOException e) {
             throw new BadRequestException(e.getMessage());
         }
-        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")
@@ -97,5 +85,9 @@ public class UserController {
     public ResponseEntity<User> patchUser(@PathVariable Long id, @RequestBody PatchUserRequest userDetails) {
         User updatedUser = userService.patchUser(id,userDetails);
         return ResponseEntity.ok(updatedUser);
+    }
+    @GetMapping("/stats")
+    public ResponseEntity<Map<String, Object>> getUsersStats() {
+        return ResponseEntity.ok(userService.getUserStatistics());
     }
 }

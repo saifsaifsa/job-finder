@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { UserService } from 'app/core/user/user.service';
+import { emailRegexValidator } from 'app/layout/common/validators/validators';
 
 @Component({
     selector: 'app-user-detail',
@@ -19,7 +20,7 @@ export class UserDetailComponent implements OnInit {
     private fileUrl = 'http://localhost:8080/api/files/';
     roles = {
         "ROLE_USER": "ROLE_USER",
-        "ROLE_MODERATOR": "ROLE_MODERATOR",
+        "ROLE_PUBLISHER": "ROLE_PUBLISHER",
         "ROLE_ADMIN": "ROLE_ADMIN",
     };
 
@@ -32,7 +33,7 @@ export class UserDetailComponent implements OnInit {
     isUpdating: boolean = false;
     authentifiedUser:any
     avatar: string | ArrayBuffer | null = null;
-
+    showRole:boolean;
     constructor(
         private userService: UserService,
         private router: Router,
@@ -40,11 +41,14 @@ export class UserDetailComponent implements OnInit {
         private datePipe: DatePipe
     ) {}
     private formatDate(date: Date): string {
-        console.log("date:",date);
-        console.log("this.datePipe.transform(date, 'yyyy/MM/dd')",this.datePipe.transform(date, 'yyyy/MM/dd'));
-        
-        return this.datePipe.transform(date, 'yyyy/MM/dd') || '';
+         return this.datePipe.transform(date, 'yyyy/MM/dd') || '';
       }
+      getProfilePicture(profilePicture){
+        if(profilePicture){
+            return /^http/.test(profilePicture) ? profilePicture:this.fileUrl+profilePicture
+        }
+        return"assets/avatars/avatar.png"
+    }
     ngOnInit(): void {
         this.userService.getLoggedInUser().subscribe((user)=>{
             this.authentifiedUser = user
@@ -54,8 +58,7 @@ export class UserDetailComponent implements OnInit {
             firstName: new FormControl('', Validators.required),
             username: new FormControl('', Validators.required),
             email: new FormControl('', [
-                Validators.required,
-                Validators.minLength(8),
+                emailRegexValidator()
             ]),
             password: new FormControl('', [
                 Validators.required,
@@ -73,7 +76,7 @@ export class UserDetailComponent implements OnInit {
 
         this.route.params.subscribe((params) => {
             const userId = params['id'];
-
+            this.showRole = userId != this.authentifiedUser.id
             if (userId) {
                 this.isUpdating = true;
                 this.userDetailsForm = new FormGroup({
@@ -81,21 +84,19 @@ export class UserDetailComponent implements OnInit {
                     firstName: new FormControl('', Validators.required),
                     username: new FormControl('', Validators.required),
                     email: new FormControl('', [
-                        Validators.required,
-                        Validators.minLength(8),
+                    emailRegexValidator()
                     ]),
                     phone: new FormControl('', [
                         Validators.required,
                         Validators.pattern(/^\+216(20|21|22|23|24|25|26|27|28|29|50|52|53|54|55|56|58|90|91|92|93|94|95|96|97|98|99)\d{6}$/)
                     ]),
-                    role: new FormControl(this.roles[1], Validators.required),
+                    role: new FormControl(this.roles["ROLE_USER"], this.showRole ? Validators.required:null),
                     photo: new FormControl(null),
                     birthDay: new FormControl(this.formatDate(new Date())),
                 });
                 this.userService.getUser(userId).subscribe((user: any) => {
-                    console.log("user:",user);
                     
-                    this.avatar = this.fileUrl+user.profilePicture
+                    this.avatar = this.getProfilePicture(user.profilePicture)
                     this.userDetailsForm.patchValue({
                         lastName: user.lastName,
                         firstName: user.firstName,
@@ -159,7 +160,7 @@ export class UserDetailComponent implements OnInit {
             );
         }
         formData.append('phone', this.userDetailsForm.get('phone').value);
-        formData.append('role', this.userDetailsForm.get('role').value);
+        formData.append('role', this.showRole ? this.userDetailsForm.get('role').value:this.authentifiedUser.role);
         if(this.userDetailsForm.get('photo').value){formData.append('photo', this.userDetailsForm.get('photo').value);}
         
         formData.append('birthDay', this.formatDate(this.userDetailsForm.get('birthDay').value));
@@ -187,13 +188,17 @@ export class UserDetailComponent implements OnInit {
                     // if(this.userService.getLoggedInUser()._id == userId){
                     //     this.userService.setLoggedInUser(res)
                     // }
-                    this.goToUsersList();
+                    if(this.authentifiedUser.role == "ROLE_ADMIN"){
+                        this.goToUsersList();
+                    }else{
+                        this.router.navigateByUrl('/home');
+                    }
                 },
                 (error) => {
                     if (error.status === 409) {
                         this.alert = {
                             type: 'error',
-                            message: 'Adresse e-mail ou phone est déjà utilisée',
+                            message: 'Username, Adresse e-mail ou phone est déjà utilisée',
                         };
                     } else if (error.status === 400) {
                         console.log(error);

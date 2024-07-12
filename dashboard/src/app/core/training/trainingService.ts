@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, ReplaySubject } from 'rxjs';
 import { Training } from './training.types';
 import { environment } from "environments/environment";
-import { map } from 'rxjs/internal/operators/map';
+import { map } from 'rxjs/internal/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -102,4 +102,11 @@ export class TrainingService {
         // let headers = new HttpHeaders({'Content-Type': 'application/json'});
         return this._httpClient.post(`${environment.apiUrl}training`,data)
     }
+    likeTraining(postId: Number): Observable<any> {
+        return this._httpClient.post<any>(`${environment.apiUrl}training/${postId}/like`, {});
+      }
+    
+      dislikeTraining(postId: Number): Observable<any> {
+        return this._httpClient.post<any>(`${environment.apiUrl}training/${postId}/dislike`, {});
+      }
 }

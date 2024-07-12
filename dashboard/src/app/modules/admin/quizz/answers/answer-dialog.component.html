@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+    <form [formGroup]="answerForm">
+        <mat-form-field class="w-full">
+            <mat-label>Answer Content</mat-label>
+            <input matInput formControlName="content">
+            <mat-error *ngIf="answerForm.get('content').hasError('required')">Content is required</mat-error>
+        </mat-form-field>
+
+        <mat-checkbox formControlName="isCorrect">Correct Answer</mat-checkbox>
+
+        <mat-form-field class="w-full">
+            <mat-label>Score</mat-label>
+            <input matInput type="number" formControlName="score">
+            <mat-error *ngIf="answerForm.get('score').hasError('required')">Score is required</mat-error>
+            <mat-error *ngIf="answerForm.get('score').hasError('min')">Score must be positive</mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button (click)="onSave()">Save</button>
+</div>

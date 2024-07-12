@@ -27,7 +27,7 @@
                         userDetailsForm.get('lastName').invalid &&
                         userDetailsForm.get('lastName').touched
                     ">
-                    Lasrname is required
+                    Lastname is required
                 </mat-error>
             </mat-form-field>
         </div>
@@ -84,13 +84,13 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="sm:col-span-4">
+        <div class="sm:col-span-4" *ngIf="showRole">
             <mat-form-field class="w-3/4 mt-4 mx-4">
                 <mat-label>Role</mat-label>
                 <mat-select formControlName="role">
                     <mat-option value="ROLE_ADMIN">Admin</mat-option>
                     <mat-option value="ROLE_USER">User</mat-option>
-                    <mat-option value="ROLE_MODERATOR">Publisher</mat-option>
+                    <mat-option value="ROLE_PUBLISHER">Publisher</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -107,7 +107,7 @@
         </div> -->
         <!-- <div class="sm:col-span-4  mt-4 mx-4" >
             <div class="relative w-24 h-24">
-                <img class="w-full h-full rounded-full" [src]="avatar ? avatar : 'assets/images/avatars/avatar.png'" alt="User avatar"
+                <img class="w-full h-full rounded-full" [src]="avatar ? avatar : 'assets/avatars/avatar.png'" alt="User avatar"
                     (click)="avatarInput.click()" />
                 <input formControlName="photo" id="image" type="file" accept=".jpg,.jpeg,.png"
                     (change)="onAvatarChange($event)" #avatarInput style="display: none" />
@@ -125,7 +125,7 @@
 
         <div class="sm:col-span-4 mt-4 mx-4">
             <div class="relative w-24 h-24">
-                <img class="w-full h-full rounded-full" [src]="avatar ? avatar : 'assets/images/avatars/avatar.png'" alt="User avatar"
+                <img class="w-full h-full rounded-full" [src]="avatar ? avatar : 'assets/avatars/avatar.png'" alt="User avatar"
                     (click)="avatarInput.click()" />
                 <input formControlName="photo" id="image" type="file" accept=".jpg,.jpeg,.png"
                     (change)="onAvatarChange($event)" #avatarInput style="display: none" />

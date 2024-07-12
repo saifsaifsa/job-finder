@@ -1,0 +1,67 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <div class="flex m-5">
+        <div class="text-4xl font-extrabold tracking-tight leading-none">Quizz</div>
+
+    </div>
+
+    <div class="m-3">
+
+        <button
+            [routerLink]="['/quizz', 'skills', skillId, 'add']"
+            class="p-0 w-16 h-16 bg-blue-600 rounded-full hover:bg-blue-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
+            >
+            <svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" class="w-6 h-6 inline-block">
+                <path fill="#FFFFFF" d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
+                                C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
+                                C15.952,9,16,9.447,16,10z" />
+            </svg>
+        </button>
+    </div>
+
+    <div class="flex">
+        <div class=" w-full h-10 sm:flex items-center bg-white rounded-lg overflow-hidden px-2 py-1 justify-between m-2">
+            <input class="text-base text-gray-400 flex-grow outline-none px-2 " type="text" (keyup)="applyFilter($event)"
+                   placeholder="Search by name" />
+
+        </div>
+
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="Title">
+            <th mat-header-cell *matHeaderCellDef>Title</th>
+            <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+                <button
+                    [routerLink]="['/quizz','skills', skillId, 'edit', element.id]"
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-2 rounded transition-all duration-500 ease-in-out transform hover:scale-110 hover:-rotate-3"
+                    >
+                    Update
+                </button>
+                <button
+                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-all duration-500 ease-in-out transform hover:scale-110 hover:-rotate-3"
+
+                    (click)="onDelete(element.id)">
+                    Delete
+                </button>
+                <button
+                    class="bg-bleu-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-all duration-500 ease-in-out transform hover:scale-110 hover:-rotate-3"
+
+                    [routerLink]="['/quizz', 'skills', element.id]">
+                    Quizzs
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSize]="5"> </mat-paginator>
+</div>

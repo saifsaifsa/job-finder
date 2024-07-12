@@ -90,15 +90,6 @@ export class TrainingDetailComponent implements OnInit {
         });
     }
 
-    // onAvatarChange(event: Event): void {
-    //     const inputElement = event.target as HTMLInputElement;
-    //     if (inputElement?.files && inputElement.files.length > 0) {
-    //         const file = inputElement.files[0];
-    //         this.trainingDetailsForm.patchValue({
-    //             image: file,
-    //         });
-    //     }
-    // }
     onAvatarChange(event: any): void {
         const inputElement = event.target as HTMLInputElement;
         if (inputElement?.files && inputElement.files.length > 0) {
@@ -138,13 +129,7 @@ export class TrainingDetailComponent implements OnInit {
 
         if (this.isUpdating) {
             const trainingId = this.route.snapshot.params['id'];
-            // var object = {};
-            // formData.forEach(function(value, key){
-            //     object[key] = value;
-            // });
-            // object['id'] = trainingId;
-            // var json = JSON.stringify(object);
-            // console.log(json)
+            formData.append('id', trainingId);
             this.trainingService
                 .updateTraining(trainingId, formData)
                 .subscribe(
@@ -170,12 +155,6 @@ export class TrainingDetailComponent implements OnInit {
                     }
                 );
         } else {
-            // var object = {};
-            // formData.forEach(function(value, key){
-            //     object[key] = value;
-            // });
-            // var json = JSON.stringify(object);
-            // Perform add operation
             this.trainingService.createTraining(formData).subscribe(
                 () => {
                     this.goToTrainingsList();

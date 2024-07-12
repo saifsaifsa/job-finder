@@ -34,7 +34,7 @@
                 <mat-form-field class="fuse-mat-no-subscript w-full sm:w-36 mt-4 sm:mt-0 sm:ml-4">
                     <mat-select [value]="'all'" [(ngModel)]="filterValues.role" (ngModelChange)="applyFilters()">
                         <mat-option [value]="''">All</mat-option>
-                        <ng-container *ngFor="let role of [{id:'ROLE_USER',title:'User'},{id:'ROLE_MODERATOR',title:'Moderator'},{id:'ROLE_ADMIN',title:'Admin'}]">
+                        <ng-container *ngFor="let role of [{id:'ROLE_USER',title:'User'},{id:'ROLE_PUBLISHER',title:'Publisher'},{id:'ROLE_ADMIN',title:'Admin'}]">
                             <mat-option [value]="role.id">{{role.title}}</mat-option>
                         </ng-container>
                     </mat-select>
@@ -106,7 +106,9 @@
                                     'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
                                         user.role == 'ROLE_ADMIN',
                                     'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
-                                        user.role == 'ROLE_USER'
+                                        user.role == 'ROLE_USER',
+                                        'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                            user.role == 'ROLE_PUBLISHER'
                                 }">
                                 <span class="leading-relaxed whitespace-nowrap">{{ user.role }}</span>
                             </span>

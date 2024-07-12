@@ -12,10 +12,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Collection;
 
 @Entity
 @Getter
@@ -53,4 +57,20 @@ public class Offer {
         }
     }
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "offres")
+    private Collection<User> users;
+
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id")
+    Company company;
+
+    public Collection<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Collection<User> users) {
+        this.users = users;
+    }
 }

@@ -2,14 +2,9 @@ package com.esprit.jobfinder.payload.request;
 
 import com.esprit.jobfinder.models.enums.TrainingCategories;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDate;
 
 @Data
 public class CreateTrainingReq {

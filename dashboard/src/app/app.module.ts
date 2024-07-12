@@ -14,6 +14,10 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatNativeDateModule } from '@angular/material/core';
+import { CvComponent } from './modules/admin/cv/cv.component';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { StatsModule } from './modules/admin/cv/cvStats/statsModule';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -28,7 +32,9 @@ const routerConfig: ExtraOptions = {
         BrowserModule,
         BrowserAnimationsModule,
         MatNativeDateModule, // Include MatNativeDateModule or MatMomentDateModule based on your preference
-        MatMomentDateModule ,
+        MatMomentDateModule , 
+        MatSortModule,
+        MatTableModule,
         RouterModule.forRoot(appRoutes, routerConfig),
 
         // Fuse, FuseConfig & FuseMockAPI

@@ -4,10 +4,13 @@ import com.esprit.jobfinder.exceptions.ConflictException;
 import com.esprit.jobfinder.exceptions.NotFoundException;
 import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.VerificationToken;
+import com.esprit.jobfinder.models.enums.ERole;
 import com.esprit.jobfinder.payload.request.PatchUserRequest;
+import com.esprit.jobfinder.payload.request.UpdateUserReq;
 import com.esprit.jobfinder.repository.IUserRepository;
 import com.esprit.jobfinder.repository.IVerificationTokenRepository;
 import com.esprit.jobfinder.security.jwt.JwtUtils;
+import com.esprit.jobfinder.utiles.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,8 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class UserService implements IUserService{
@@ -98,7 +102,7 @@ public class UserService implements IUserService{
         return userRepository.findAll(spec, pageable);
     }
     @Override
-    public User updateUser(User user, MultipartFile profilePicture) throws IOException {
+    public User updateUser(UpdateUserReq user, MultipartFile profilePicture) throws IOException {
         User existingUser = userRepository.findById(user.getId())
                 .orElseThrow(() -> new NotFoundException("User not found with id: " + user.getId()));
 
@@ -106,20 +110,18 @@ public class UserService implements IUserService{
             String filePath = fileUploaderService.uploadFile(profilePicture);
             existingUser.setProfilePicture(filePath);
         }
-
         existingUser.setUsername(user.getUsername());
         existingUser.setFirstName(user.getFirstName());
         existingUser.setLastName(user.getLastName());
-        existingUser.setActive(user.getActive());
         existingUser.setEmail(user.getEmail());
-        existingUser.setBirthDay(user.getBirthDay());
+        existingUser.setBirthDay(DateUtils.parseDate(user.getBirthDay()));
         if (user.getPassword() != null && !user.getPassword().isEmpty()) {
             String hashedPassword = passwordEncoder.encode(user.getPassword());
             existingUser.setPassword(hashedPassword);
         }
         existingUser.setPhone(user.getPhone());
-        existingUser.setRole(user.getRole());
-
+        existingUser.setRole(ERole.valueOf(user.getRole()));
+        System.out.println("existingUser: "+existingUser);
         return userRepository.save(existingUser);
     }
 
@@ -163,5 +165,31 @@ public class UserService implements IUserService{
             user.setRole(patchUserRequest.getRole());
         }
         return userRepository.save(user);
+    }
+
+    public void deleteInactiveUsers() {
+        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+        List<User> inactiveUsers = userRepository.findInactiveUsers(oneMonthAgo);
+        List<Long> ids = inactiveUsers.stream().map(User::getId).toList();
+        userRepository.deleteAllByIdIn(ids);
+    }
+    public Map<String, Object> getUserStatistics() {
+        long totalUsers = userRepository.countAllUsers();
+        long activeUsers = userRepository.countActiveUsers();
+        List<Object[]> usersByRole = userRepository.countUsersByRole();
+
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("totalUsers", totalUsers);
+        stats.put("activeUsers", activeUsers);
+
+        Map<String, Long> roleStats = new HashMap<>();
+        for (Object[] result : usersByRole) {
+            ERole role = (ERole) result[0];
+            long count = (long) result[1];
+            roleStats.put(role.name(), count);
+        }
+        stats.put("usersByRole", roleStats);
+
+        return stats;
     }
 }

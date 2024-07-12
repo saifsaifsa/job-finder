@@ -75,6 +75,7 @@ export class UserComponent implements OnInit {
             )
             .subscribe(
                 (data: any) => {
+                    console.log("data:",data);
                     this.usersDataSource.data = data.content;
                     this.totalItems = data.totalElements
                 },

@@ -12,7 +12,7 @@ public interface ITrainingService {
     public Training addTraining(Training training, MultipartFile image);
     public List<Training> getAll();
     public Training getTraining(long id);
-    public Training updateTraining(Training training);
+    public Training updateTraining(Training training, MultipartFile image);
     public void DeleteTraining(long id);
     public Set<Training> findTrainingByCategories(TrainingCategories trainingCategories);
     public List<Training> getAllOrderByPrice(String direction);

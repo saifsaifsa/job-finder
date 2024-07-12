@@ -5,10 +5,10 @@ export interface Training{
     title:  String;
     description:  String;
     trainingCategories: TrainingCategories;
-    rating: Number;
+    rating: number;
     price: Number;
-    likes: Number;
-    dislikes: Number;
+    likes: number;
+    dislikes: number;
     dateDebut: Date;
     dateFin: Date;
     image?: String;

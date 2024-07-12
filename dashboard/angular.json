@@ -46,6 +46,7 @@
                             ]
                         },
                         "styles": [
+                            "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
                             "src/@fuse/styles/tailwind.scss",
                             "src/@fuse/styles/themes.scss",
                             "src/styles/vendors.scss",
@@ -120,6 +121,7 @@
                             "src/assets"
                         ],
                         "styles": [
+                            "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
                             "src/styles/styles.scss"
                         ],
                         "scripts": []
@@ -139,6 +141,7 @@
     },
     "defaultProject": "fuse",
     "cli": {
+      "analytics": "619728e8-4d08-40e6-a2e9-bc821fdaed87",
         "defaultCollection": "@angular-eslint/schematics"
     }
 }
