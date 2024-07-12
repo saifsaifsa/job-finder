@@ -10,6 +10,7 @@ import com.esprit.jobfinder.models.Quiz;
 import com.esprit.jobfinder.repository.CompetenceRepository;
 import com.esprit.jobfinder.repository.QuizRepository;
 import jakarta.transaction.Transactional;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,6 +67,14 @@ public class QuizService {
         return quizRepository.save(quiz);
     }
 
+    public Quiz updateQuiz(Long id, @NotNull Quiz quizDetails) {
+        Quiz quiz = quizRepository.findById(id).orElseThrow(() -> new RuntimeException("Quiz not found"));
+        quiz.setTitle(quizDetails.getTitle());
+        quiz.setTotalScore(quizDetails.getTotalScore());
+        quiz.setSuccessScore(quizDetails.getSuccessScore());
+        quiz.setQuestions(quizDetails.getQuestions());
+        return quizRepository.save(quiz);
+    }
 
     public void deleteById(Long id) {
         quizRepository.deleteById(id);
