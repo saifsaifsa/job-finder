@@ -12,7 +12,7 @@ public class LoyaltyPointsService {
     @Autowired
     private LoyaltyPointsRepository loyaltyPointsRepository;
 
-    public void addPoints(User user, intpoints int points int points) {
+    public void addPoints(User user, int points) {
         LoyaltyPoints loyaltyPoints = loyaltyPointsRepository.findByUser(user)
                 .orElse(new LoyaltyPoints());
         loyaltyPoints.setUser(user);
