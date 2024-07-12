@@ -31,9 +31,9 @@ public class TrainingController {
         train.setTitle(training.getTitle());
         train.setDescription(training.getDescription());
         train.setPrice(Double.parseDouble(training.getPrice()));
-        train.setRating(Double.parseDouble(training.getRating()));
-        train.setLikes(Integer.parseInt(training.getLikes()));
-        train.setDislikes(Integer.parseInt(training.getDislikes()));
+        train.setRating(0);
+        train.setLikes(0);
+        train.setDislikes(0);
         train.setTrainingCategories(training.getTrainingCategories());
         train.setDateDebut(DateUtils.parseDate(training.getDateDebut()));
         train.setDateFin(DateUtils.parseDate(training.getDateFin()));
@@ -58,14 +58,14 @@ public class TrainingController {
     }
     @PutMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public Training updateTraining(@Valid @ModelAttribute UpdateTrainingReq training){
-        Training train = new Training();
-        train.setId(Long.parseLong(training.getId()));
+        Training train = trainingService.getTraining(Long.parseLong(training.getId()));
+//        train.setId(Long.parseLong(training.getId()));
         train.setTitle(training.getTitle());
         train.setDescription(training.getDescription());
         train.setPrice(Double.parseDouble(training.getPrice()));
-        train.setRating(Double.parseDouble(training.getRating()));
-        train.setLikes(Integer.parseInt(training.getLikes()));
-        train.setDislikes(Integer.parseInt(training.getDislikes()));
+//        train.setRating(Double.parseDouble(training.getRating()));
+//        train.setLikes(Integer.parseInt(training.getLikes()));
+//        train.setDislikes(Integer.parseInt(training.getDislikes()));
         train.setTrainingCategories(training.getTrainingCategories());
         train.setDateDebut(DateUtils.parseDate(training.getDateDebut()));
         train.setDateFin(DateUtils.parseDate(training.getDateFin()));
