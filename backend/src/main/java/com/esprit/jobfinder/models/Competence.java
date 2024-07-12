@@ -27,6 +27,8 @@ public class Competence {
     private List<Quiz> quizzes;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "skills")
-    private List<User> users;
+
+    @ManyToMany(mappedBy = "competences")
+    private Collection<Offer> offers;
+
 }

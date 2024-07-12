@@ -24,7 +24,19 @@ public class Skill {
     private String description;
     private String category;
 
-    @ManyToOne
-    @JoinColumn(name = "offer_id")
-    private Offer offer;
+
+   
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "skills")
+    private Collection<User> users;
+
+    public Collection<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Collection<User> users) {
+        this.users = users;
+    }
+
 }
