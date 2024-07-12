@@ -45,7 +45,7 @@ export class CvService {
   exportCvToPDF(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}/export-pdf`, { responseType: 'blob' }).pipe(
       catchError(this.handleError),
-      tap(() => this.incrementDownloads(id)) // Use tap here to increment downloads after successful export
+      tap(() => this.incrementDownloads(id)) 
     );
   }
 

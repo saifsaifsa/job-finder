@@ -107,7 +107,7 @@ export const userNavigation: FuseNavigationItem[] = [
         title: 'Cv user',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/cv/company'
+        link : '/cvs'
     }
 ];
 export const publisherNavigation: FuseNavigationItem[] = [
