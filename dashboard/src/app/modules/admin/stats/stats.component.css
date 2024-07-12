@@ -1,0 +1,16 @@
+:host {
+  display: block;
+  padding: 24px;
+}
+
+h3 {
+  margin-top: 16px;
+  font-size: 1.5rem;
+}
+
+ngx-charts-bar-vertical,
+ngx-charts-pie-chart,
+ngx-charts-line-chart {
+  display: block;
+  height: 400px;
+}
