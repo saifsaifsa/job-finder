@@ -5,50 +5,52 @@
             {{ alert.message }}
         </fuse-alert>
     </div>
-    <form [formGroup]="quizForm" (ngSubmit)="onSubmit()">
+    <form id="quizForm" [formGroup]="quizForm" (ngSubmit)="onSubmit()" class="space-y-6">
         <div class="sm:col-span-4">
-            <mat-form-field class="w-3/4 mt-4 mx-4">
-                <mat-label>Title</mat-label>
-                <input matInput placeholder="Title" formControlName="title" />
-                <mat-error *ngIf="quizForm.get('title').invalid && quizForm.get('title').touched">
-                    Title is required
-                </mat-error>
-            </mat-form-field>
+          <mat-form-field class="w-full mt-4 mx-4">
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Title" formControlName="title" />
+            <mat-error *ngIf="quizForm.get('title').invalid && quizForm.get('title').touched">
+              Title is required
+            </mat-error>
+          </mat-form-field>
         </div>
+      
         <div class="sm:col-span-4">
-            <mat-form-field class="w-3/4 mt-4 mx-4">
-                <mat-label>Success Score</mat-label>
-                <input matInput type="number" placeholder="Success Score" formControlName="successScore" />
-                <mat-error *ngIf="quizForm.get('successScore').invalid && quizForm.get('successScore').touched">
-                    Success score must be a positive number
-                </mat-error>
-            </mat-form-field>
+          <mat-form-field class="w-full mt-4 mx-4">
+            <mat-label>Success Score</mat-label>
+            <input matInput type="number" placeholder="Success Score" formControlName="successScore" />
+            <mat-error *ngIf="quizForm.get('successScore').invalid && quizForm.get('successScore').touched">
+              Success score must be a positive number
+            </mat-error>
+          </mat-form-field>
         </div>
-
-        <div formArrayName="questions">
-            <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="question-container">
-                <div class="sm:col-span-4">
-                    <p class="question-content">{{ question.get('content').value }}</p>
-                    <div formArrayName="answers">
-                        <div *ngFor="let answer of getAnswers(i).controls; let j = index" [formGroupName]="j">
-                            <p>{{ answer.get('content').value }} - Score: {{ answer.get('score').value }} - Correct: {{ answer.get('isCorrect').value }}</p>
-                            <button mat-button type="button" (click)="removeAnswer(i, j)">Remove Answer</button>
-                        </div>
-                    </div>
-                    <button mat-button type="button" (click)="addAnswer(i)">Add Answer</button>
-                    <button mat-button type="button" (click)="removeQuestion(i)">Remove Question</button>
+      
+        <div formArrayName="questions" class="space-y-4">
+          <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="question-container bg-gray-100 p-4 rounded-lg shadow-md">
+            <div class="sm:col-span-4">
+              <p class="question-content font-semibold">{{ question.get('content').value }}</p>
+              <div formArrayName="answers" class="space-y-2">
+                <div *ngFor="let answer of getAnswers(i)?.controls; let j = index" [formGroupName]="j" class="answer-container">
+                  <p>{{ answer.get('content')?.value }} - Score: {{ answer.get('score')?.value }} - Correct: {{ answer.get('isCorrect')?.value }}</p>
+                  <button mat-button type="button" class="text-red-600 hover:text-red-800" (click)="removeAnswer(i, j)">Remove Answer</button>
                 </div>
+              </div>
+              <button mat-button type="button" class="mt-2 text-blue-600 hover:text-blue-800" (click)="addAnswer(i)">Add Answer</button>
+              <button mat-button type="button" class="mt-2 text-red-600 hover:text-red-800" (click)="removeQuestion(i)">Remove Question</button>
             </div>
-            <button mat-button type="button" (click)="addQuestion()">Add Question</button>
+          </div>
+          <button mat-button type="button" class="mt-4 bg-green-500 text-white hover:bg-green-700 rounded-md px-4 py-2" (click)="addQuestion()">Add Question</button>
         </div>
-
-        <div class="flex items-center justify-end mb-10 mx-4">
-            <button mat-stroked-button type="button">
-                Cancel
-            </button>
-            <button class="ml-4" [class.greenBtn]="!quizForm.invalid" mat-flat-button type="submit" [disabled]="quizForm.invalid">
-                Save
-            </button>
+      
+        <div class="flex items-center justify-end mb-10 mx-4 space-x-4">
+          <button mat-stroked-button type="button" class="text-gray-600 hover:text-gray-800 border-gray-400">
+            Cancel
+          </button>
+          <button class="ml-4 bg-blue-500 text-white hover:bg-blue-700 rounded-md px-4 py-2" mat-flat-button type="submit" [disabled]="quizForm.invalid">
+            Save
+          </button>
         </div>
-    </form>
+      </form>
+      
 </div>

@@ -118,4 +118,11 @@ export const publisherNavigation: FuseNavigationItem[] = [
         icon : 'heroicons_outline:chart-pie',
         link : '/cv'
     }
+    ,{
+        id   : 'company',
+        title: 'Company',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/company'
+    }
 ];

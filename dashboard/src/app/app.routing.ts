@@ -165,6 +165,7 @@ export const appRoutes: Route[] = [
         children: [
             {path: 'exemple2',loadChildren: () => import('app/modules/userFront/example/example.module').then((m) => m.ExampleModuleUser),},
             {path: 'training',loadChildren: () => import('app/modules/userFront/training/training.module').then((m) => m.TrainingModuleUser),},
+            {path: 'company',loadChildren: () => import('app/modules/userFront/company/company.module').then((m) => m.CompanyModuleUser),},
             { path: 'success',loadChildren: () => import('app/modules/userFront/success-page/success-page.module').then((m) => m.SuccessModule), },
             { path: 'cancel',loadChildren: () => import('app/modules/userFront/cancel-page/cancel-page.module').then((m) => m.CancelModule), },
         ],

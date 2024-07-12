@@ -56,17 +56,11 @@ public class QuizController {
         return quizService.save(quiz);
     }
 
+
     @PutMapping("/{id}")
-    public ResponseEntity<Quiz> updateQuiz(@PathVariable Long id, @Valid @RequestBody QuizDTO quizDetails) {
-        Quiz quiz = quizService.findById(id);
-        return ResponseEntity.ok(quiz);
-//        if (quiz == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        quiz.setTitle(quizDetails.getTitle());
-//        quiz.setTotalScore(quizDetails.getTotalScore());
-//        quiz.setSuccessScore(quizDetails.getSuccessScore());
-//        return ResponseEntity.ok(quizService.save(quiz));
+    public ResponseEntity<Quiz> updateQuiz(@PathVariable Long id, @Valid @RequestBody QuizDTO quizDTO) {
+        Quiz updatedQuiz = quizService.updateQuiz(id, quizDTO);
+        return ResponseEntity.ok(updatedQuiz);
     }
 
     @DeleteMapping("/{id}")

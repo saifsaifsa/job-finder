@@ -1,70 +1,69 @@
 <div class="flex flex-col flex-auto min-w-0">
 
-    <!-- Main -->
-    <div class="flex-auto p-6 sm:p-10">
+  <!-- Main -->
+  <div class="flex-auto p-6 sm:p-10">
 
-        <!-- CONTENT GOES HERE -->
-        <div class="h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
+    <!-- CONTENT GOES HERE -->
+    <div class="h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
 
-            <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
-                <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
-                    <div class="flex items-start justify-between">
-                        <div class="text-lg font-medium tracking-tight leading-6 truncate"></div>
-                    </div>
-                    <div class="flex flex-col items-center mt-2">
-                        <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">
-                            {{totalUsers}}</div>
-                        <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Total users</div>
-                        <!-- <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
+      <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
+        <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+          <div class="flex items-start justify-between">
+            <div class="text-lg font-medium tracking-tight leading-6 truncate"></div>
+          </div>
+          <div class="flex flex-col items-center mt-2">
+            <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">
+              {{totalUsers}}</div>
+            <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Total users</div>
+            <!-- <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
                             <div class="text-md font-medium truncate">Completed:</div>
                             <div class="ml-1.5 text-lg font-semibold">13</div>
                         </div> -->
-                    </div>
-                </div>
-                <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
-                    <div class="flex items-start justify-between">
-                        <div class="text-lg font-medium tracking-tight leading-6 truncate"></div>
-                    </div>
-                    <div class="flex flex-col items-center mt-2">
-                        <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">
-                            {{activeUsers}}</div>
-                        <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Active users</div>
-                        <!-- <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
+          </div>
+        </div>
+        <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+          <div class="flex items-start justify-between">
+            <div class="text-lg font-medium tracking-tight leading-6 truncate"></div>
+          </div>
+          <div class="flex flex-col items-center mt-2">
+            <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">
+              {{activeUsers}}</div>
+            <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Active users</div>
+            <!-- <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
                             <div class="text-md font-medium truncate"></div>
                             <div class="ml-1.5 text-lg font-semibold"></div>
                         </div> -->
-                    </div>
-                </div>
-                <!-- Roles -->
-                <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
-                    *ngFor="let usersRole of usersRoles | keyvalue ">
-                    <div class="flex items-start justify-between">
-                        <div class="text-lg font-medium tracking-tight leading-6 truncate"></div>
-                    </div>
-                    <div class="flex flex-col items-center mt-2">
-                        <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">
-                            {{usersRole.value}}</div>
-                        <div class="text-lg font-medium text-blue-600 dark:text-blue-500">{{usersRole.key}}</div>
-                        <!-- <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
+          </div>
+        </div>
+        <!-- Roles -->
+        <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
+          *ngFor="let usersRole of usersRoles | keyvalue ">
+          <div class="flex items-start justify-between">
+            <div class="text-lg font-medium tracking-tight leading-6 truncate"></div>
+          </div>
+          <div class="flex flex-col items-center mt-2">
+            <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">
+              {{usersRole.value}}</div>
+            <div class="text-lg font-medium text-blue-600 dark:text-blue-500">{{usersRole.key}}</div>
+            <!-- <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
                             <div class="text-md font-medium truncate">Completed:</div>
                             <div class="ml-1.5 text-lg font-semibold">13</div>
                         </div> -->
-                    </div>
-                </div>
-            </div>
+          </div>
+        </div>
+      </div>
 
-            <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full mt-6 md:mt-8">
-                <!-- New vs. Returning -->
-                <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6">
-                    <div class="flex items-start justify-between">
-                        <div class="text-lg font-medium tracking-tight leading-6 truncate">Users roles</div>
-                    </div>
-                    <div class="flex flex-col flex-auto mt-6 h-44">
-                        <apx-chart class="flex flex-auto items-center justify-center w-full h-full"
-                            [chart]="userChart.chart" [labels]="userChart.labels" [plotOptions]="userChart.plotOptions"
-                            [series]="userChart.series"></apx-chart>
-                    </div>
-                    <!-- <div class="mt-8">
+      <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full mt-6 md:mt-8">
+        <!-- New vs. Returning -->
+        <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6">
+          <div class="flex items-start justify-between">
+            <div class="text-lg font-medium tracking-tight leading-6 truncate">Users roles</div>
+          </div>
+          <div class="flex flex-col flex-auto mt-6 h-44">
+            <apx-chart class="flex flex-auto items-center justify-center w-full h-full" [chart]="userChart.chart"
+              [labels]="userChart.labels" [plotOptions]="userChart.plotOptions" [series]="userChart.series"></apx-chart>
+          </div>
+          <!-- <div class="mt-8">
                         <div class="-my-3 divide-y">
                             <ng-container *ngFor="let dataset of userChart.series; let i = index">
                                 <div class="grid grid-cols-3 py-3">
@@ -80,10 +79,84 @@
                             </ng-container>
                         </div>
                     </div> -->
-                </div>
-            </div>
         </div>
+      </div>
 
+
+      <!-- Total Trainings -->
+      <div class="flex flex-col items-center mt-2">
+        <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">
+          {{ totalTrainings }}
+        </div>
+        <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Total Trainings</div>
+      </div>
+
+      <!-- Most Liked Trainings -->
+      <div class="mt-6" *ngIf="mostLikedTrainings?.length">
+        <h3 class="text-lg font-medium">Most Liked Trainings</h3>
+        <ngx-charts-bar-vertical [results]="mostLikedTrainings" [scheme]="colorScheme" [legend]="true" [xAxis]="true"
+          [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" xAxisLabel="Trainings" yAxisLabel="Likes">
+        </ngx-charts-bar-vertical>
+      </div>
+
+      <!-- Most Disliked Trainings -->
+      <div class="mt-6" *ngIf="mostDislikedTrainings?.length">
+        <h3 class="text-lg font-medium">Most Disliked Trainings</h3>
+        <ngx-charts-bar-vertical [results]="mostDislikedTrainings" [scheme]="colorScheme" [legend]="true" [xAxis]="true"
+          [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" xAxisLabel="Trainings" yAxisLabel="Dislikes">
+        </ngx-charts-bar-vertical>
+      </div>
+
+      <!-- Most Popular Categories -->
+      <div class="mt-6" *ngIf="mostPopularCategories?.length">
+        <h3 class="text-lg font-medium">Most Popular Categories</h3>
+        <ngx-charts-pie-chart [results]="mostPopularCategories" [scheme]="colorScheme" [legend]="true"
+          [doughnut]="false" [labels]="true">
+        </ngx-charts-pie-chart>
+      </div>
+
+      <!-- Average Price Per Category -->
+      <div class="mt-6" *ngIf="averagePricePerCategory?.length">
+        <h3 class="text-lg font-medium">Average Price Per Category</h3>
+        <ngx-charts-bar-vertical [results]="averagePricePerCategory" [scheme]="colorScheme" [legend]="true"
+          [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" xAxisLabel="Categories"
+          yAxisLabel="Price">
+        </ngx-charts-bar-vertical>
+      </div>
+
+      <!-- Average Duration Per Category -->
+      <div class="mt-6" *ngIf="averageDurationPerCategory?.length">
+        <h3 class="text-lg font-medium">Average Duration Per Category</h3>
+        <ngx-charts-bar-vertical [results]="averageDurationPerCategory" [scheme]="colorScheme" [legend]="true"
+          [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" xAxisLabel="Categories"
+          yAxisLabel="Duration (hours)">
+        </ngx-charts-bar-vertical>
+      </div>
+
+      <!-- Number Of Trainings Per Category -->
+      <div class="mt-6" *ngIf="numberOfTrainingsPerCategory?.length">
+        <h3 class="text-lg font-medium">Number of Trainings Per Category</h3>
+        <ngx-charts-bar-vertical [results]="numberOfTrainingsPerCategory" [scheme]="colorScheme" [legend]="true"
+          [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" xAxisLabel="Categories"
+          yAxisLabel="Number of Trainings">
+        </ngx-charts-bar-vertical>
+      </div>
+
+      <!-- Monthly Engagement Trends -->
+      <div class="mt-6" *ngIf="monthlyEngagementTrends?.length">
+        <h3 class="text-lg font-medium">Monthly Engagement Trends</h3>
+        <ngx-charts-line-chart [results]="monthlyEngagementTrends" [scheme]="colorScheme" [legend]="true" [xAxis]="true"
+          [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" xAxisLabel="Months" yAxisLabel="Engagement">
+        </ngx-charts-line-chart>
+      </div>
+
+      <!-- Rating Trends Over Time -->
+      <div class="mt-6" *ngIf="ratingTrendsOverTime?.length">
+        <h3 class="text-lg font-medium">Rating Trends Over Time</h3>
+        <ngx-charts-line-chart [results]="ratingTrendsOverTime" [scheme]="colorScheme" [legend]="true" [xAxis]="true"
+          [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" xAxisLabel="Time" yAxisLabel="Ratings">
+        </ngx-charts-line-chart>
+      </div>
     </div>
-
+  </div>
 </div>

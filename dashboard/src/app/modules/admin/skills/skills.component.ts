@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatSort} from '@angular/material/sort';
 import {SkillsService} from './skillsService';
 import {SkillDialogComponent} from "./modals/skill-dialog.component";
+import { TrainingCategories } from 'app/core/training/training.enums';
 
 @Component({
   selector: 'skills',
