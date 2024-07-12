@@ -77,7 +77,8 @@ export class CompanyService {
         // let headers = new HttpHeaders({'Content-Type': 'application/json'});
         return this._httpClient.put(`${environment.apiUrl}company/${id}`,data)
     }
-    
+
+
     /**
     * delete the training
     *
@@ -96,8 +97,13 @@ export class CompanyService {
         // let headers = new HttpHeaders({'Content-Type': 'application/json'});
         return this._httpClient.post(`${environment.apiUrl}company`,data)
     }
-    rateCompany(postId: Number): Observable<any> {
-        return this._httpClient.post<any>(`${environment.apiUrl}company/${postId}/rate`, {});
+    rateCompany(id:any,data:any): Observable<any> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json'
+            })
+          };
+        return this._httpClient.put(`${environment.apiUrl}company/${id}`,data,httpOptions)
       }
     
 

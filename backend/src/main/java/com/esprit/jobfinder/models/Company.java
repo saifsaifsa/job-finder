@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -45,8 +46,9 @@ public class Company {
     @ManyToMany(mappedBy = "companies",fetch = FetchType.LAZY)
     Set<User> subscribers;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.ALL)
-    Set<Offer> offers;
+
+    @OneToMany(mappedBy = "company",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Offer> offers;
 
 
 

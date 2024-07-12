@@ -1,6 +1,7 @@
 package com.esprit.jobfinder.models;
 
 import com.esprit.jobfinder.models.enums.ExperienceLevel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +32,8 @@ public class Offer {
     @ManyToMany(mappedBy = "offres")
     private Collection<User> users;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "company_id")
     Company company;
 

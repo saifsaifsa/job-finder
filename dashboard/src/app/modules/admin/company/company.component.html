@@ -114,6 +114,8 @@
                           <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
                               <button class="mr-3" mat-flat-button [color]="'warn'" (click)="deleteCompany(company.id)">Delete</button>
                               <button class="mr-3 orangeBtn" mat-flat-button [color]="'primary'" [routerLink]="['/company', 'update', company.id]">Update</button>
+                              <button class="mr-3 " mat-flat-button [color]="'primary'" [routerLink]="['/offre', 'create', company.id]">Create Offer</button>
+
                           </mat-button-toggle-group>
                       </td>
                   </ng-container>
