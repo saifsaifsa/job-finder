@@ -1,6 +1,7 @@
 package com.esprit.jobfinder.models;
 
 import com.esprit.jobfinder.models.enums.ERole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -35,6 +36,7 @@ public class User {
 
   @Enumerated(EnumType.ORDINAL)
   private ERole role;
+
   @ManyToMany
   Set<Training> trainings;
 
@@ -46,6 +48,7 @@ public class User {
   @ManyToMany
   Set<Skill> skills;
 
+  @JsonIgnore
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<UserQuiz> userQuizzes = new HashSet<>();
 
@@ -58,6 +61,7 @@ public class User {
   @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime lastLogin;
 
+  @JsonIgnore
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private VerificationToken verificationToken;
   public User() {

@@ -198,7 +198,7 @@ export class UserDetailComponent implements OnInit {
                     if (error.status === 409) {
                         this.alert = {
                             type: 'error',
-                            message: 'Adresse e-mail ou phone est déjà utilisée',
+                            message: 'Username, Adresse e-mail ou phone est déjà utilisée',
                         };
                     } else if (error.status === 400) {
                         console.log(error);

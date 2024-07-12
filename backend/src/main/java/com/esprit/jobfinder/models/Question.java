@@ -1,6 +1,5 @@
 package com.esprit.jobfinder.models;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -20,6 +19,7 @@ public class Question {
 
     @JsonIgnore
     @ManyToOne
+    @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)

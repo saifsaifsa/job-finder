@@ -2,6 +2,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TrainingCategories } from 'app/core/training/training.enums';
 
 @Component({
     selector: 'app-skill-dialog',
@@ -9,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SkillDialogComponent {
     skillForm: FormGroup;
+    categories = Object.values(TrainingCategories)
 
     constructor(
         public dialogRef: MatDialogRef<SkillDialogComponent>,

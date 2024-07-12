@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { ExampleComponentAdmin } from 'app/modules/admin/example/example.component';
 import { StatsComponentAdmin } from './stats.component';
 import { CommonModule } from '@angular/common';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 const statsRoutes: Route[] = [
     {
@@ -17,8 +17,10 @@ const statsRoutes: Route[] = [
     ],
     imports     : [
         RouterModule.forChild(statsRoutes),
-        CommonModule
-    ]
+        CommonModule,
+        NgApexchartsModule,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA]
 })
 export class StatsModule
 {

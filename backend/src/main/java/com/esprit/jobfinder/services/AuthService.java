@@ -132,7 +132,6 @@ public class AuthService implements IAuthService{
             User user = verificationToken.getUser();
             user.setPassword(new BCryptPasswordEncoder ().encode(newPassword));
             userRepository.save(user);
-            tokenRepository.delete(verificationToken);
         } else {
             throw new RuntimeException("Invalid or expired token");
         }

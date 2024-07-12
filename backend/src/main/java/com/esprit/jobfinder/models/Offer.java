@@ -29,6 +29,7 @@ public class Offer {
     @Enumerated(EnumType.STRING)
     private ExperienceLevel experienceLevel;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "offres")
     private Collection<User> users;
 

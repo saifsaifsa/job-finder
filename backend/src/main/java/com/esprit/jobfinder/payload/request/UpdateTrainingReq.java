@@ -4,6 +4,7 @@ import com.esprit.jobfinder.models.enums.TrainingCategories;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,10 +24,11 @@ public class UpdateTrainingReq {
     private String description;
 
     @NotBlank(message = "price cannot be blank")
+    @Positive(message = "price cannot be negative")
     private String price;
-    private String rating;
-    private String likes;
-    private String dislikes;
+//    private String rating;
+//    private String likes;
+//    private String dislikes;
     private String  dateDebut;
     private String dateFin;
 }

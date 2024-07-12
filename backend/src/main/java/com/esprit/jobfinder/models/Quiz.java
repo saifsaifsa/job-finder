@@ -1,6 +1,5 @@
 package com.esprit.jobfinder.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -10,7 +9,6 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "quiz")
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +27,7 @@ public class Quiz {
 
     @ManyToOne
     private Competence competence;
+
+//    @NotBlank(message = "Le chemin de l'image est obligatoire")
+//    private String imagePath;
 }

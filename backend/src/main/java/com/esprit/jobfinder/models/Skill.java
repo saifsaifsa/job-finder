@@ -1,5 +1,6 @@
 package com.esprit.jobfinder.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +28,7 @@ public class Skill {
     @JoinColumn(name = "offer_id")
     private Offer offer;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "skills")
     private Collection<User> users;
 
