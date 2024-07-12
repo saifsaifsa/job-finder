@@ -14,9 +14,9 @@ public class FileUploadController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    public FileUploadController() {
-        fileStorageService.init();
-    }
+//    public FileUploadController() {
+//        fileStorageService.init();
+//    }
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {

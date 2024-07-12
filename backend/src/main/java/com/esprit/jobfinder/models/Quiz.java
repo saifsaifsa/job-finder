@@ -6,8 +6,6 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.util.List;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Entity
@@ -28,8 +26,8 @@ public class Quiz {
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions;
 
-    @ManyToMany(mappedBy = "quizzes")
-    private Set<Competence> competences = new HashSet<>();
+    @ManyToOne
+    private Competence competence;
 
     @NotBlank(message = "Le chemin de l'image est obligatoire")
     private String imagePath;
