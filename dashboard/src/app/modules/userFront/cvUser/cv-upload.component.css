@@ -1,0 +1,14 @@
+.cv-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .cv-upload-container input,
+  .cv-upload-container button {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  

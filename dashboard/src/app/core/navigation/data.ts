@@ -101,6 +101,13 @@ export const userNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/user/company'
+    },
+    {
+        id   : 'Cv',
+        title: 'Cv user',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/cv/company'
     }
 ];
 export const publisherNavigation: FuseNavigationItem[] = [
@@ -111,11 +118,5 @@ export const publisherNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/exemple'
-    },{
-        id   : 'cv',
-        title: 'Cv',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/cv'
-    }
+    }   
 ];

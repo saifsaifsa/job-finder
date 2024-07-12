@@ -2,7 +2,9 @@ package com.esprit.jobfinder.services;
 
 import com.esprit.jobfinder.models.Cv;
 import com.esprit.jobfinder.models.Skill;
+import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.repository.CvRepository;
+import com.esprit.jobfinder.repository.IUserRepository;
 import com.esprit.jobfinder.repository.SkillRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -10,10 +12,13 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,10 +28,29 @@ import java.util.Map;
 public class CvServiceImp implements CvService {
     private final CvRepository cvRepository;
     private final SkillRepository skillRepository;
+    private final IUserRepository userRepository;
 
     @Override
     public Cv createCv(Cv cv) {
-        return cvRepository.save(cv);
+        User connectedUser = getConnectedUser();
+        if (connectedUser != null) {
+            cv.setUser(connectedUser);
+            List<Skill> userSkills = new ArrayList<>(connectedUser.getSkills());
+            cv.setSkills(userSkills);
+            return cvRepository.save(cv);
+        } else {
+            throw new RuntimeException("User not found or not authenticated");
+        }
+    }
+
+    private User getConnectedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails) principal).getUsername();
+            return userRepository.findByUsername(username).orElse(null);
+        } else {
+            return null;
+        }
     }
 
     @Override

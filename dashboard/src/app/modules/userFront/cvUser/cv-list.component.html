@@ -1,0 +1,24 @@
+<div class="cv-container">
+    <div class="cv-actions">
+      <button (click)="generateCv()">Create CV</button>
+      <button routerLink="/upload">Upload CV</button>
+    </div>
+  
+    <div class="cv-display" *ngIf="cvs && cvs.length">
+      <h2>My CVs</h2>
+      <ul>
+        <li *ngFor="let cv of cvs">
+          <a routerLink="/cv/{{ cv.id }}">{{ cv.content }}</a>
+        </li>
+      </ul>
+    </div>
+  
+    <div class="cv-display" *ngIf="!cvs || !cvs.length">
+      <p>No CVs available. Click "Create CV" to generate a new one.</p>
+    </div>
+  
+    <div class="cv-download" *ngIf="selectedCv">
+      <button (click)="downloadCv(selectedCv.id)">Download CV</button>
+    </div>
+  </div>
+  
