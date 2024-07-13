@@ -5,10 +5,13 @@ import java.util.Optional;
 
 import com.esprit.jobfinder.models.Offer;
 
+import reactor.core.publisher.Flux;
+
 public interface OfferService {
     Offer createOffer(Offer offer) throws Exception;
     Optional<Offer> updateOffer(int id, Offer offerDetails);
     void deleteOffer(int id);
-    List<Offer> getAllOffers();
+    Flux<Offer> getAllOffers();
     Optional<Offer> getOfferById(int id);
+    public void addUserToOffer(int offerId, int userId);
 }

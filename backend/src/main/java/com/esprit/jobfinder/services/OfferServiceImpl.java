@@ -1,21 +1,27 @@
 package com.esprit.jobfinder.services;
 
+import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.esprit.jobfinder.exceptions.BadRequestException;
 import com.esprit.jobfinder.models.Company;
 import com.esprit.jobfinder.models.Offer;
+import com.esprit.jobfinder.models.User;
+import com.esprit.jobfinder.repository.IUserRepository;
 import com.esprit.jobfinder.repository.OfferRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -24,13 +30,22 @@ public class OfferServiceImpl implements OfferService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public OfferServiceImpl(OfferRepository offerRepository) {
+    private final IUserRepository userRepository;
+
+    private final KafkaProducerService kafkaProducerService;
+
+    public OfferServiceImpl(OfferRepository offerRepository, KafkaProducerService kafkaProducerService, IUserRepository userRepository) {
         this.offerRepository = offerRepository;
+        this.kafkaProducerService = kafkaProducerService;
+        this.userRepository = userRepository;
     }
 
     @Override
     @Transactional
+    @Cacheable(value = "offres")
     public Offer createOffer(Offer offer) {
+
+      
         try {
             offer.validate();
             offer.setCreationDate(new Date());
@@ -61,18 +76,34 @@ public class OfferServiceImpl implements OfferService {
     public void deleteOffer(int id) {
         Offer offer = offerRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Offer not found with id " + id));
-        offerRepository.delete(offer);
-    }
+        offerRepository.deleteById(id);
+        }
+        @Override
+        public Flux<Offer> getAllOffers() {
+        
+            return Flux.defer(() -> Flux.fromIterable(offerRepository.findAll()))
+                    .subscribeOn(Schedulers.boundedElastic())
+                    .take(100) // Limit to 100 requests
+                    .delayElements(Duration.ofMillis(10)); //  Introduce a delay between emissions
+        }
 
-    @Override
-    public List<Offer> getAllOffers() {
-        return offerRepository.findAll();
-    }
+        @Override
+        public Optional<Offer> getOfferById(int id) {
 
-    @Override
-    public Optional<Offer> getOfferById(int id) {
         return offerRepository.findById(id);
     }
+
+    @Override
+    public void addUserToOffer(int offerId, int userId) {
+        Offer offer = offerRepository.findById(offerId)
+                .orElseThrow(() -> new NoSuchElementException("Offer not found with id " + offerId));
+        User user = userRepository.findById((long) userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found with id " + userId));
+        offer.getUsers().add(user);
+       // this.kafkaProducerService.sendMessage("my_topic_name", offer.getTitle() + ";" + user.getFullName() + ";" + user.getEmail());
+        offerRepository.save(offer);
+    }
+   
 
     @Scheduled(cron = "0 0 0 * * ?") // this runs the method every day at midnight
     public void closeOffers() {

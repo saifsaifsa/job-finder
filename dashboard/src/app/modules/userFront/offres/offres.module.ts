@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 import { OffresComponentAdmin } from './offres.component';
+import { CommonModule } from '@angular/common';
 
 const offresRoutes: Route[] = [
     {
@@ -11,10 +12,11 @@ const offresRoutes: Route[] = [
 
 @NgModule({
     declarations: [
-        OffresComponentAdmin
+        OffresComponentAdmin,
+        
     ],
     imports     : [
-        RouterModule.forChild(offresRoutes)
+        RouterModule.forChild(offresRoutes),CommonModule,
     ]
 })
 export class OffresModuleAdmin
