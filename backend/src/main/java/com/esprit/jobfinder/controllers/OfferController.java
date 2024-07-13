@@ -3,6 +3,7 @@ package com.esprit.jobfinder.controllers;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.esprit.jobfinder.exceptions.ResourceNotFoundException;
 import com.esprit.jobfinder.models.Offer;
 import com.esprit.jobfinder.services.OfferService;
+
+import reactor.core.publisher.Flux;
 
 // add cross origin *
 @CrossOrigin(origins = "*")
@@ -60,10 +63,9 @@ public class OfferController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
-    public ResponseEntity<List<Offer>> getAllOffers() {
-        List<Offer> offers = offerService.getAllOffers();
-        return ResponseEntity.ok(offers);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public Flux<Offer> getAllOffers() {
+        return offerService.getAllOffers();
     }
 
     @GetMapping("/{id}")
