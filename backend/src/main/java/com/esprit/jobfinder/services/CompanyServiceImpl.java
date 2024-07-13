@@ -1,17 +1,19 @@
 package com.esprit.jobfinder.services;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 import com.esprit.jobfinder.exceptions.NotFoundException;
+import com.esprit.jobfinder.models.Training;
 import com.esprit.jobfinder.models.User;
+import com.esprit.jobfinder.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.esprit.jobfinder.models.Company;
 import com.esprit.jobfinder.repository.CompanyRepository;
+
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,9 +26,13 @@ public class CompanyServiceImpl implements ICompanyService {
     @Autowired
     private IFileUploaderService fileUploaderService;
     private final CompanyRepository companyRepository;
+    private final OfferRepository offerRepository;
 
-    public CompanyServiceImpl(CompanyRepository companyRepository) {
+
+    public CompanyServiceImpl(CompanyRepository companyRepository, OfferRepository offerRepository ) {
         this.companyRepository = companyRepository;
+        this.offerRepository = offerRepository;
+
     }
 
     @Override
@@ -85,5 +91,25 @@ public class CompanyServiceImpl implements ICompanyService {
     @Override
     public Optional<Company> getCompanyById(int id) {
         return companyRepository.findById(id);
+    }
+
+    public Map<String, Object> getCompanyStatistics() {
+        long totalCompanies = companyRepository.count();
+        long totalOffres = offerRepository.count();
+
+        List<Company> mostLikedCompanies= companyRepository.findMostLikedCompanies(PageRequest.of(0, 5)); // Get top 5 most disliked trainings
+        List<Object[]> mostPopularIndustry = companyRepository.findMostPopularIndustry();
+        List<Object[]> numberOfCompaniesPerIndustry = companyRepository.findNumberOfCompaniesPerIndustry();
+
+
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("totalCompanies", totalCompanies);
+        stats.put("totalOffres", totalOffres);
+        stats.put("mostLikedCompanies", mostLikedCompanies);
+        stats.put("mostPopularIndustry", mostPopularIndustry);
+        stats.put("numberOfCompaniesPerIndustry", numberOfCompaniesPerIndustry);
+
+
+        return stats;
     }
 }

@@ -1,6 +1,7 @@
 package com.esprit.jobfinder.services;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.esprit.jobfinder.models.Company;
@@ -12,4 +13,6 @@ public interface ICompanyService {
     void deleteCompany(int id);
     List<Company> getAllCompanies();
     Optional<Company> getCompanyById(int id);
+    public Map<String, Object> getCompanyStatistics();
+
 }

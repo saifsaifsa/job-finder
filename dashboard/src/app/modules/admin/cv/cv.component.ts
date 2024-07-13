@@ -3,7 +3,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { CvService } from './cvService';
-import { saveAs } from 'file-saver';
 import { Router } from '@angular/router';
 
 @Component({
@@ -52,7 +51,6 @@ export class CvComponent implements OnInit {
 
   downloadCv(id: number): void {
     this.cvService.exportCvToPDF(id).subscribe((blob) => {
-      saveAs(blob, `cv-${id}.pdf`);
       this.incrementDownloads(id); // Optionally update the downloads count in the UI
     });
   }
