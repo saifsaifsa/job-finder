@@ -1,6 +1,19 @@
 <div class="flex flex-col flex-auto min-w-0">
 
-    <div class="bg-gray-100 dark:bg-gray-800 py-8">
+    <div class="m-3 w-full flex justify-between items-center"
+        style="font-family: Rubik; font-size: 36px; font-weight: 700; line-height: 42.66px; text-align: left; color: #2D355B;">
+        <span>Offre</span>
+        <button (click)="generatePDF()" type="button" style="background: #2D355B;"
+            class="px-3 py-2 rounded-full text-white outline-none focus:ring-4 -lg transform active:scale-x-75 transition-transform mx-5 flex items-center text-sm">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span class="ml-2">Download PDF</span>
+        </button>
+    </div>
+
+    <div  #content class="bg-gray-100 dark:bg-gray-800 py-8">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row -mx-4">
                 <div class="md:flex-1 px-4">
