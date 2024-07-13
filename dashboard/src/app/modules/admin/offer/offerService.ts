@@ -26,4 +26,11 @@ export class OfferService {
         offerDetails.competences = offerDetails.competences[0];
         return this.http.post(this.apiUrl, offerDetails);
     }
+    getOfferById(id: any): Observable<any> {
+        return this.http.get(`${this.apiUrl}/${id}`);
+    }
+    addUserToOffer(offerId: any, userId: any): Observable<any> {
+        return this.http.post(`${this.apiUrl}/addUserToOffer/${offerId}/${userId}`, {});
+    }
+
 }
