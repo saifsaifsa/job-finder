@@ -166,6 +166,7 @@ export const appRoutes: Route[] = [
             {path: 'company',loadChildren: () => import('app/modules/userFront/company/company.module').then((m) => m.CompanyModuleUser),},
             { path: 'success',loadChildren: () => import('app/modules/userFront/success-page/success-page.module').then((m) => m.SuccessModule), },
             { path: 'cancel',loadChildren: () => import('app/modules/userFront/cancel-page/cancel-page.module').then((m) => m.CancelModule), },
+            { path: 'quizzes',loadChildren: () => import('app/modules/userFront/quiz/quiz.module').then((m) => m.QuizModule), },
         ],
     },
     // Publisher routes

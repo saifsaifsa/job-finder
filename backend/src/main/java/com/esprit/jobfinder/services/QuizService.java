@@ -7,7 +7,9 @@ import com.esprit.jobfinder.models.Answer;
 import com.esprit.jobfinder.models.Competence;
 import com.esprit.jobfinder.models.Question;
 import com.esprit.jobfinder.models.Quiz;
+import com.esprit.jobfinder.repository.AnswerRepository;
 import com.esprit.jobfinder.repository.CompetenceRepository;
+import com.esprit.jobfinder.repository.QuestionRepository;
 import com.esprit.jobfinder.repository.QuizRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -25,6 +27,10 @@ public class QuizService {
     private QuizRepository quizRepository;
     @Autowired
     private CompetenceRepository competenceRepository;
+    @Autowired
+    private QuestionRepository questionRepository;
+    @Autowired
+    private AnswerRepository answerRepository;
 
     public List<Quiz> findAll() {
         return quizRepository.findAll();
@@ -48,23 +54,22 @@ public class QuizService {
         for (Question questionDTO : quizDTO.getQuestions()) {
             Question question = new Question();
             question.setContent(questionDTO.getContent());
-
+            questionRepository.save(question);
             List<Answer> answers = new ArrayList<>();
             for (Answer answerDTO : questionDTO.getAnswers()) {
                 Answer answer = new Answer();
                 answer.setContent(answerDTO.getContent());
                 answer.setCorrect(answerDTO.isCorrect());
                 answer.setScore(answerDTO.getScore());
-                answer.setQuestion(question); // Set the question for the answer
+                answer.setQuestion(question);
                 answers.add(answer);
+                answerRepository.saveAll(answers);
             }
-
-            question.setAnswers(answers); // Set answers for the question
-            question.setQuiz(quiz); // Set the quiz for the question
+            question.setAnswers(answers);
+            question.setQuiz(quiz);
             questions.add(question);
         }
-
-        quiz.setQuestions(questions); // Set questions for the quiz
+        quiz.setQuestions(questions);
         return quizRepository.save(quiz);
     }
 
@@ -130,14 +135,14 @@ public class QuizService {
             }
         }
 
-        // Remove deleted questions
         existingQuestions.removeIf(question -> newQuestions.stream().noneMatch(dto -> dto.getId().equals(question.getId())));
 
         return quizRepository.save(existingQuiz);
     }
 
+
     public void deleteById(Long id) {
-        quizRepository.deleteById(id);
+        this.quizRepository.deleteById(id);
     }
     public List<Quiz> getQuizzesByCompetenceId(Long competenceId){
         return this.quizRepository.findQuizzesByCompetenceId(competenceId);

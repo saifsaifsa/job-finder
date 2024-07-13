@@ -54,7 +54,7 @@ public class User {
   private List<Competence> skills;
 
   @JsonIgnore
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private Set<UserQuiz> userQuizzes = new HashSet<>();
 
   @ManyToMany

@@ -1,13 +1,16 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { CompanyService } from 'app/core/company/companyService';
 import { TrainingService } from 'app/core/training/trainingService';
 import { UserService } from 'app/core/user/user.service';
-import { ApexChart, ApexNonAxisChartSeries, ApexPlotOptions,ApexOptions } from 'ng-apexcharts';
+import { ApexChart, ApexNonAxisChartSeries, ApexPlotOptions,ApexOptions,ApexResponsive } from 'ng-apexcharts';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
   labels: any;
   plotOptions: ApexPlotOptions;
+  responsive: ApexResponsive[];
+
 };
 @Component({
     selector     : 'stats',
@@ -17,18 +20,25 @@ export type ChartOptions = {
 export class StatsComponentAdmin implements OnInit 
 {
     public userChart: Partial<ChartOptions>;
+    public companyChart: Partial<ChartOptions>;
+
     /**
      * Constructor
      */
     usersRoles:any
     totalUsers:number
     activeUsers:number
-    constructor(private readonly _userService:UserService, private readonly _trainingService:TrainingService )
+    constructor(private readonly _userService:UserService, private readonly _trainingService:TrainingService, private readonly _companyService:CompanyService )
     {
     }
     statistics: any;
     totalTrainings: number = 0;
+    totalCompanies: number = 0;
+    totalOffres: number = 0;
     mostLikedTrainings: any[];
+    mostLikedCompanies: any[];
+    mostPopularIndustry: any[];
+    numberOfCompaniesPerIndustry: any[];
     mostDislikedTrainings: any[];
     mostPopularCategories: any[];
     averagePricePerCategory: any[];
@@ -51,6 +61,20 @@ export class StatsComponentAdmin implements OnInit
               type: 'pie',
             },
             labels: [],
+            plotOptions: {
+              pie: {
+                expandOnClick: true
+              }
+            }
+          };
+
+          this.companyChart = {
+            series : [],
+            labels :[],
+            chart: {
+              width: 380,
+              type: "pie"
+            },
             plotOptions: {
               pie: {
                 expandOnClick: true
@@ -83,5 +107,25 @@ export class StatsComponentAdmin implements OnInit
           }));
           this.ratingTrendsOverTime = (this.statistics.ratingTrendsOverTime || []).map(item => ({ name: item[0], value: item[1] }));
         });
+
+
+        this._companyService.getStats().subscribe((data:any) => {
+          this.statistics = data|| {};
+          this.totalCompanies = this.statistics.totalCompanies|| 0;
+          this.totalOffres = this.statistics.totalOffres|| 0;
+
+
+          this.mostLikedCompanies = (this.statistics.mostLikedCompanies || []).map(item => ({ name: item.name, value: item.rating }));
+          this.mostPopularIndustry = (this.statistics.mostPopularIndustry || []).map(item => ({ name: item[0], value: item[1] }));
+          this.numberOfCompaniesPerIndustry = (this.statistics.numberOfCompaniesPerIndustry || []).map(item => ({ name: item[0], value: item[1] }));
+
+
+
+    
+
+
+        });
+
+
     }
 }
