@@ -177,7 +177,9 @@ export class UserDetailComponent implements OnInit {
             );
         }
         formData.append('phone', this.userDetailsForm.get('phone').value);
-        formData.append('skills', this.userDetailsForm.get('skills').value);
+        if(this.userDetailsForm.get('skills').value){
+            formData.append('skills', this.userDetailsForm.get('skills').value);
+        }
         formData.append('role', this.showRole ? this.userDetailsForm.get('role').value:this.authentifiedUser.role);
         if(this.userDetailsForm.get('photo').value){formData.append('photo', this.userDetailsForm.get('photo').value);}
         
