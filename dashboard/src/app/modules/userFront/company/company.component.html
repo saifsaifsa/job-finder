@@ -9,7 +9,7 @@
           <p class="text-bold-700">Rating: {{ company.rating }}%</p>
           <div class="flex items-center justify-between mt-4">
             <span *ngIf="company.offers" class="text-lg font-bold">Offres : {{ company.offers.length }}</span>
-            <button mat-button color="primary" (click)="viewDetails(company.id)">Details</button>
+            <button mat-button color="warn" (click)="viewDetails(company.id)">View Details</button>
           </div>
         </div>
       </div>
