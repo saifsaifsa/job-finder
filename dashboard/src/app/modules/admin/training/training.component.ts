@@ -39,10 +39,7 @@ export class TrainingComponent {
 
     onTrainingCategoryChange(selectedCategory: string): void {
         if (selectedCategory == 'None') {
-            this.trainingService.getTrainings().subscribe(res => {
-                console.log(res);
-                this.trainingsDataSource.data = res;
-            });
+            this.getAllTrainings();
         } else {
             this.trainingService.getFilteredTrainings(selectedCategory).subscribe(res => {
                 this.trainingsDataSource.data = res;
