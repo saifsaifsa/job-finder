@@ -51,6 +51,7 @@ public class Offer {
     }
 
    
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "offer_user", joinColumns = @JoinColumn(name = "offer_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Collection<User> users;

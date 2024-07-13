@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { OfferService } from 'app/modules/admin/offer/offerService';
 
 @Component({
     selector     : 'offres',
@@ -7,10 +8,15 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class OffresComponentAdmin
 {
+    dataSource: any;
     /**
      * Constructor
      */
-    constructor()
+    constructor(private offerService: OfferService,)
     {
+        this.offerService.getOffer().subscribe((data) => {
+            this.dataSource = data;
+            console.log(this.dataSource);
+        }); 
     }
 }

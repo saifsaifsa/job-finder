@@ -80,7 +80,7 @@ public class OfferServiceImpl implements OfferService {
         }
         @Override
         public Flux<Offer> getAllOffers() {
-            this.kafkaProducerService.sendMessage("my_topic_name", "Offer : " +"getAllOffers");
+        
             return Flux.defer(() -> Flux.fromIterable(offerRepository.findAll()))
                     .subscribeOn(Schedulers.boundedElastic())
                     .take(100) // Limit to 100 requests
@@ -100,8 +100,7 @@ public class OfferServiceImpl implements OfferService {
         User user = userRepository.findById((long) userId)
                 .orElseThrow(() -> new NoSuchElementException("User not found with id " + userId));
         offer.getUsers().add(user);
-        // send user name email and offer title to kafka
-        this.kafkaProducerService.sendMessage("my_topic_name", offer.getTitle() + ";" + user.getFullName() + ";" + user.getEmail());
+       // this.kafkaProducerService.sendMessage("my_topic_name", offer.getTitle() + ";" + user.getFullName() + ";" + user.getEmail());
         offerRepository.save(offer);
     }
    
