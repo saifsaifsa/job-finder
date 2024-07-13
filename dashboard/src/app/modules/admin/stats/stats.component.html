@@ -52,34 +52,11 @@
           </div>
         </div>
       </div>
-
-      <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full mt-6 md:mt-8">
-        <!-- New vs. Returning -->
-        <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6">
-          <div class="flex items-start justify-between">
-            <div class="text-lg font-medium tracking-tight leading-6 truncate">Users roles</div>
-          </div>
-          <div class="flex flex-col flex-auto mt-6 h-44">
-            <apx-chart class="flex flex-auto items-center justify-center w-full h-full" [chart]="userChart?.chart"
-              [labels]="userChart?.labels" [plotOptions]="userChart?.plotOptions" [series]="userChart?.series"></apx-chart>
-          </div>
-          <!-- <div class="mt-8">
-                        <div class="-my-3 divide-y">
-                            <ng-container *ngFor="let dataset of userChart.series; let i = index">
-                                <div class="grid grid-cols-3 py-3">
-                                    <div class="flex items-center">
-                                        <div class="flex-0 w-2 h-2 rounded-full"
-                                            [style.backgroundColor]="userChart.colors[i]"></div>
-                                        <div class="ml-3 truncate">{{userChart.labels[i]}}</div>
-                                    </div>
-                                    <div class="font-medium text-right">{{userChart.series * dataset / 100 |
-                                        number:'1.0-0'}}</div>
-                                    <div class="text-right text-secondary">{{dataset}}%</div>
-                                </div>
-                            </ng-container>
-                        </div>
-                    </div> -->
-        </div>
+      <div class="mt-6" *ngIf="usersRolePieChart?.length">
+        <h3 class="text-lg font-medium">User roles</h3>
+        <ngx-charts-pie-chart [view]="[700, 400]"  [results]="usersRolePieChart" [scheme]="colorScheme" [legend]="true"
+        [doughnut]="false" [labels]="true">
+      </ngx-charts-pie-chart>
       </div>
     <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
       <!-- Total companies -->
