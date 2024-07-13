@@ -14,7 +14,7 @@ import { UserService } from 'app/core/user/user.service';
 export class UserQuizzComponent implements OnInit {
   displayedColumns: string[] = ["Name","Actions"];
   dataSource: any;
-
+  skills=[]
   constructor(private quizService: QuizzesService,private userService: UserService) {
   }
 
@@ -28,18 +28,31 @@ export class UserQuizzComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  
+  trackByFn(index: number, item: any): any
+  {
+      return item.id || index;
+  }
   private refreshData(): void {
     // get user skills
     // get quizzes By userSkills
     this.userService.getLoggedInUser().subscribe((user)=>{
         const data = []
+        console.log("user.skills: ",user.skills);
+        
+        this.skills = user.skills
         user.skills.map((skill:any)=>{
             this.quizService.getQuizzes(skill.id).subscribe((res: any) => {
+                res.forEach((r)=>{
+                  return {...r,skillName:skill.name}
+                })
+                console.log("res:",res);
+                
                 data.push(...res)
             });
         })        
         this.dataSource= data
+        console.log(this.dataSource);
+        
         // this.dataSource = new MatTableDataSource(data);
         //     this.dataSource.sort = this.sort;
         //     this.dataSource.paginator = this.paginator;
