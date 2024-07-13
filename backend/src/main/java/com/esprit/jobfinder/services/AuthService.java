@@ -76,7 +76,7 @@ public class AuthService implements IAuthService{
         VerificationToken verificationToken = new VerificationToken(token, savedUser);
         tokenRepository.save(verificationToken);
 
-        String verificationUrl = "http://localhost:4200/confirmation?token=" + token;
+        String verificationUrl = "http://127.0.0.1:4200/confirmation?token=" + token;
         emailService.sendSimpleMessage(savedUser.getEmail(), "Email Verification", "To verify your email, click the following link: " + verificationUrl);
     }
     public void verifyAccount(String token) {
@@ -89,7 +89,6 @@ public class AuthService implements IAuthService{
         }
         user.setActive(true);
         userRepository.save(user);
-        tokenRepository.delete(verificationToken);
     }
     @Override
     public String login(String userName, String email, String password) {
@@ -117,10 +116,15 @@ public class AuthService implements IAuthService{
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             String token = UUID.randomUUID().toString();
-            VerificationToken verificationToken = new VerificationToken(token, user);
-            tokenRepository.save(verificationToken);
+            if(user.getVerificationToken() != null){
+                user.getVerificationToken().setToken(token);
+                tokenRepository.save(user.getVerificationToken());
+            }else{
+                VerificationToken verificationToken = new VerificationToken(token, user);
+                tokenRepository.save(verificationToken);
+            }
 
-            String resetLink = "http://localhost:4200/reset-password?token=" + token;
+            String resetLink = "http://127.0.0.1:4200/reset-password?token=" + token;
             emailService.sendSimpleMessage (user.getEmail(), "Password Reset Request", resetLink);
         }
     }

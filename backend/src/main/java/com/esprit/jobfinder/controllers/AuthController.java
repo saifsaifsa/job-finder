@@ -3,39 +3,22 @@ package com.esprit.jobfinder.controllers;
 import com.esprit.jobfinder.payload.request.*;
 import com.esprit.jobfinder.payload.request.ForgotPasswordRequest;
 import com.esprit.jobfinder.payload.request.ResetPasswordRequest;
-import com.esprit.jobfinder.payload.response.AccessTokenResponse;
 import com.esprit.jobfinder.services.IAuthService;
 import jakarta.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.*;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-
 import com.esprit.jobfinder.payload.response.JwtResponse;
 import com.esprit.jobfinder.payload.response.MessageResponse;
-import org.springframework.web.client.RestTemplate;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
+@AllArgsConstructor
 public class AuthController {
-  @Autowired
-  AuthenticationManager authenticationManager;
 
-  @Autowired
-  IAuthService authService;
+    private final IAuthService authService;
 
-  @Autowired
-  PasswordEncoder encoder;
-  private final RestTemplate restTemplate;
-
-    public AuthController(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     String token = authService.login (loginRequest.getUsername (),loginRequest.getEmail (),loginRequest.getPassword ());
