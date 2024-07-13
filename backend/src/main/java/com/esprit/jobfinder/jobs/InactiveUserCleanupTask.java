@@ -10,7 +10,7 @@ public class InactiveUserCleanupTask {
     @Autowired
     private IUserService userService;
 
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(fixedRate = 60000)
     public void cleanUpInactiveUsers() {
         userService.deleteInactiveUsers();
     }
