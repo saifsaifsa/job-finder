@@ -7,6 +7,7 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { UserService } from 'app/core/user/user.service';
 import { emailRegexValidator } from 'app/layout/common/validators/validators';
 import { SkillsService } from '../skills/skillsService';
+import { CompanyService } from 'app/core/company/companyService';
 
 @Component({
     selector: 'app-user-detail',
@@ -36,12 +37,15 @@ export class UserDetailComponent implements OnInit {
     avatar: string | ArrayBuffer | null = null;
     showRole:boolean;
     skills = []
+    role = ""
+    company:any
     constructor(
         private userService: UserService,
         private router: Router,
         private route: ActivatedRoute, 
         private datePipe: DatePipe,
-        private skillsService:SkillsService
+        private skillsService:SkillsService,
+        private companyService:CompanyService
     ) {}
     private formatDate(date: Date): string {
          return this.datePipe.transform(date, 'yyyy/MM/dd') || '';
@@ -53,6 +57,9 @@ export class UserDetailComponent implements OnInit {
         return"assets/avatars/avatar.png"
     }
     ngOnInit(): void {
+        this.companyService.geCompanies().subscribe((data)=>{
+            this.company = data
+        })
         this.skillsService.getSkills().subscribe((data)=>{this.skills = data},(err)=>{console.log(err);
         })
         this.userService.getLoggedInUser().subscribe((user)=>{
@@ -102,7 +109,7 @@ export class UserDetailComponent implements OnInit {
                     skills: new FormControl(null),
                 });
                 this.userService.getUser(userId).subscribe((user: any) => {
-                    
+                    this.role = user.role
                     this.avatar = this.getProfilePicture(user.profilePicture)
                     this.userDetailsForm.patchValue({
                         lastName: user.lastName,
@@ -145,7 +152,9 @@ export class UserDetailComponent implements OnInit {
         }
     }
       
-      
+    onRoleChange(event: any) {
+        this.role = event.value;
+      }
 
     goToUsersList() {
         this.router.navigateByUrl('/users');

@@ -192,12 +192,15 @@ public class AuthService implements IAuthService{
                 Authentication authentication = authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken (userDetailsImpl.getUsername(), "default")
                 );SecurityContextHolder.getContext().setAuthentication(authentication);
+                existingUser.get().setLastLogin(LocalDateTime.now());
+                userRepository.save(existingUser.get());
                 return jwtUtil.generateJwtToken ( authentication );
             } else {
                 User savedUser = new User(userProfile.getName(),userProfile.getFamilyName(),userProfile.getName().charAt(0)+userProfile.getFamilyName(),userProfile.getEmail(),"");
                 savedUser.setProfilePicture(userProfile.getPicture());
                 savedUser.setActive(true);
                 savedUser.setRole(ERole.ROLE_USER);
+                savedUser.setLastLogin(LocalDateTime.now());
                 userRepository.save(savedUser);
                 savedUser.setPassword(new BCryptPasswordEncoder ().encode("default"));
                 UserDetailsImpl userDetailsImpl =new UserDetailsImpl(savedUser);
