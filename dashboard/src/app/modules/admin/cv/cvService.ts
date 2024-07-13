@@ -11,8 +11,8 @@ export class CvService {
 
   constructor(private http: HttpClient) { }
 
-  getAllCvs(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  getAllCvs(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
   getCv(id: number): Observable<any> {
@@ -44,22 +44,20 @@ export class CvService {
   exportCvToPDF(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}/export-pdf`, { responseType: 'blob' }).pipe(
       catchError(this.handleError),
-      tap(() => this.incrementDownloads(id)) // Use tap here to increment downloads after successful export
+      tap(() => this.incrementDownloads(id))
     );
+  }
+
+  // New method to fetch CV statistics
+  getCvStatistics(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/statistics`);
   }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
     }
-    // Return an observable with a user-facing error message.
     return throwError('Something bad happened; please try again later.');
   }
 

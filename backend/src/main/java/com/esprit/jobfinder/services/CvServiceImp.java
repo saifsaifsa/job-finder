@@ -1,19 +1,26 @@
 package com.esprit.jobfinder.services;
 
+import com.esprit.jobfinder.models.Competence;
 import com.esprit.jobfinder.models.Cv;
-import com.esprit.jobfinder.models.Skill;
+import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.repository.CvRepository;
-import com.esprit.jobfinder.repository.SkillRepository;
+import com.esprit.jobfinder.repository.IUserRepository;
+import com.esprit.jobfinder.repository.CompetenceRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,11 +29,28 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CvServiceImp implements CvService {
     private final CvRepository cvRepository;
-    private final SkillRepository skillRepository;
+    private final CompetenceRepository competenceRepository;
+    private final IUserRepository userRepository;
 
     @Override
     public Cv createCv(Cv cv) {
-        return cvRepository.save(cv);
+        User connectedUser = getConnectedUser();
+        if (connectedUser != null) {
+            cv.setUser(connectedUser);
+            return cvRepository.save(cv);
+        } else {
+            throw new RuntimeException("User not found or not authenticated");
+        }
+    }
+
+    private User getConnectedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails) principal).getUsername();
+            return userRepository.findByUsername(username).orElse(null);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -57,8 +81,6 @@ public class CvServiceImp implements CvService {
         });
     }
 
-
-
     @Override
     public byte[] exportCvToPDF(Long id) {
         Cv cv = cvRepository.findById(id).orElseThrow(() -> new RuntimeException("CV not found"));
@@ -72,7 +94,6 @@ public class CvServiceImp implements CvService {
 
             float yPosition = page.getMediaBox().getHeight() - 50;
             float margin = 50;
-
 
             addHeading(contentStream, "CV Details", margin, yPosition);
             yPosition -= 30;
@@ -122,35 +143,50 @@ public class CvServiceImp implements CvService {
         contentStream.endText();
     }
 
-
-
-
-
     @Override
-    public Cv addSkillToCv(Long cvId, Skill skill) {
+    public Cv addCompetenceToCv(Long cvId, Competence competence) {
         Cv cv = cvRepository.findById(cvId).orElseThrow(() -> new RuntimeException("CV not found"));
-        Skill existingSkill = skillRepository.findById(skill.getId()).orElseThrow(() -> new RuntimeException("Skill not found"));
-        cv.getSkills().add(existingSkill);
+        Competence existingCompetence = competenceRepository.findById(competence.getId()).orElseThrow(() -> new RuntimeException("Competence not found"));
+        cv.getCompetences().add(existingCompetence);
         return cvRepository.save(cv);
     }
 
     @Override
-    public Cv removeSkillFromCv(Long cvId, Long skillId) {
-        return null;
+    public Cv removeCompetenceFromCv(Long cvId, Long competenceId) {
+        Cv cv = cvRepository.findById(cvId).orElseThrow(() -> new RuntimeException("CV not found"));
+        Competence competence = competenceRepository.findById(competenceId).orElseThrow(() -> new RuntimeException("Competence not found"));
+        cv.getCompetences().remove(competence);
+        return cvRepository.save(cv);
     }
+
+    @Override
     public Map<String, Long> getCvStatistics() {
         Map<String, Long> stats = new HashMap<>();
         stats.put("totalCvs", cvRepository.count());
         stats.put("totalViews", cvRepository.sumViews());
         stats.put("totalDownloads", cvRepository.sumDownloads());
         return stats;
-    }@Override
+    }
+
+    @Override
     public void incrementDownloads(Long id) {
         cvRepository.findById(id).ifPresent(cv -> {
             cv.setDownloads(cv.getDownloads() + 1);
             cvRepository.save(cv);
         });
     }
+    @Override
+    public Cv uploadCvPdf(Long userId, MultipartFile file) {
+        User connectedUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-
+        Cv cv = new Cv();
+        cv.setUser(connectedUser);
+        try {
+            cv.setContent(new String(file.getBytes()));
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read file content", e);
+        }
+        return cvRepository.save(cv);
+    }
 }

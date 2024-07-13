@@ -103,20 +103,11 @@ export const userNavigation: FuseNavigationItem[] = [
         link : '/user/company'
     },
     {
-        id   : 'quizzes',
-        title: 'Quizzes',
+        id   : 'Cv',
+        title: 'Cv user',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/user/quizzes/5'
-    },
-  
-    {
-        id   : 'offre',
-        title: 'offre',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/user/offre'
-
+        link : '/user/cv'
     }
 ];
 export const publisherNavigation: FuseNavigationItem[] = [

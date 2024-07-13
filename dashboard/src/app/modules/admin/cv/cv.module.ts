@@ -16,6 +16,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FuseCardModule } from '@fuse/components/card';
 import { CvComponent } from './cv.component';
 import { SharedModule } from 'app/shared/shared.module';
+import { EditCvDialogComponent } from './EditCvDialogComponent';
 
 const cvRoutes: Routes = [
   { path: '', component: CvComponent }
@@ -23,7 +24,7 @@ const cvRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    CvComponent
+    CvComponent, EditCvDialogComponent
   ],
   imports: [
     RouterModule.forChild(cvRoutes),

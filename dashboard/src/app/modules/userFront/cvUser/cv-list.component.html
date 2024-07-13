@@ -1,0 +1,41 @@
+<div class="cv-container">
+  <div class="cv-actions mb-4">
+    <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="generateCv()">Create CV</button>
+    <a class="bg-blue-500 text-white px-4 py-2 rounded ml-2" routerLink="/user/cv/upload">Upload CV</a>
+  </div>
+  <div class="grid grid-cols-6 gap-6">
+    <div
+      class="bg-white rounded-lg shadow-md p-4 transition-shadow duration-300 hover:shadow-lg cursor-pointer"
+      routerLink="/cv/{{ cv.id }}"
+      *ngFor="let cv of cvs"
+    >
+      <h3 class="text-xl font-semibold mb-2">{{ cv.user?.firstName }}</h3>
+      <p class="text-gray-700">{{ cv.user?.email }}</p>
+      <p class="text-gray-700">{{ cv.content }}</p>
+      <p class="text-gray-700">compotances: java, angular,spring </p>
+      <button class="bg-green-500 text-white px-2 py-1 rounded mr-2 mt-2" (click)="editCv(cv)">Edit</button>
+      <button class="bg-red-500 text-white px-2 py-1 rounded mt-2" (click)="deleteCv(cv.id)">Delete</button>
+    </div>
+  </div>
+  <div class="cv-display mt-6" *ngIf="!cvs || !cvs.length">
+    <p>No CVs available. Click "Create CV" to generate a new one.</p>
+  </div>
+</div>
+
+<!-- Edit CV Modal -->
+<div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" *ngIf="editMode">
+  <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+    <div class="flex justify-between items-center">
+      <h2 class="text-xl font-semibold">Edit CV</h2>
+      <span class="text-gray-600 cursor-pointer" (click)="closeModal()">&times;</span>
+    </div>
+    <div class="mt-4">
+      <label class="block text-sm font-medium text-gray-700">Content:</label>
+      <textarea class="w-full mt-2 p-2 border rounded-md" [(ngModel)]="selectedCv.content"></textarea>
+      <div class="mt-4 flex justify-end space-x-2">
+        <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="saveCv()">Save CV</button>
+        <button class="bg-gray-300 text-gray-700 px-4 py-2 rounded" (click)="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 package com.esprit.jobfinder.controllers;
 
+import com.esprit.jobfinder.models.Competence;
 import com.esprit.jobfinder.models.Cv;
-import com.esprit.jobfinder.models.Skill;
 import com.esprit.jobfinder.services.CvService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class CvController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found");
     }
 
+
     @PutMapping("/{id}")
     public Cv updateCv(@PathVariable Long id, @RequestBody Cv cvDetails) {
         Cv cv = cvService.getCv(id);
@@ -62,15 +64,16 @@ public class CvController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/{id}/skills")
-    public Cv addSkillToCv(@PathVariable Long id, @RequestBody Skill skill) {
-        return cvService.addSkillToCv(id, skill);
+    @PostMapping("/{id}/competences")
+    public Cv addCompetenceToCv(@PathVariable Long id, @RequestBody Competence competence) {
+        return cvService.addCompetenceToCv(id, competence);
     }
 
-    @DeleteMapping("/{id}/skills/{skillId}")
-    public Cv removeSkillFromCv(@PathVariable Long id, @PathVariable Long skillId) {
-        return cvService.removeSkillFromCv(id, skillId);
+    @DeleteMapping("/{id}/competences/{competenceId}")
+    public Cv removeCompetenceFromCv(@PathVariable Long id, @PathVariable Long competenceId) {
+        return cvService.removeCompetenceFromCv(id, competenceId);
     }
+
     @GetMapping("/{id}/export-pdf")
     public ResponseEntity<byte[]> exportCvToPDF(@PathVariable Long id) {
         byte[] pdfData = cvService.exportCvToPDF(id);
@@ -79,14 +82,20 @@ public class CvController {
         headers.setContentDispositionFormData("attachment", "cv.pdf");
         return new ResponseEntity<>(pdfData, headers, HttpStatus.OK);
     }
+
     @GetMapping("/stats")
     public Map<String, Long> getCvStatistics() {
         return cvService.getCvStatistics();
     }
+
     @GetMapping("/{id}/increment-downloads")
     public ResponseEntity<Void> incrementDownloads(@PathVariable Long id) {
         cvService.incrementDownloads(id);
         return ResponseEntity.ok().build();
     }
-
+    @PostMapping("/upload")
+    public ResponseEntity<Cv> uploadCv(@RequestParam("userId") Long userId, @RequestParam("file") MultipartFile file) {
+        Cv cv = cvService.uploadCvPdf(userId, file);
+        return ResponseEntity.ok(cv);
+    }
 }

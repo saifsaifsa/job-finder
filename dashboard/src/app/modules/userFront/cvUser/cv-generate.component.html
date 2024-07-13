@@ -1,0 +1,18 @@
+>
+<div class="cv-generate-container">
+    <button (click)="generateCv()">Generate CV</button>
+  
+    <div *ngIf="newCv">
+      <h2>Generated CV</h2>
+      <p><strong>Name:</strong> {{ newCv.user.fullName }}</p>
+      <p><strong>Email:</strong> {{ newCv.user.email }}</p>
+      <p><strong>Content:</strong> {{ newCv.content }}</p>
+      <p><strong>Views:</strong> {{ newCv.views }}</p>
+      <p><strong>Downloads:</strong> {{ newCv.downloads }}</p>
+      <h3>Skills</h3>
+      <ul>
+        <li *ngFor="let skill of newCv.skills">{{ skill.name }}</li>
+      </ul>
+    </div>
+  </div>
+ 

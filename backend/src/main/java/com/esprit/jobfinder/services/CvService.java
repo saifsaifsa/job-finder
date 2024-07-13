@@ -1,7 +1,8 @@
 package com.esprit.jobfinder.services;
 
+import com.esprit.jobfinder.models.Competence;
 import com.esprit.jobfinder.models.Cv;
-import com.esprit.jobfinder.models.Skill;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,9 @@ public interface CvService {
     void incrementViews(Long id);
     void incrementDownloads(Long id);
     byte[] exportCvToPDF(Long id);
-    Cv addSkillToCv(Long cvId, Skill skill);
-    Cv removeSkillFromCv(Long cvId, Long skillId);
+    Cv addCompetenceToCv(Long cvId, Competence competence);
+    Cv removeCompetenceFromCv(Long cvId, Long competenceId);
     Map<String, Long> getCvStatistics();
+    Cv uploadCvPdf(Long userId, MultipartFile file);
+
 }

@@ -56,7 +56,7 @@ public class User {
   @JsonIgnore
   @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private Set<UserQuiz> userQuizzes = new HashSet<>();
-
+  @JsonIgnore
   @ManyToMany
   Set<Offer> offres;
 
@@ -65,7 +65,6 @@ public class User {
 
   @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime lastLogin;
-
   @JsonIgnore
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private VerificationToken verificationToken;
