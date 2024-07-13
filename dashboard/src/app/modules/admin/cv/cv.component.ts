@@ -6,6 +6,8 @@ import { CvService } from './cvService';
 import { Router } from '@angular/router';
 import { EditCvDialogComponent } from './EditCvDialogComponent';
 import { MatDialog } from '@angular/material/dialog';
+import { saveAs } from 'file-saver';
+import { CvPreviewDialogComponent } from './CvPreviewDialogComponent';
 
 @Component({
   selector: 'app-cv',
@@ -83,11 +85,28 @@ export class CvComponent implements OnInit {
     );
   }
 
-  openCv(id: number): void {
-    this.cvService.getCv(id).subscribe((cv) => {
-      this.selectedCv = cv;
+  openCv(cv: any): void {
+    this.cvService.getCv(cv.id).subscribe((cvData) => {
+      this.selectedCv = cvData;
+      
+      // Increment views
+      this.cvService.incrementViews(cv.id).subscribe(() => {
+        console.log('Views incremented for CV ID:', cv.id);
+        this.incrementViews(cv.id); // Update the view count in the table
+      });
+
+      // Optionally, open a preview dialog or modal
+      const dialogRef = this.dialog.open(CvPreviewDialogComponent, {
+        width: '800px', // Adjust width as needed
+        data: cvData
+      });
+
+      dialogRef.afterClosed().subscribe(() => {
+        // Optional: Handle any close actions if needed
+        this.selectedCv = null; // Reset selectedCv when dialog/modal is closed
+      });
     });
-  }
+  }  
 
   closeCv(): void {
     this.selectedCv = null;
@@ -97,6 +116,13 @@ export class CvComponent implements OnInit {
     const cvToUpdate = this.dataSource.data.find(cv => cv.id === id);
     if (cvToUpdate) {
       cvToUpdate.downloads++;
+      this.dataSource._updateChangeSubscription();
+    }
+  }
+  private incrementViews(id: number): void {
+    const cvToUpdate = this.dataSource.data.find(cv => cv.id === id);
+    if (cvToUpdate) {
+      cvToUpdate.views++;
       this.dataSource._updateChangeSubscription();
     }
   }

@@ -49,9 +49,9 @@ export class CvService {
     return this.http.get(`${this.apiUrl}/${id}/download`, { headers: this.getAuthHeaders(), responseType: 'blob' });
   }
 
-  uploadCvPdf(id: number, file: File): Observable<any> {
+  uploadCvPdf(id: number, file: File): Observable<Cv> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post(`${this.apiUrl}/upload?userId=`+id, formData, { headers: this.getAuthHeaders() });
+    return this.http.post<Cv>(`${this.apiUrl}/upload?userId=` + id, formData, { headers: this.getAuthHeaders() });
   }
 }

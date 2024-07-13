@@ -11,7 +11,6 @@ export class CvService {
 
   constructor(private http: HttpClient) { }
 
- 
   getAllCvs(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
@@ -45,8 +44,13 @@ export class CvService {
   exportCvToPDF(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}/export-pdf`, { responseType: 'blob' }).pipe(
       catchError(this.handleError),
-      tap(() => this.incrementDownloads(id)) 
+      tap(() => this.incrementDownloads(id))
     );
+  }
+
+  // New method to fetch CV statistics
+  getCvStatistics(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/statistics`);
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -41,6 +41,7 @@ public class CvController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found");
     }
 
+
     @PutMapping("/{id}")
     public Cv updateCv(@PathVariable Long id, @RequestBody Cv cvDetails) {
         Cv cv = cvService.getCv(id);
