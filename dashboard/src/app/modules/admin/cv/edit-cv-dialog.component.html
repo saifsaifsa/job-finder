@@ -1,0 +1,40 @@
+
+<h1 mat-dialog-title>Edit CV</h1>
+<div mat-dialog-content>
+  <form [formGroup]="editCvForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-error *ngIf="editCvForm.controls['name'].invalid">{{getErrorMessage('name')}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" required>
+      <mat-error *ngIf="editCvForm.controls['email'].invalid">{{getErrorMessage('email')}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>UserName</mat-label>
+      <input matInput formControlName="username" required>
+      <mat-error *ngIf="editCvForm.controls['username'].invalid">{{getErrorMessage('username')}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Views</mat-label>
+      <input matInput formControlName="views" type="number" required>
+      <mat-error *ngIf="editCvForm.controls['views'].invalid">{{getErrorMessage('views')}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Downloads</mat-label>
+      <input matInput formControlName="downloads" type="number" required>
+      <mat-error *ngIf="editCvForm.controls['downloads'].invalid">{{getErrorMessage('downloads')}}</mat-error>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-button type="submit" [disabled]="!editCvForm.valid">Save</button>
+    </div>
+  </form>
+</div>

@@ -6,8 +6,7 @@ import { CvService } from '../cvUser/cv.service';
   templateUrl: './cv-upload.component.html',
   styleUrls: ['./cv-upload.component.css']
 })
-export class CvUploadComponent {
-  selectedFile: File = null;
+export class CvUploadComponent { selectedFile: File = null;
 
   constructor(private cvService: CvService) {}
 

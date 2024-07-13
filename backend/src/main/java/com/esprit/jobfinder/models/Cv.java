@@ -22,6 +22,7 @@ public class Cv {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
     private int views;
     private int downloads;
@@ -29,9 +30,10 @@ public class Cv {
 
     @ManyToMany
     @JoinTable(
-            name = "SkillCV",
+            name = "CompetenceCV",
             joinColumns = @JoinColumn(name = "cv_id"),
-            inverseJoinColumns = @JoinColumn(name = "skill_id")
+            inverseJoinColumns = @JoinColumn(name = "competence_id")
     )
-    private List<Skill> skills;
+    private List<Competence> competences;
+
 }

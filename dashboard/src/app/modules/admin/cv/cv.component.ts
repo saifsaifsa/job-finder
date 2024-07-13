@@ -5,6 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { CvService } from './cvService';
 import { saveAs } from 'file-saver';
 import { Router } from '@angular/router';
+import { EditCvDialogComponent } from './EditCvDialogComponent';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-cv',
@@ -19,7 +21,7 @@ export class CvComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private cvService: CvService, private router: Router) {}
+  constructor(private cvService: CvService, private router: Router, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.loadCvs();
@@ -54,10 +56,24 @@ export class CvComponent implements OnInit {
     }
   }
 
-  editCv(cvId: number) {
-    this.router.navigate(['/cv/edit', cvId]);
-  }
+  
+  editCv(cv: any): void {
+    const dialogRef = this.dialog.open(EditCvDialogComponent, {
+      width: '400px',
+      data: cv
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Handle the result (e.g., save the changes)
+        console.log('Dialog result:', result);
+        // Call the service to update the CV details
+        this.cvService.updateCv(result).subscribe(() => {
+          this.loadCvs(); // Reload the CV list
+        });
+      }
+    });
+  }
   downloadCv(id: number): void {
     this.cvService.exportCvToPDF(id).subscribe(
       (blob) => {
