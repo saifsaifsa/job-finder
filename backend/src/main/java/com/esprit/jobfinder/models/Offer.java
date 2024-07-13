@@ -50,8 +50,9 @@ public class Offer {
         }
     }
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "offres")
+   
+    @ManyToMany
+    @JoinTable(name = "offer_user", joinColumns = @JoinColumn(name = "offer_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Collection<User> users;
 
     
@@ -78,4 +79,6 @@ public class Offer {
     public void setCompetences(Collection<Competence> competences) {
         this.competences = competences;
     }
+
+    
 }

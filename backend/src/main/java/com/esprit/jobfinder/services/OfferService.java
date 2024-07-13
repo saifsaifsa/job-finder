@@ -13,4 +13,5 @@ public interface OfferService {
     void deleteOffer(int id);
     Flux<Offer> getAllOffers();
     Optional<Offer> getOfferById(int id);
+    public void addUserToOffer(int offerId, int userId);
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.esprit.jobfinder.exceptions.ResourceNotFoundException;
 import com.esprit.jobfinder.models.Offer;
+import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.services.OfferService;
 
 import reactor.core.publisher.Flux;
@@ -84,5 +85,11 @@ public class OfferController {
     public ResponseEntity<String> sendJobAlerts() {
         
         return ResponseEntity.ok("Job alerts sending  .....");
+    }
+
+    @PostMapping("/addUserToOffer/{offerId}/{userId}")
+    public ResponseEntity<Void> addUserToOffer(@PathVariable int offerId, @PathVariable int userId) {
+        this.offerService.addUserToOffer(offerId, userId);
+        return ResponseEntity.ok().build();
     }
 }
