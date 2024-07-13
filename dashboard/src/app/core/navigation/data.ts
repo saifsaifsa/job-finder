@@ -138,5 +138,12 @@ export const publisherNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/offresUser'
+    },
+    {
+        id   : 'training',
+        title: 'Training Publisher',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/publisher/training'
     }
 ];

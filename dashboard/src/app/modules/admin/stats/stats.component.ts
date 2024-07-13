@@ -28,6 +28,7 @@ export class StatsComponentAdmin implements OnInit
     usersRoles:any
     totalUsers:number
     activeUsers:number
+    usersRolePieChart:any
     constructor(private readonly _userService:UserService, private readonly _trainingService:TrainingService, private readonly _companyService:CompanyService )
     {
     }
@@ -87,6 +88,7 @@ export class StatsComponentAdmin implements OnInit
             this.activeUsers=data.activeUsers
             this.userChart.series = Object.values(data.usersByRole);
             this.userChart.labels = Object.keys(data.usersByRole);
+            this.usersRolePieChart = Object.keys(data.usersByRole).map(key => ({ name:key, value: data.usersByRole[key] }));
         });
         this._trainingService.getStats().subscribe(data => {
           this.statistics = data|| {};

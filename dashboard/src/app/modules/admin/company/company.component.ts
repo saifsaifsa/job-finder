@@ -82,6 +82,11 @@ export class CompanyComponent {
         this.currentPage = 0;
         this.getAllCompanies();
     }
+
+    applyFilterCompany(event: Event) {
+        const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+        this.companysDataSource.filter = filterValue;
+      }
     reloadCurrent() {
         this.reloadComponent(true);
     }

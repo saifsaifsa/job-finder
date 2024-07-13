@@ -89,7 +89,7 @@ export class AuthSignInComponent implements OnInit {
                 }
             },
             (response) => {
-                
+                console.log("response.error.message",response.error.message);
                 // Re-enable the form
                 this.signInForm.enable();
 
@@ -104,6 +104,8 @@ export class AuthSignInComponent implements OnInit {
                             "You don't have permission to access",
                     };
                 }else if (response.error.message == 'Le compte utilisateur est désactivé') {
+                    
+                    
                     this.alert = {
                         type: 'error',
                         message: 'You Account is not active',

@@ -14,6 +14,7 @@ import com.esprit.jobfinder.services.IUserService;
 import com.esprit.jobfinder.services.SkillService;
 import com.esprit.jobfinder.utiles.DateUtils;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -28,13 +29,12 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/users")
+@AllArgsConstructor
 public class UserController {
 
-    @Autowired
-    private IUserService userService;
+    private final IUserService userService;
 
-    @Autowired
-    private ICompetenceService competenceService;
+    private final ICompetenceService competenceService;
 
     @PostMapping( consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<User> createUser(@Valid @ModelAttribute CreateUserReq user) {
