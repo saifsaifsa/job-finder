@@ -100,7 +100,7 @@ public class OfferServiceImpl implements OfferService {
         User user = userRepository.findById((long) userId)
                 .orElseThrow(() -> new NoSuchElementException("User not found with id " + userId));
         offer.getUsers().add(user);
-       // this.kafkaProducerService.sendMessage("my_topic_name", offer.getTitle() + ";" + user.getFullName() + ";" + user.getEmail());
+        this.kafkaProducerService.sendMessage("my_topic_name", offer.getTitle() + ";" + user.getFullName() + ";" + user.getEmail());
     offer.setNombreVu(offer.getNombreVu() + 1);
         offerRepository.save(offer);
     }
