@@ -21,4 +21,5 @@ public class UserQuiz {
     private Quiz quiz;
 
     private int totalScore;
+    private boolean success;
 }

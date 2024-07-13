@@ -2,6 +2,7 @@ package com.esprit.jobfinder.controllers;
 
 import com.esprit.jobfinder.dto.QuizDTO;
 import com.esprit.jobfinder.models.*;
+import com.esprit.jobfinder.payload.request.SubmitQuizReq;
 import com.esprit.jobfinder.repository.QuizRepository;
 import com.esprit.jobfinder.services.*;
 import com.esprit.jobfinder.utiles.PDFExporter;
@@ -141,17 +142,16 @@ public class QuizController {
     @PostMapping("/{quizId}/submit")
     public ResponseEntity<Integer> submitQuiz(
             @PathVariable Long quizId,
-            @RequestParam Long userId,
-            @RequestBody List<Answer> answers) {
+            @RequestBody SubmitQuizReq submitQuizReq) {
         Quiz quiz = quizService.findById(quizId);
-        Optional<User> user = userService.getUserById(userId);
+        Optional<User> user = userService.getUserById(submitQuizReq.getUserId());
 
         if (quiz == null || !user.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
         int totalScore = 0;
-        for (Answer answer : answers) {
+        for (Answer answer : submitQuizReq.getAnswers()) {
             Answer correctAnswer = answerService.findById(answer.getId());
             if (correctAnswer != null && correctAnswer.isCorrect() && correctAnswer.getQuestion().getQuiz().getId().equals(quizId)) {
                 totalScore += correctAnswer.getScore();
@@ -162,7 +162,7 @@ public class QuizController {
         userQuiz.setUser(user.get());
         userQuiz.setQuiz(quiz);
         userQuiz.setTotalScore(totalScore);
-
+        userQuiz.setSuccess( quiz.getSuccessScore() <= totalScore);
         userQuizService.save(userQuiz);
 
         return ResponseEntity.ok(totalScore);
