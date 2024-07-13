@@ -134,7 +134,7 @@
       <!-- Most Popular Categories -->
       <div class="mt-6" *ngIf="mostPopularCategories?.length">
         <h3 class="text-lg font-medium">Most Popular Categories</h3>
-        <ngx-charts-pie-chart [results]="mostPopularCategories" [scheme]="colorScheme" [legend]="true"
+        <ngx-charts-pie-chart [view]="[700, 400]"  [results]="mostPopularCategories" [scheme]="colorScheme" [legend]="true"
           [doughnut]="false" [labels]="true">
         </ngx-charts-pie-chart>
       </div>
@@ -142,7 +142,7 @@
       <!-- Most Popular Companies -->
       <div class="mt-6" *ngIf="mostPopularIndustry?.length">
         <h3 class="text-lg font-medium">Most Popular Companies Industries</h3>
-        <ngx-charts-pie-chart [results]="mostPopularIndustry" [scheme]="colorScheme" [legend]="true"
+        <ngx-charts-pie-chart [view]="[700, 400]"  [results]="mostPopularIndustry" [scheme]="colorScheme" [legend]="true"
           [doughnut]="false" [labels]="true">
         </ngx-charts-pie-chart>
       </div>
