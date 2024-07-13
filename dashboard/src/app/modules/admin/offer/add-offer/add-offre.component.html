@@ -1,6 +1,6 @@
 <div class="p-6">
   <div class="mb-4">
-    <h2 class="text-2xl font-bold text-primary-600">Add customer</h2>
+    <h2 class="text-2xl font-bold text-primary-600">Add offre</h2>
   </div>
   <div>
     <form [formGroup]="addCusForm" (change)="formChanged()">
@@ -21,17 +21,32 @@
           <label class="block text-gray-700 text-sm font-bold mb-2" for="Experience">Experience</label>
           <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="experienceLevel" type="text" placeholder="Experience" formControlName="experienceLevel" required>
         </div>
+        <div>
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="Company">Company</label>
+          <mat-form-field class="w-full">
+            <mat-select placeholder="Select Company" formControlName="company">
+              <mat-option *ngFor="let company of companys" [value]="company">{{ company.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="competences">Skills</label>
+          <mat-form-field class="w-full">
+            <mat-select placeholder="Select competences" formControlName="competences" multiple>
+              <mat-option *ngFor="let competence of competences" [value]="competences">{{ competence.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
 
       <div class="mt-6">
-        <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" (click)="onadd()"  *ngIf="!isDataExist()">Save</button>
-        <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" *ngIf="isDataExist()"  (click)="onUpdate()" >Update</button>
+        <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" (click)="onadd()" *ngIf="!isDataExist()">Save</button>
+        <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" *ngIf="isDataExist()" (click)="onUpdate()">Update</button>
         <button class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="openDialog()">Cancel</button>
       </div>
       <div *ngIf="errorMessage" class="error-message text-red-500">
         {{ errorMessage }}
       </div>
-
     </form>
   </div>
 </div>

@@ -131,8 +131,42 @@ export const appRoutes: Route[] = [
             {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
             {path: 'skills', loadChildren: () => import('app/modules/admin/skills/skills.module').then((m) => m.SkillsModule)},
             {path: 'quizz', loadChildren: () => import('app/modules/admin/quizz/quizz.module').then((m) => m.QuizzModule)},           
-            {path: 'cv', loadChildren: () => import('app/modules/admin/cv/cv.module').then((m) => m.CvModule)},       
-       
+            {path: 'cv', loadChildren: () => import('app/modules/admin/cv/cv.module').then((m) => m.CvModule)},     
+            { path: 'offresUser',loadChildren: () => import('app/modules/userFront/offres/offres.module').then((m) => m.OffresModuleAdmin), },
+            { path: 'offresUser/:id',loadChildren: () => import('app/modules/userFront/offresDetail/offresDetail.module').then((m) => m.OofresDetailModuleAdmin), },
+        ],
+    },
+    // TODO check if has role ROLE_PUBLISHER
+    {
+        path: 'publisher',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        resolve: {
+            initialData: InitialDataResolver,
+        },
+        children: [
+            {path: 'exemple1',loadChildren: () => import('app/modules/publisherFront/example/example.module').then((m) => m.ExampleModule),},
+            {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
+            {path: 'company', loadChildren: () => import('app/modules/admin/company/company.module').then((m) => m.CompanyModule)},
+        ],
+    },
+    // TODO check if has role ROLE_USER
+    {
+        path: 'user',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        resolve: {
+            initialData: InitialDataResolver,
+        },
+        children: [
+            {path: 'exemple2',loadChildren: () => import('app/modules/userFront/example/example.module').then((m) => m.ExampleModuleUser),},
+            {path: 'training',loadChildren: () => import('app/modules/userFront/training/training.module').then((m) => m.TrainingModuleUser),},
+            {path: 'company',loadChildren: () => import('app/modules/userFront/company/company.module').then((m) => m.CompanyModuleUser),},
+            { path: 'success',loadChildren: () => import('app/modules/userFront/success-page/success-page.module').then((m) => m.SuccessModule), },
+            { path: 'cancel',loadChildren: () => import('app/modules/userFront/cancel-page/cancel-page.module').then((m) => m.CancelModule), },
+            { path: 'quizzes',loadChildren: () => import('app/modules/userFront/quiz/quiz.module').then((m) => m.QuizModule), },
         ],
     },
     // Publisher routes
@@ -149,6 +183,7 @@ export const appRoutes: Route[] = [
             {path: 'exemple1',loadChildren: () => import('app/modules/publisherFront/example/example.module').then((m) => m.ExampleModule),},
             {path: 'training', loadChildren: () => import('app/modules/admin/training/training.module').then((m) => m.TrainingModule)},
             {path: 'company', loadChildren: () => import('app/modules/admin/company/company.module').then((m) => m.CompanyModule)},
+
 
         ],
     },

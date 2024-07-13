@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +23,12 @@ public class Competence {
     @NotBlank(message = "La catégorie de la compétence est obligatoire")
     private String category;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "competence", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "competence", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Quiz> quizzes;
+
+    @JsonIgnore
+
+    @ManyToMany(mappedBy = "competences")
+    private Collection<Offer> offers;
+
 }

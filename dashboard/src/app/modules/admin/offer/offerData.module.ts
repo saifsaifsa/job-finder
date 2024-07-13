@@ -37,6 +37,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 import { MatTabsModule } from '@angular/material/tabs';
+import { GetProfilesComponent } from './get-profiles/get-profiles.component';
 
 
 const offerRoutes: Route[] = [
@@ -51,6 +52,7 @@ const offerRoutes: Route[] = [
         OfferComponent,
         AddCustomerComponent,
         DeleteComponent,
+        GetProfilesComponent
         
 
     ],

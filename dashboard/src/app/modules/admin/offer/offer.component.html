@@ -3,7 +3,7 @@
   <div class="flex m-5">
 
 
-    <div class="text-4xl font-extrabold tracking-tight leading-none">Offre</div>
+    <div class="text-4xl font-extrabold tracking-tight leading-none">Offres</div>
 
 
 
@@ -27,7 +27,7 @@
   <div class="flex">
     <div class=" w-full h-10 sm:flex items-center bg-white rounded-lg overflow-hidden px-2 py-1 justify-between m-2">
       <input class="text-base text-gray-400 flex-grow outline-none px-2 " type="text" (keyup)="applyFilter($event)"
-        placeholder="Search Agent by  name" />
+        placeholder="Search " />
 
     </div>
 
@@ -37,47 +37,64 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
 
-
-    <ng-container matColumnDef="Title">
-      <th mat-header-cell *matHeaderCellDef>Title</th>
-      <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+    <ng-container matColumnDef="LogoCompany">
+      <th mat-header-cell *matHeaderCellDef class="text-center">Logo Company</th>
+      <td mat-cell *matCellDef="let element" class="text-center">
+        <img [src]="element.company.image ? 'http://localhost:8080/api/files/'+element.company.image : 'assets/avatars/avatar.png'" alt="Logo" style="width: 80px; height: 80px;">
+      </td>
     </ng-container>
 
-    <!-- Date Column -->
+    <ng-container matColumnDef="NameCompany">
+      <th mat-header-cell *matHeaderCellDef class="text-center">Name Company</th>
+      <td mat-cell *matCellDef="let element" class="text-center">{{element.company.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Title">
+      <th mat-header-cell *matHeaderCellDef class="text-center">Title</th>
+      <td mat-cell *matCellDef="let element" class="text-center">{{ element.title }}</td>
+    </ng-container>
+    <!-- Description Column -->
     <ng-container matColumnDef="Description">
-      <th mat-header-cell *matHeaderCellDef>Date</th>
-      <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+      <th mat-header-cell *matHeaderCellDef class="text-center">Description</th>
+      <td mat-cell *matCellDef="let element" class="text-center">
+        <span *ngIf="element.description.length <= 15" [matTooltip]="element.description" >{{ element.description }}</span>
+        <span *ngIf="element.description.length > 15" [matTooltip]="element.description" >{{ element.description.slice(0, 15) + '...' }}</span>
+      </td>
     </ng-container>
 
     <!-- Distribution Group Column -->
     <ng-container matColumnDef="Type">
-      <th mat-header-cell *matHeaderCellDef>type</th>
-      <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+      <th mat-header-cell *matHeaderCellDef class="text-center">Type</th>
+      <td mat-cell *matCellDef="let element" class="text-center">{{ element.type }}</td>
     </ng-container>
 
 
 
     <!-- IVR Duration Column -->
     <ng-container matColumnDef="Experience Level">
-      <th mat-header-cell *matHeaderCellDef>Experience Level</th>
-      <td mat-cell *matCellDef="let element">{{ element.experienceLevel }}</td>
+      <th mat-header-cell *matHeaderCellDef class="text-center">Experience Level</th>
+      <td mat-cell *matCellDef="let element" class="text-center">{{ element.experienceLevel }}</td>
     </ng-container>
 
 
     <!-- Actions Column -->
     <ng-container matColumnDef="Actions">
-      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
       <td mat-cell *matCellDef="let element">
         <button
-          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-2 rounded transition-all duration-500 ease-in-out transform hover:scale-110 hover:-rotate-3"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 ml-24 px-4 mr-2 rounded transition-all duration-500 ease-in-out transform hover:scale-110 hover:-rotate-3"
           (click)="openDialog('update', element)">
           Update
         </button>
         <button
           class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-all duration-500 ease-in-out transform hover:scale-110 hover:-rotate-3"
-          
           (click)="onDelete(element.id)">
           Delete
+        </button>
+        <button
+          class="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-500 ease-in-out transform hover:scale-110 hover:-rotate-3"
+          (click)="getTopProfiles()">
+          Top Match Profiles
         </button>
       </td>
     </ng-container>

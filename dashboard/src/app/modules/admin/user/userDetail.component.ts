@@ -6,6 +6,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { UserService } from 'app/core/user/user.service';
 import { emailRegexValidator } from 'app/layout/common/validators/validators';
+import { SkillsService } from '../skills/skillsService';
 
 @Component({
     selector: 'app-user-detail',
@@ -34,11 +35,13 @@ export class UserDetailComponent implements OnInit {
     authentifiedUser:any
     avatar: string | ArrayBuffer | null = null;
     showRole:boolean;
+    skills = []
     constructor(
         private userService: UserService,
         private router: Router,
         private route: ActivatedRoute, 
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private skillsService:SkillsService
     ) {}
     private formatDate(date: Date): string {
          return this.datePipe.transform(date, 'yyyy/MM/dd') || '';
@@ -50,6 +53,8 @@ export class UserDetailComponent implements OnInit {
         return"assets/avatars/avatar.png"
     }
     ngOnInit(): void {
+        this.skillsService.getSkills().subscribe((data)=>{this.skills = data},(err)=>{console.log(err);
+        })
         this.userService.getLoggedInUser().subscribe((user)=>{
             this.authentifiedUser = user
         })
@@ -72,6 +77,7 @@ export class UserDetailComponent implements OnInit {
             role: new FormControl(this.roles[1], Validators.required),
             photo: new FormControl(null),
             birthDay: new FormControl(this.formatDate(new Date())),
+            skills: new FormControl(null),
         });
 
         this.route.params.subscribe((params) => {
@@ -93,6 +99,7 @@ export class UserDetailComponent implements OnInit {
                     role: new FormControl(this.roles["ROLE_USER"], this.showRole ? Validators.required:null),
                     photo: new FormControl(null),
                     birthDay: new FormControl(this.formatDate(new Date())),
+                    skills: new FormControl(null),
                 });
                 this.userService.getUser(userId).subscribe((user: any) => {
                     
@@ -105,7 +112,8 @@ export class UserDetailComponent implements OnInit {
                         phone: user.phone,
                         role: this.roles[user.role],
                         username:user.username,
-                        birthDay:user.birthDay
+                        birthDay:user.birthDay,
+                        skills:user.skills?.map(s=>s.id)
                     });
                 });
             }
@@ -160,6 +168,7 @@ export class UserDetailComponent implements OnInit {
             );
         }
         formData.append('phone', this.userDetailsForm.get('phone').value);
+        formData.append('skills', this.userDetailsForm.get('skills').value);
         formData.append('role', this.showRole ? this.userDetailsForm.get('role').value:this.authentifiedUser.role);
         if(this.userDetailsForm.get('photo').value){formData.append('photo', this.userDetailsForm.get('photo').value);}
         

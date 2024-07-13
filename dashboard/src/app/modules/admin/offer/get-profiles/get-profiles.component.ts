@@ -1,72 +1,73 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { DeleteComponent } from '../delete-offer/delete.component';
 import { OfferService } from '../offerService';
-import { CompanyService } from 'app/core/company/companyService';
-import { SkillsService } from '../../skills/skillsService';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-add-offre',
-  templateUrl: './add-offre.component.html',
+  selector: 'app-get-profiles',
+  templateUrl: './get-profiles.component.html',
   styleUrls: []
 })
-export class AddCustomerComponent implements OnInit {
-  public companysDataSource: { data: any[] } = { data: [] }; 
-  
+export class GetProfilesComponent implements OnInit {
+  displayedColumns: string[] = ["Name", "Prename", "Mail", "ExperienceLevel", "Actions"];
+  dataSource: any;
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
+
+  private refreshData(): void {
+    const data = [
+      { Name: 'John', Prename: 'Doe', Mail: 'john.doe@example.com', ExperienceLevel: 'Senior' },
+      { Name: 'Jane', Prename: 'Doe', Mail: 'jane.doe@example.com', ExperienceLevel: 'Junior' },
+      { Name: 'Alice', Prename: 'Smith', Mail: 'alice.smith@example.com', ExperienceLevel: 'Mid' },
+    ];
+    console.log(data);
+
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
   public breakpoint: number;
   public fname: string = ``;
   public lname: string = `Suresh`;
   public addCusForm: FormGroup;
   wasFormChanged = false;
   public errorMessage: string = '';
-  companys: any[] = [];
-  public competences = []; // Example skills
-
 
   constructor(
     public offerService: OfferService,
     private fb: FormBuilder,
     public dialog: MatDialog,
-    private companyService: CompanyService,
-    private skillsService: SkillsService,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {}
 
   public ngOnInit(): void {
-    this.companyService.getAllCompanies().subscribe(
-      (data: any) => {
-        this.companys = data;
-        console.log('Companies data: ', this.companys); // Log to verify data
-      },
-      (err) => {
-        console.error('Error fetching companies: ', err);
-      }
-    );
-    this.skillsService.getSkills().subscribe(
-      (data: any) => {
-        this.competences = data;
-        console.log('Skills data: ', this.competences); // Log to verify data
-      },
-      (err) => {
-        console.error('Error fetching skills: ', err);
-      }
-    );
-  
-  
+    this.refreshData();
+
     this.addCusForm = this.fb.group({
       title: [''],
       description: [''],
       type: [''],
       experienceLevel: [''],
-      company: [this.companysDataSource],
-      competences: this.competences
     });
 
     setTimeout(() => {
       if (this.isDataExist()) {
         console.log('Dialog opened with data:', this.data);
-        this.addCusForm.patchValue(this.data);
+        this.addCusForm.get('title').setValue(this.data.title);
+        this.addCusForm.get('description').setValue(this.data.description);
+        this.addCusForm.get('type').setValue(this.data.type);
+        this.addCusForm.get('experienceLevel').setValue(this.data.experienceLevel);
       } else {
         console.log('Dialog opened without data');
       }
@@ -83,7 +84,7 @@ export class AddCustomerComponent implements OnInit {
   openDialog(): void {
     console.log(this.wasFormChanged);
     if (this.addCusForm.dirty) {
-      const dialogRef = this.dialog.open(DeleteComponent, {
+      this.dialog.open(DeleteComponent, {
         width: '340px',
       });
     } else {
@@ -111,7 +112,7 @@ export class AddCustomerComponent implements OnInit {
   }
 
   public onUpdate(): void {
-    if (this.addCusForm.valid) {
+    if (this.addCusForm.valid && this.addCusForm.value.title && this.addCusForm.value.description && this.addCusForm.value.type && this.addCusForm.value.experienceLevel) {
       this.offerService.updateOffer(this.data.id, this.addCusForm.value).subscribe(() => {
         this.dialog.closeAll();
       }, error => {
@@ -124,8 +125,7 @@ export class AddCustomerComponent implements OnInit {
   }
 
   public onadd(): void {
-    console.log(this.addCusForm.value);
-    if (this.addCusForm.valid) {
+    if (this.addCusForm.valid && this.addCusForm.value.title && this.addCusForm.value.description && this.addCusForm.value.type && this.addCusForm.value.experienceLevel) {
       this.offerService.addOffer(this.addCusForm.value).subscribe(() => {
         this.dialog.closeAll();
       }, error => {

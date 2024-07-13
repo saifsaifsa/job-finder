@@ -28,4 +28,7 @@ export class QuizzesService {
     getQuizById(id: number): Observable<any> {
         return this.http.get(`${this.apiUrl}/${id}`);
     }
+    submitAnswers(id,answers): Observable<any> {
+        return this.http.post(`${this.apiUrl}/${id}/submit`,answers)
+    }
 }

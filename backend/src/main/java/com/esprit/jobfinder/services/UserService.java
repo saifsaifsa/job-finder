@@ -3,6 +3,7 @@ package com.esprit.jobfinder.services;
 import com.esprit.jobfinder.dto.UserMapper;
 import com.esprit.jobfinder.exceptions.ConflictException;
 import com.esprit.jobfinder.exceptions.NotFoundException;
+import com.esprit.jobfinder.models.Competence;
 import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.models.VerificationToken;
 import com.esprit.jobfinder.models.enums.ERole;
@@ -52,6 +53,9 @@ public class UserService implements IUserService{
 
     @Autowired
     private IFileUploaderService fileUploaderService;
+
+    @Autowired
+    private ICompetenceService competenceService;
     @Override
     public User saveUser(User user, MultipartFile profilePicture) {
 
@@ -112,6 +116,8 @@ public class UserService implements IUserService{
             String filePath = fileUploaderService.uploadFile(profilePicture);
             existingUser.setProfilePicture(filePath);
         }
+        List<Competence> competenceList = this.competenceService.findByids(user.getSkills());
+        existingUser.setSkills(competenceList);
         existingUser.setUsername(user.getUsername());
         existingUser.setFirstName(user.getFirstName());
         existingUser.setLastName(user.getLastName());
@@ -123,6 +129,7 @@ public class UserService implements IUserService{
         }
         existingUser.setPhone(user.getPhone());
         existingUser.setRole(ERole.valueOf(user.getRole()));
+//        existingUser.setSkills(user.getSkills());
         return userRepository.save(existingUser);
     }
 

@@ -1,5 +1,6 @@
 package com.esprit.jobfinder.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -22,9 +23,10 @@ public class Quiz {
     @Positive(message = "Le seuil de réussite doit être une valeur positive")
     private double successScore;
 
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Question> questions;
 
+    @JsonIgnore
     @ManyToOne
     private Competence competence;
 
