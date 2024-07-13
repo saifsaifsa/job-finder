@@ -13,6 +13,7 @@ import com.esprit.jobfinder.repository.IUserRepository;
 import com.esprit.jobfinder.repository.IVerificationTokenRepository;
 import com.esprit.jobfinder.security.jwt.JwtUtils;
 import com.esprit.jobfinder.utiles.DateUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,32 +31,24 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
+@AllArgsConstructor
 public class UserService implements IUserService{
-    @Autowired
-    private IUserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final IUserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private EmailService emailService;
+    private final EmailService emailService;
 
-    @Autowired
-    private IVerificationTokenRepository tokenRepository;
+    private final IVerificationTokenRepository tokenRepository;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtUtils jwtUtil;
+    private final JwtUtils jwtUtil;
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
-    @Autowired
-    private IFileUploaderService fileUploaderService;
+    private final IFileUploaderService fileUploaderService;
 
-    @Autowired
-    private ICompetenceService competenceService;
+    private final ICompetenceService competenceService;
     @Override
     public User saveUser(User user, MultipartFile profilePicture) {
 
@@ -92,11 +85,6 @@ public class UserService implements IUserService{
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
-
-//    @Override
-//    public List<User> getAllUsers() {
-//        return userRepository.findAll();
-//    }
     public Page<User> getAllUsers(String name, String email, String role, String phone, int page, int size, String sortBy,String sortOrder) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortOrder), sortBy));
 
@@ -129,7 +117,6 @@ public class UserService implements IUserService{
         }
         existingUser.setPhone(user.getPhone());
         existingUser.setRole(ERole.valueOf(user.getRole()));
-//        existingUser.setSkills(user.getSkills());
         return userRepository.save(existingUser);
     }
 

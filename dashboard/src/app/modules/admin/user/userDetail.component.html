@@ -87,14 +87,14 @@
         <div class="sm:col-span-4" *ngIf="showRole">
             <mat-form-field class="w-3/4 mt-4 mx-4">
                 <mat-label>Role</mat-label>
-                <mat-select formControlName="role">
+                <mat-select formControlName="role" (selectionChange)="onRoleChange($event)">
                     <mat-option value="ROLE_ADMIN">Admin</mat-option>
                     <mat-option value="ROLE_USER">User</mat-option>
                     <mat-option value="ROLE_PUBLISHER">Publisher</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="sm:col-span-4" *ngIf="showRole">
+        <div class="sm:col-span-4" *ngIf="role == 'ROLE_USER'">
             <mat-form-field class="w-3/4 mt-4 mx-4">
                 <mat-label>Skills</mat-label>
                 <mat-select formControlName="skills" multiple>
@@ -103,6 +103,16 @@
                 </mat-select>
             </mat-form-field>
         </div>
+        
+        <!-- <div class="sm:col-span-4" *ngIf="role == 'ROLE_PUBLISHER'">
+            <mat-form-field class="w-3/4 mt-4 mx-4">
+                <mat-label>Company</mat-label>
+                <mat-select formControlName="company">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let c of company" [value]="c.id">{{c.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div> -->
         <!-- <div class="sm:col-span-4">
             <label for="image">Avatar</label>
             <img

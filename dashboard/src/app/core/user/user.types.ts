@@ -7,4 +7,5 @@ export interface User
     status?: string;
     profilePicture?:string
     role?:string
+    skills?:[]
 }

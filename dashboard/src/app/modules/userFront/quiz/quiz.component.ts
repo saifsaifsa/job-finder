@@ -50,7 +50,9 @@ export class QuizComponent implements OnInit {
         this.quizService
             .submitAnswers(this.quizId, { userId: this.user.id, answers })
             .subscribe((result: any) => {
-                console.log('Quiz result:', result);
+                if(result >= this.quiz.successScore){
+                    
+                }
             });
     }
 }

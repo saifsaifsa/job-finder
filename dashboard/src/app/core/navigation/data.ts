@@ -109,12 +109,14 @@ export const userNavigation: FuseNavigationItem[] = [
         icon : 'heroicons_outline:chart-pie',
         link : '/user/quizzes/5'
     },
+  
     {
-        id   : 'offres',
-        title: 'Offres',
+        id   : 'offre',
+        title: 'offre',
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
-        link : '/user/offresUser'
+        link : '/user/offre'
+
     }
 ];
 export const publisherNavigation: FuseNavigationItem[] = [
@@ -145,5 +147,12 @@ export const publisherNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/offresUser'
+    },
+    {
+        id   : 'training',
+        title: 'Training Publisher',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/publisher/training'
     }
 ];
