@@ -1,5 +1,6 @@
 <div class="p-24">
     <div class="bg-white rounded-lg shadow-md">
+
       <img [src]="company.image" alt="company.name" class="w-full h-64 object-cover rounded-t-lg">
       <div class="p-6">
         <h2 class="text-3xl font-bold mb-4">{{ company.name }}</h2>
@@ -11,12 +12,14 @@
             <p>Rating: {{ company.rating }}%</p>
             <div *ngIf="company.offers">Offres: {{ company.offers.length }}</div>
           </div>
-          <div>
+          <div >
             <h3 class="text-lg font-semibold">Location</h3>
             <p>Adress: {{ company.location }}</p>
 
+
           </div>
         </div>
+ 
         <!-- <div class="flex items-center mt-4">
             <button mat-icon-button color="primary" (click)="like()">
               <mat-icon>thumb_up</mat-icon>
@@ -37,4 +40,5 @@
         </button>
         </div>
     </div>
+
 </div>  

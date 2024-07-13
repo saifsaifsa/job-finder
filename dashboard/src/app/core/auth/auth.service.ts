@@ -70,7 +70,7 @@ export class AuthService {
         return decodedToken;
     }
     returnUserAfterLogin(accessToken: string) {
-        const user = this.decodeJwt(accessToken);
+        const user = this.decodeJwt(accessToken);        
         // if (user.role[0].authority !== "ROLE_ADMIN") {
         //     return throwError('User role is not authorized.'); // Throw an error if the user's role is not 99
         // }

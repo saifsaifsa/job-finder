@@ -1,0 +1,9 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"
+         updateCheck="true">
+    <cache name="offers"
+           maxEntriesLocalHeap="100"
+           eternal="false"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"/>
+</ehcache>

@@ -81,7 +81,21 @@
                     </div> -->
         </div>
       </div>
-
+    <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
+      <!-- Total companies -->
+      <div class="flex flex-col items-center mt-2">
+        <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">
+          {{ totalCompanies }}
+        </div>
+        <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Total Companies</div>
+      </div>
+      <!-- Total Offres -->
+      <div class="flex flex-col items-center mt-2">
+        <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">
+          {{ totalOffres }}
+        </div>
+        <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Total Offres</div>
+      </div>
 
       <!-- Total Trainings -->
       <div class="flex flex-col items-center mt-2">
@@ -90,6 +104,7 @@
         </div>
         <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Total Trainings</div>
       </div>
+    </div>
 
       <!-- Most Liked Trainings -->
       <div class="mt-6" *ngIf="mostLikedTrainings?.length">
@@ -99,6 +114,7 @@
         </ngx-charts-bar-vertical>
       </div>
 
+
       <!-- Most Disliked Trainings -->
       <div class="mt-6" *ngIf="mostDislikedTrainings?.length">
         <h3 class="text-lg font-medium">Most Disliked Trainings</h3>
@@ -107,10 +123,26 @@
         </ngx-charts-bar-vertical>
       </div>
 
+            <!-- Most Liked companies -->
+            <div class="mt-6" *ngIf="mostLikedCompanies?.length">
+              <h3 class="text-lg font-medium">Most Liked Companies</h3>
+              <ngx-charts-bar-vertical [results]="mostLikedCompanies" [scheme]="colorScheme" [legend]="true" [xAxis]="true"
+                [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" xAxisLabel="Companies" yAxisLabel="Rating">
+              </ngx-charts-bar-vertical>
+            </div>
+
       <!-- Most Popular Categories -->
       <div class="mt-6" *ngIf="mostPopularCategories?.length">
         <h3 class="text-lg font-medium">Most Popular Categories</h3>
         <ngx-charts-pie-chart [results]="mostPopularCategories" [scheme]="colorScheme" [legend]="true"
+          [doughnut]="false" [labels]="true">
+        </ngx-charts-pie-chart>
+      </div>
+
+      <!-- Most Popular Companies -->
+      <div class="mt-6" *ngIf="mostPopularIndustry?.length">
+        <h3 class="text-lg font-medium">Most Popular Companies Industries</h3>
+        <ngx-charts-pie-chart [results]="mostPopularIndustry" [scheme]="colorScheme" [legend]="true"
           [doughnut]="false" [labels]="true">
         </ngx-charts-pie-chart>
       </div>
@@ -141,6 +173,15 @@
           yAxisLabel="Number of Trainings">
         </ngx-charts-bar-vertical>
       </div>
+      <!-- Number Of Trainings Per Company -->
+      <div class="mt-6" *ngIf="numberOfCompaniesPerIndustry?.length">
+        <h3 class="text-lg font-medium">Number of Companies Per Industry</h3>
+        <ngx-charts-bar-vertical [results]="numberOfCompaniesPerIndustry" [scheme]="colorScheme" [legend]="true"
+          [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" xAxisLabel="Industries"
+          yAxisLabel="Number of Companies">
+        </ngx-charts-bar-vertical>
+      </div>
+
 
       <!-- Monthly Engagement Trends -->
       <div class="mt-6" *ngIf="monthlyEngagementTrends?.length">

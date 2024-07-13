@@ -105,6 +105,10 @@ export class CompanyService {
           };
         return this._httpClient.put(`${environment.apiUrl}company/${id}`,data,httpOptions)
       }
+
+      getStats(){
+        return this._httpClient.get(`${environment.apiUrl}company/statistics`)
+    }
     
 
 }

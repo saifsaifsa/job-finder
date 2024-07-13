@@ -118,5 +118,25 @@ export const publisherNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/exemple'
-    }   
+    },{
+        id   : 'cv',
+        title: 'Cv',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/cv'
+    }
+    ,{
+        id   : 'company',
+        title: 'Company',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/company'
+    },
+    {
+        id   : 'offres',
+        title: 'Offres',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/offresUser'
+    }
 ];

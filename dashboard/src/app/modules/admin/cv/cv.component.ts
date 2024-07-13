@@ -3,7 +3,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { CvService } from './cvService';
-import { saveAs } from 'file-saver';
 import { Router } from '@angular/router';
 import { EditCvDialogComponent } from './EditCvDialogComponent';
 import { MatDialog } from '@angular/material/dialog';

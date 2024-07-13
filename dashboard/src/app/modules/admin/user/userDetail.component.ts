@@ -236,7 +236,7 @@ export class UserDetailComponent implements OnInit {
                     if (error.status === 409) {
                         this.alert = {
                             type: 'error',
-                            message: 'E-mail or phone number already used',
+                            message: 'Username, E-mail or phone number already used',
                         };
                     } else if (error.status === 400) {
                         this.alert = {

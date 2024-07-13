@@ -1,0 +1,79 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <div class="m-3 w-full flex justify-between items-center"
+        style="font-family: Rubik; font-size: 36px; font-weight: 700; line-height: 42.66px; text-align: left; color: #2D355B;">
+        <span>Offre</span>
+        <button (click)="generatePDF()" type="button" style="background: #2D355B;"
+            class="px-3 py-2 rounded-full text-white outline-none focus:ring-4 -lg transform active:scale-x-75 transition-transform mx-5 flex items-center text-sm">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span class="ml-2">Download PDF</span>
+        </button>
+    </div>
+
+    <div  #content class="bg-gray-100 dark:bg-gray-800 py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row -mx-4">
+                <div class="md:flex-1 px-4">
+                    <div class="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
+                        <img class="w-full h-full object-cover"
+                            [src]="dataSource?.company.image ? 'http://localhost:8080/api/files/'+dataSource.company.image : 'assets/avatars/avatar.png'"
+                            alt="Product Image">
+                    </div>
+                    <div class="flex -mx-2 mb-4">
+                        <div class="w-1/2 px-2">
+                            <button
+                                class="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
+                                (click)="addUserToOffer()">Postuler</button>
+                        </div>
+                        <div class="w-1/2 px-2">
+                            <a href="/offresUser"> <button
+                                    class="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">Retour
+                                    au offres</button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:flex-1 px-4">
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">{{dataSource?.title}}</h2>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                        {{dataSource?.description}}
+                    </p>
+                    <div class="flex mb-4">
+                        <div class="mr-4">
+                            <span class="font-bold text-gray-700 dark:text-gray-300">Nombre des candidats :</span>
+                            <span class="text-gray-600 dark:text-gray-300">{{dataSource?.nombreVu}}</span>
+                        </div>
+                        <div>
+                            <span class="font-bold text-gray-700 dark:text-gray-300">Status :</span>
+                            <span class="text-gray-600 dark:text-green-300">{{dataSource?.status}}</span>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-4">
+                        <span class="font-bold text-gray-700 dark:text-gray-300">Skills Requires:</span>
+                        <div class="flex items-center mt-2">
+                            <ng-container *ngFor="let skill of dataSource?.competences">
+                                <button
+                                    class="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">{{
+                                    skill.name }}</button>
+                            </ng-container>
+                        </div>
+
+                    </div>
+                    <div>
+                        <span class="font-bold text-gray-700 dark:text-gray-300">Company : {{dataSource?.name}} </span>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">
+                            {{dataSource?.description}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

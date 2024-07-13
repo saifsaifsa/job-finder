@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewChild, ViewEncapsulation,AfterViewInit } from "@angular/core";
 import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { fuseAnimations } from "@fuse/animations";
@@ -8,6 +8,10 @@ import { CompanyService } from "app/core/company/companyService";
 import { Company } from "app/core/company/company.types";
 import { PaymentService } from "app/core/payment/paymentService";
 import { HttpHeaders } from "@angular/common/http";
+import { Observable, Subscriber } from 'rxjs';
+import * as L from 'leaflet';
+import { environment } from "environments/environment";
+
 
 @Component({
     selector: 'app-company-detail',
@@ -21,6 +25,7 @@ export class CompanyDetailComponentUser implements OnInit {
     private fileUrl = 'http://localhost:8080/api/files/';
     photo: string | ArrayBuffer | null = null;
     paymentUrl: string = '';
+    map: any;
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
@@ -54,7 +59,9 @@ export class CompanyDetailComponentUser implements OnInit {
             
         });
 
+
     }
+
 
     onAvatarChange(event: any): void {
         const inputElement = event.target as HTMLInputElement;
@@ -78,24 +85,7 @@ export class CompanyDetailComponentUser implements OnInit {
         console.log(event);
     }
 
-    // subscribe(): void {
-    //     const paymentRequest = {
-    //         currency: 'usd',
-    //         amount: this.training.price,
-    //         name: this.training.title, 
-    //         successUrl: 'http://localhost:4200/user/success',
-    //         cancelUrl: 'http://localhost:4200/user/cancel'
-    //       };
-    //       this.paymentService.initiatePayment(paymentRequest).subscribe(response => {
-    //         this.paymentUrl = response.url;
-    //         window.location.href = this.paymentUrl;
-    //       }, error => {
-    //         console.error('Error initiating payment:', error);
-    //       });
-    //     }
     like(): void {
-      
-
         const companyId = this.company.id;
         var form_data = new FormData();
 
@@ -132,4 +122,21 @@ export class CompanyDetailComponentUser implements OnInit {
         reload() {
             this.reloadComponent(false, 'CompanyDetailComponentUser');
         }
+
+        private getCurrentPosition(): any {
+            return new Observable((observer: Subscriber<any>) => {
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position: any) => {
+                  observer.next({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                  });
+                  observer.complete();
+                });
+              } else {
+                observer.error();
+              }
+            });
+          }
+        
 }

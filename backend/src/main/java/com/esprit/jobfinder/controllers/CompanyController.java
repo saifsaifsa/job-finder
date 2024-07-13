@@ -2,6 +2,7 @@ package com.esprit.jobfinder.controllers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.esprit.jobfinder.exceptions.BadRequestException;
 import com.esprit.jobfinder.models.User;
@@ -92,6 +93,11 @@ public class CompanyController {
     public ResponseEntity<String> sendCompanyMailConfirmation() {
 
         return ResponseEntity.ok("mail confirmation sending  .....");
+    }
+
+    @GetMapping("/statistics")
+    public ResponseEntity<Map<String, Object>> getUsersStats() {
+        return ResponseEntity.ok(companyService.getCompanyStatistics());
     }
 }
 

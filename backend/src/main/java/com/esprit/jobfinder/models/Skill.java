@@ -24,7 +24,4 @@ public class Skill {
     private String description;
     private String category;
 
-    @ManyToOne
-    @JoinColumn(name = "offer_id")
-    private Offer offer;
 }

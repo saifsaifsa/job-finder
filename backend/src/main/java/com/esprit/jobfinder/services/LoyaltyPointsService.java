@@ -1,10 +1,11 @@
 package com.esprit.jobfinder.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.esprit.jobfinder.models.LoyaltyPoints;
 import com.esprit.jobfinder.models.User;
 import com.esprit.jobfinder.repository.LoyaltyPointsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class LoyaltyPointsService {
