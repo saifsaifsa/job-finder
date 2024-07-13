@@ -81,6 +81,12 @@ export class CompanyDetailComponentUser implements OnInit {
     goToCompaniesList() {
         this.router.navigateByUrl('/company');
     }
+
+    goToOffresList() {
+        this.router.navigateByUrl('/user/offre');
+    }
+
+
     upload(event: Event) {
         console.log(event);
     }

@@ -108,6 +108,13 @@ export const userNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/user/quizzes'
+    },
+    {
+        id   : 'offre',
+        title: 'offre',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/user/offre'
     }
 ];
 export const publisherNavigation: FuseNavigationItem[] = [
